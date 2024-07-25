@@ -145,7 +145,7 @@ def get_accuracy_score(eval_preds, cfg):
     return {'accuracy': score}
 
 
-def preprocess_function(examples, cfg):
+def preprocess_dataset(examples, cfg):
     inputs = examples['input']
     targets = examples[cfg.target_column]
     model_inputs = cfg.tokenizer(inputs, max_length=cfg.input_max_len, truncation=True)
