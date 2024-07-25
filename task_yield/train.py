@@ -623,7 +623,7 @@ if __name__ == "__main__":
             + ["REACTANT:", "PRODUCT:", "REAGENT:"]
         }
     )
-    tokenizer.save_pretrained(os.path.join(CFG.output_dir, "tokenizer/"))
+    tokenizer.save_pretrained(os.path.join(CFG.output_dir))
     CFG.tokenizer = tokenizer
 
     train_loop(train, valid, CFG)

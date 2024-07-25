@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
     try:  # load pretrained tokenizer from local directory
         CFG.tokenizer = AutoTokenizer.from_pretrained(
-            os.path.join(CFG.model_name_or_path, "tokenizer"), return_tensors="pt"
+            CFG.model_name_or_path, return_tensors="pt"
         )
     except:  # load pretrained tokenizer from huggingface model hub
         CFG.tokenizer = AutoTokenizer.from_pretrained(

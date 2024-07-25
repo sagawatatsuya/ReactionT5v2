@@ -17,7 +17,7 @@ from train import train_loop
 # Suppress warnings and logging
 warnings.filterwarnings("ignore")
 disable_progress_bar()
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"  
 
 
 def parse_args():
@@ -164,10 +164,6 @@ def download_pretrained_model():
     """
     Download the pretrained model from Hugging Face.
     """
-    try:
-        os.mkdir("tokenizer")
-    except:
-        print("already tokenizer exists")
     subprocess.run(
         "wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/ZINC-t5_best.pth",
         shell=True,
@@ -177,15 +173,15 @@ def download_pretrained_model():
         shell=True,
     )
     subprocess.run(
-        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/special_tokens_map.json -P ./tokenizer",
+        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/special_tokens_map.json",
         shell=True,
     )
     subprocess.run(
-        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer.json -P ./tokenizer",
+        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer.json",
         shell=True,
     )
     subprocess.run(
-        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer_config.json -P ./tokenizer",
+        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer_config.json",
         shell=True,
     )
 
@@ -212,11 +208,11 @@ if __name__ == "__main__":
 
     # load tokenizer
     if CFG.download_pretrained_model:
-        tokenizer = AutoTokenizer.from_pretrained("./tokenizer", return_tensors="pt")
+        tokenizer = AutoTokenizer.from_pretrained("./", return_tensors="pt")
     else:
         try:  # load pretrained tokenizer from local directory
             tokenizer = AutoTokenizer.from_pretrained(
-                os.path.abspath(os.path.join(CFG.model_name_or_path, "tokenizer")), return_tensors="pt"
+                os.path.abspath(CFG.model_name_or_path), return_tensors="pt"
             )
         except:  # load pretrained tokenizer from huggingface model hub
             tokenizer = AutoTokenizer.from_pretrained(

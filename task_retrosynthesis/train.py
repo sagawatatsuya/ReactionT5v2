@@ -2,7 +2,6 @@ import os
 import warnings
 import sys
 
-import numpy as np
 import pandas as pd
 import torch
 from tqdm.auto import tqdm
@@ -332,5 +331,8 @@ if __name__ == "__main__":
         callbacks=[EarlyStoppingCallback(early_stopping_patience=10)],
     )
 
-    trainer.train(resume_from_checkpoint=True)
+    try:
+        trainer.train(resume_from_checkpoint=True)
+    except:
+        trainer.train(resume_from_checkpoint=None)
     trainer.save_model("./best_model")

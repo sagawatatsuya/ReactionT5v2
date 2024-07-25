@@ -11,15 +11,9 @@ class ReactionT5Yield(nn.Module):
         else:
             self.config = torch.load(config_path)
         if pretrained:
-            if 't5' in self.cfg.model:
-                self.model = T5ForConditionalGeneration.from_pretrained(self.cfg.pretrained_model_name_or_path)
-            else:
-                self.model = AutoModel.from_pretrained(self.cfg.pretrained_model_name_or_path)
+            self.model = AutoModel.from_pretrained(self.cfg.pretrained_model_name_or_path)
         else:
-            if 't5' in self.cfg.model:
-                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/CompoundT5')
-            else:
-                self.model = AutoModel.from_config(self.config)
+            self.model = AutoModel.from_config(self.config)
         self.model.resize_token_embeddings(len(self.cfg.tokenizer))
         self.fc_dropout1 = nn.Dropout(self.cfg.fc_dropout)
         self.fc1 = nn.Linear(self.config.hidden_size, self.config.hidden_size//2)
@@ -76,15 +70,9 @@ class ClassificationT5(nn.Module):
         else:
             self.config = torch.load(config_path)
         if pretrained:
-            if 't5' in self.cfg.model:
-                self.model = T5ForConditionalGeneration.from_pretrained(self.cfg.pretrained_model_name_or_path)
-            else:
-                self.model = AutoModel.from_pretrained(self.cfg.pretrained_model_name_or_path)
+            self.model = T5ForConditionalGeneration.from_pretrained(self.cfg.pretrained_model_name_or_path)
         else:
-            if 't5' in self.cfg.model:
-                self.model = T5ForConditionalGeneration.from_pretrained('sagawa/CompoundT5')
-            else:
-                self.model = AutoModel.from_config(self.config)
+            self.model = T5ForConditionalGeneration.from_pretrained('sagawa/CompoundT5')
         self.model.resize_token_embeddings(len(self.cfg.tokenizer))
         self.fc_dropout1 = nn.Dropout(self.cfg.fc_dropout)
         self.fc1 = nn.Linear(self.config.hidden_size, self.config.hidden_size//2)
