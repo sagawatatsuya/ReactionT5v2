@@ -1,0 +1,13 @@
+*.ipynb_checkpoints
+__pycache__
+*.csv
+*.bin
+*.pth
+*.pt
+*.tar
+*.tar.gz
+*.zip
+*.gz
+*.tgz
+*.rar
+*.safetensors
