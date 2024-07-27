@@ -33,7 +33,10 @@ def canonicalize_str(smiles):
     try:
         return canonicalize(smiles)
     except:
-        return ""
+        if "%" in smiles:
+            return smiles
+        else:
+            return ""
 
 
 def uncanonicalize(smiles):
@@ -103,7 +106,6 @@ def timeSince(since, percent):
 
 
 def get_optimizer_params(model, encoder_lr, decoder_lr, weight_decay=0.0):
-    param_optimizer = list(model.named_parameters())
     no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
     optimizer_parameters = [
         {'params': [p for n, p in model.model.named_parameters() if not any(nd in n for nd in no_decay)], 'lr': encoder_lr, 'weight_decay': weight_decay},
@@ -133,6 +135,34 @@ def get_accuracy_score(eval_preds, cfg):
 
     labels = np.where(labels != -100, labels, cfg.tokenizer.pad_token_id)
     decoded_labels = cfg.tokenizer.batch_decode(labels, skip_special_tokens=True)
+
+    decoded_preds = [canonicalize_str(pred.strip().replace(' ', '')) for pred in decoded_preds]
+    decoded_labels = [[canonicalize_str(label.strip().replace(' ', ''))] for label in decoded_labels]
+
+    score = 0
+    for i in range(len(decoded_preds)):
+        if decoded_preds[i] == decoded_labels[i][0]:
+            score += 1
+    score /= len(decoded_preds)
+    return {'accuracy': score}
+
+
+def get_accuracy_score_multitask(eval_preds, cfg):
+    preds, labels = eval_preds
+    if isinstance(preds, tuple):
+        preds = preds[0]
+
+    special_tokens = cfg.tokenizer.special_tokens_map
+    special_tokens = [special_tokens['eos_token'], special_tokens['pad_token'], special_tokens['unk_token']] + list(set(special_tokens['additional_special_tokens']) - set(['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%']))
+
+    decoded_preds = cfg.tokenizer.batch_decode(preds, skip_special_tokens=False)
+    for special_token in special_tokens:
+        decoded_preds = [pred.replace(special_token, '') for pred in decoded_preds]
+
+    labels = np.where(labels != -100, labels, cfg.tokenizer.pad_token_id)
+    decoded_labels = cfg.tokenizer.batch_decode(labels, skip_special_tokens=False)
+    for special_token in special_tokens:
+        decoded_labels = [pred.replace(special_token, '') for pred in decoded_labels]
 
     decoded_preds = [canonicalize_str(pred.strip().replace(' ', '')) for pred in decoded_preds]
     decoded_labels = [[canonicalize_str(label.strip().replace(' ', ''))] for label in decoded_labels]
