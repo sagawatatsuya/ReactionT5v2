@@ -157,11 +157,10 @@ def parse_args():
 
 def preprocess_df(df):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
-    df = df[~df["PRODUCT"].isna()]
-    for col in ["CATALYST", "REACTANT", "REAGENT", "SOLVENT", "PRODUCT"]:
+    df = df[~(df["PRODUCT"].isna() | df["REACTANT"].isna())]
+    for col in ["CATALYST", "REAGENT", "SOLVENT"]:
         df[col] = df[col].fillna(" ")
 
-    df = df[df["REACTANT"] != " "]
     df = (
         df[["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]]
         .drop_duplicates()

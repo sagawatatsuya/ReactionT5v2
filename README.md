@@ -22,7 +22,7 @@ pip install sentencepiece==0.1.96
 # Use ReactionT5
 You can use ReactionT5 to predict the products and yields of chemical reactions.
 
-### Product prediction
+### Forward prediction
 To predict the products of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}". If there are no catalyst, reagent, or solvents, fill the blank with a space. And if there are multiple compounds, concatenate them with ".".(ex. "REACTANT:COC(=O)C1=CCCN(C)C1.O.\[Al+3].\[H-].\[Li+].\[Na+].\[OH-]REAGENT:C1CCOC1")
 ```
 cd forward_reaction_prediction/

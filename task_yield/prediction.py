@@ -111,15 +111,9 @@ if __name__ == "__main__":
         download_pretrained_model()
         CFG.model_name_or_path = "."
 
-    try:  # load pretrained tokenizer from local directory
-        CFG.tokenizer = AutoTokenizer.from_pretrained(
-            CFG.model_name_or_path, return_tensors="pt"
-        )
-    except:  # load pretrained tokenizer from huggingface model hub
-        CFG.tokenizer = AutoTokenizer.from_pretrained(
-            CFG.model_name_or_path, return_tensors="pt"
-        )
-
+    CFG.tokenizer = AutoTokenizer.from_pretrained(
+        CFG.model_name_or_path, return_tensors="pt"
+    )
 
     model = ReactionT5Yield(
         CFG,

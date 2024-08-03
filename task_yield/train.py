@@ -160,18 +160,12 @@ def preprocess_df(df, cfg):
     Returns:
         pd.DataFrame: Preprocessed DataFrame.
     """
-    df = df[~df["YIELD"].isna()].reset_index(drop=True)
+    df = df[~(df["YIELD"].isna() | df["REACTANT"].isna() | df["PRODUCT"].isna())].reset_index(drop=True)
     df["YIELD"] = df["YIELD"].apply(lambda x: 100 if x > 100 else x) / 100
-    df = df[~(df["REACTANT"].isna() | df["PRODUCT"].isna())]
 
     for col in [
         "CATALYST",
-        "REACTANT",
         "REAGENT",
-        "SOLVENT",
-        "INTERNAL_STANDARD",
-        "NoData",
-        "PRODUCT",
     ]:
         df[col] = df[col].fillna(" ")
 
@@ -526,14 +520,11 @@ if __name__ == "__main__":
         os.makedirs(CFG.output_dir)
     seed_everything(seed=CFG.seed)
 
-    train = pd.read_csv(CFG.train_data_path)
-    valid = pd.read_csv(CFG.valid_data_path)
-    CN_test = pd.read_csv(CFG.CN_test_data_path)
+    train = preprocess_df(pd.read_csv(CFG.train_data_path))
+    valid = preprocess_df(pd.read_csv(CFG.valid_data_path))
 
-    train = preprocess_df(train, CFG)
-    valid = preprocess_df(valid, CFG)
     train_copy = preprocess_CN(train.copy())
-    CN_test = preprocess_CN(CN_test)
+    CN_test = preprocess_CN(pd.read_csv(CFG.CN_test_data_path))
 
     print(len(train))
     train = train[~train_copy["pair"].isin(CN_test["pair"])].reset_index(drop=True)

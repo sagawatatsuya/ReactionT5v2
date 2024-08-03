@@ -18,7 +18,11 @@ from datasets import Dataset, DatasetDict
 import argparse
 
 sys.path.append("../")
-from utils import seed_everything, canonicalize, space_clean, get_accuracy_score_multitask, preprocess_dataset
+from utils import (
+    seed_everything,
+    get_accuracy_score_multitask,
+    preprocess_dataset,
+)
 
 # Suppress warnings and disable progress bars
 warnings.filterwarnings("ignore")
@@ -31,7 +35,10 @@ def parse_args():
         description="Training script for reaction prediction model."
     )
     parser.add_argument(
-        "--train_data_path_FORWARD", type=str, required=True, help="Path to training data CSV."
+        "--train_data_path_FORWARD",
+        type=str,
+        required=True,
+        help="Path to training data CSV.",
     )
     parser.add_argument(
         "--valid_data_path_FORWARD",
@@ -39,9 +46,14 @@ def parse_args():
         required=True,
         help="Path to validation data CSV.",
     )
-    parser.add_argument("--test_data_path_FORWARD", type=str, help="Path to test data CSV.")
     parser.add_argument(
-        "--train_data_path_RETROSYNTHESIS", type=str, required=True, help="Path to training data CSV."
+        "--test_data_path_FORWARD", type=str, help="Path to test data CSV."
+    )
+    parser.add_argument(
+        "--train_data_path_RETROSYNTHESIS",
+        type=str,
+        required=True,
+        help="Path to training data CSV.",
     )
     parser.add_argument(
         "--valid_data_path_RETROSYNTHESIS",
@@ -49,9 +61,14 @@ def parse_args():
         required=True,
         help="Path to validation data CSV.",
     )
-    parser.add_argument("--test_data_path_RETROSYNTHESIS", type=str, help="Path to test data CSV.")
     parser.add_argument(
-        "--train_data_path_YIELD", type=str, required=True, help="Path to training data CSV."
+        "--test_data_path_RETROSYNTHESIS", type=str, help="Path to test data CSV."
+    )
+    parser.add_argument(
+        "--train_data_path_YIELD",
+        type=str,
+        required=True,
+        help="Path to training data CSV.",
     )
     parser.add_argument(
         "--valid_data_path_YIELD",
@@ -59,7 +76,9 @@ def parse_args():
         required=True,
         help="Path to validation data CSV.",
     )
-    parser.add_argument("--test_data_path_YIELD", type=str, help="Path to test data CSV.")
+    parser.add_argument(
+        "--test_data_path_YIELD", type=str, help="Path to test data CSV."
+    )
     parser.add_argument("--model", type=str, default="t5", help="Model name.")
     parser.add_argument(
         "--pretrained_model_name_or_path",
@@ -166,13 +185,13 @@ def parse_args():
     return parser.parse_args()
 
 
-
-
 def preprocess_df_FORWARD(df):
     for col in ["REACTANT", "REAGENT"]:
         df[col] = df[col].fillna(" ")
         df[col] = df[col].str.replace("\n", "")
-    df["input"] = "TASK_FORWARD" + "REACTANT:" + df["REACTANT"] + "REAGENT:" + df["REAGENT"]
+    df["input"] = (
+        "TASK_FORWARD" + "REACTANT:" + df["REACTANT"] + "REAGENT:" + df["REAGENT"]
+    )
     df.rename(columns={"PRODUCT": "target"}, inplace=True)
 
     return df
@@ -189,17 +208,24 @@ def preprocess_df_RETROSYNTHESIS(df):
 
 
 def preprocess_df_YIELD(df):
-    for col in ['REACTANT', 'REAGENT', 'PRODUCT']:
+    for col in ["REACTANT", "REAGENT", "PRODUCT"]:
         df[col] = df[col].fillna(" ")
         df[col] = df[col].str.replace("\n", "")
-    if max(df['YIELD']) > 1:
-        df['YIELD'] = df['YIELD'] / 100
-    df['YIELD'] = df['YIELD'].apply(lambda x: round(x*10)/10)
+    if max(df["YIELD"]) > 1:
+        df["YIELD"] = df["YIELD"] / 100
+    df["YIELD"] = df["YIELD"].apply(lambda x: round(x * 10) / 10)
     # convert YIELD value 0.1 to 10%, 0.2 to 20%, ..., 1.0 to 100%
-    df['YIELD'] = df['YIELD'].apply(lambda x: str(int(x*100))+'%')
+    df["YIELD"] = df["YIELD"].apply(lambda x: str(int(x * 100)) + "%")
 
-
-    df["input"] = "TASK_YIELD" + "REACTANT:" + df["REACTANT"] + "REAGENT:" + df["REAGENT"] + 'PRODUCT:' + df['PRODUCT']
+    df["input"] = (
+        "TASK_YIELD"
+        + "REACTANT:"
+        + df["REACTANT"]
+        + "REAGENT:"
+        + df["REAGENT"]
+        + "PRODUCT:"
+        + df["PRODUCT"]
+    )
     df.rename(columns={"YIELD": "target"}, inplace=True)
 
     return df
@@ -227,15 +253,21 @@ if __name__ == "__main__":
         test.to_csv("test_FORWARD.csv", index=False)
 
     # RETROSYNTHESIS
-    train = preprocess_df_RETROSYNTHESIS(pd.read_csv(CFG.train_data_path_RETROSYNTHESIS))
-    valid = preprocess_df_RETROSYNTHESIS(pd.read_csv(CFG.valid_data_path_RETROSYNTHESIS))
+    train = preprocess_df_RETROSYNTHESIS(
+        pd.read_csv(CFG.train_data_path_RETROSYNTHESIS)
+    )
+    valid = preprocess_df_RETROSYNTHESIS(
+        pd.read_csv(CFG.valid_data_path_RETROSYNTHESIS)
+    )
     train.to_csv("train_RETROSYNTHESIS.csv", index=False)
     valid.to_csv("valid_RETROSYNTHESIS.csv", index=False)
     train_dfs.append(train[["input", "target"]])
     valid_dfs.append(valid[["input", "target"]])
 
     if CFG.test_data_path_RETROSYNTHESIS:
-        test = preprocess_df_RETROSYNTHESIS(pd.read_csv(CFG.test_data_path_RETROSYNTHESIS))
+        test = preprocess_df_RETROSYNTHESIS(
+            pd.read_csv(CFG.test_data_path_RETROSYNTHESIS)
+        )
         test.to_csv("test_RETROSYNTHESIS.csv", index=False)
 
     # YIELD
@@ -320,7 +352,30 @@ if __name__ == "__main__":
             "p",
         ]
     )
-    tokenizer.add_special_tokens({'additional_special_tokens': tokenizer.additional_special_tokens + ['REACTANT:', 'REAGENT:', 'PRODUCT:', '0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%', "TASK_FORWARD", "TASK_RETROSYNTHESIS", "TASK_YIELD"]})
+    tokenizer.add_special_tokens(
+        {
+            "additional_special_tokens": tokenizer.additional_special_tokens
+            + [
+                "REACTANT:",
+                "REAGENT:",
+                "PRODUCT:",
+                "0%",
+                "10%",
+                "20%",
+                "30%",
+                "40%",
+                "50%",
+                "60%",
+                "70%",
+                "80%",
+                "90%",
+                "100%",
+                "TASK_FORWARD",
+                "TASK_RETROSYNTHESIS",
+                "TASK_YIELD",
+            ]
+        }
+    )
     CFG.tokenizer = tokenizer
 
     # load model
@@ -371,7 +426,9 @@ if __name__ == "__main__":
         eval_dataset=tokenized_datasets["validation"],
         data_collator=data_collator,
         tokenizer=tokenizer,
-        compute_metrics=lambda eval_preds: get_accuracy_score_multitask(eval_preds, CFG),
+        compute_metrics=lambda eval_preds: get_accuracy_score_multitask(
+            eval_preds, CFG
+        ),
         callbacks=[EarlyStoppingCallback(early_stopping_patience=10)],
     )
 

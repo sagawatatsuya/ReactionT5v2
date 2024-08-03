@@ -51,7 +51,7 @@ def parse_args():
     parser.add_argument(
         "--model_name_or_path",
         type=str,
-        default="sagawa/ReactionT5-product-prediction",
+        default="sagawa/ReactionT5v2-forward",
         help="Name or path of the finetuned model for prediction. Can be a local model or one from Hugging Face.",
     )
     parser.add_argument(
