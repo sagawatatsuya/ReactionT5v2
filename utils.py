@@ -57,7 +57,7 @@ def uncanonicalize(smiles):
 def remove_atom_mapping(smi):
     mol = Chem.MolFromSmiles(smi)
     [a.SetAtomMapNum(0) for a in mol.GetAtoms()]
-    smi = Chem.MolToSmiles(mol)
+    smi = Chem.MolToSmiles(mol, canonical=True)
     return canonicalize(smi)
 
 
