@@ -51,7 +51,7 @@ def parse_args():
         "--model_name_or_path",
         type=str,
         required=False,
-        default="sagawa/ReactionT5-product-prediction",
+        default="sagawa/ReactionT5v2-retrosynthesis",
         help="The name of a pretrained model or path to a model which you want to finetune on your dataset. You can use your local models or models uploaded to hugging face.",
     )
     parser.add_argument(
@@ -64,20 +64,20 @@ def parse_args():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=5,
+        default=20,
         required=False,
         help="Number of epochs for training.",
     )
     parser.add_argument(
-        "--lr", type=float, default=1e-4, required=False, help="Learning rate."
+        "--lr", type=float, default=2e-5, required=False, help="Learning rate."
     )
     parser.add_argument(
-        "--batch_size", type=int, default=16, required=False, help="Batch size."
+        "--batch_size", type=int, default=32, required=False, help="Batch size."
     )
     parser.add_argument(
         "--input_max_len",
         type=int,
-        default=400,
+        default=150,
         required=False,
         help="Max input token length.",
     )

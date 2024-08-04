@@ -43,7 +43,7 @@ def parse_args():
     parser.add_argument(
         "--model_name_or_path",
         type=str,
-        default="sagawa/ReactionT5-product-prediction",
+        default="sagawa/ReactionT5v2-forward",
         help="The name of a pretrained model or path to a model which you want to finetune on your dataset. You can use your local models or models uploaded to hugging face.",
     )
     parser.add_argument(
@@ -52,10 +52,10 @@ def parse_args():
     parser.add_argument(
         "--epochs", type=int, default=3, help="Number of epochs for training."
     )
-    parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate.")
-    parser.add_argument("--batch_size", type=int, default=16, help="Batch size.")
+    parser.add_argument("--lr", type=float, default=2e-5, help="Learning rate.")
+    parser.add_argument("--batch_size", type=int, default=32, help="Batch size.")
     parser.add_argument(
-        "--input_max_len", type=int, default=400, help="Max input token length."
+        "--input_max_len", type=int, default=200, help="Max input token length."
     )
     parser.add_argument(
         "--target_max_len", type=int, default=150, help="Max target token length."

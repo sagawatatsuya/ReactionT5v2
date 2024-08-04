@@ -60,15 +60,15 @@ def parse_args():
     )
     parser.add_argument("--debug", action="store_true", help="Enable debug mode.")
     parser.add_argument(
-        "--epochs", type=int, default=5, help="Number of training epochs."
+        "--epochs", type=int, default=200, help="Number of training epochs."
     )
     parser.add_argument(
         "--patience", type=int, default=10, help="Early stopping patience."
     )
-    parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate.")
-    parser.add_argument("--batch_size", type=int, default=5, help="Batch size.")
+    parser.add_argument("--lr", type=float, default=1e-5, help="Learning rate.")
+    parser.add_argument("--batch_size", type=int, default=32, help="Batch size.")
     parser.add_argument(
-        "--max_len", type=int, default=400, help="Maximum input token length."
+        "--max_len", type=int, default=300, help="Maximum input token length."
     )
     parser.add_argument(
         "--num_workers", type=int, default=4, help="Number of data loading workers."
@@ -171,23 +171,23 @@ def download_pretrained_model():
     Download the pretrained model from Hugging Face.
     """
     subprocess.run(
-        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/ZINC-t5_best.pth",
+        "wget https://huggingface.co/sagawa/ReactionT5v2-yield/resolve/main/CompoundT5_best.pth",
         shell=True,
     )
     subprocess.run(
-        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/resolve/main/config.pth",
+        "wget https://huggingface.co/sagawa/ReactionT5v2-yield/resolve/main/config.pth",
         shell=True,
     )
     subprocess.run(
-        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/special_tokens_map.json",
+        "wget https://huggingface.co/sagawa/ReactionT5v2-yield/resolve/main/special_tokens_map.json",
         shell=True,
     )
     subprocess.run(
-        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer.json",
+        "wget hhttps://huggingface.co/sagawa/ReactionT5v2-yield/resolve/main/tokenizer.json",
         shell=True,
     )
     subprocess.run(
-        "wget https://huggingface.co/spaces/sagawa/predictyield-t5/raw/main/tokenizer_config.json",
+        "wget https://huggingface.co/sagawa/ReactionT5v2-yield/resolve/main/tokenizer_config.json",
         shell=True,
     )
 

@@ -23,7 +23,7 @@ pip install sentencepiece==0.1.96
 You can use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction.
 
 ### Task Forward
-To predict the products of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}". If there are no catalyst, reagent, or solvents, fill the blank with a space. For multiple compounds, concatenate them with ".".(ex. "REACTANT:COC(=O)C1=CCCN(C)C1.O.\[Al+3].\[H-].\[Li+].\[Na+].\[OH-]REAGENT:C1CCOC1")
+To predict the products of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or the contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}". If there are no catalyst, reagent, or solvents, fill the blank with a space. For multiple compounds, concatenate them with ".".(ex. "REACTANT:COC(=O)C1=CCCN(C)C1.O.\[Al+3].\[H-].\[Li+].\[Na+].\[OH-]REAGENT:C1CCOC1")
 ```
 cd task_forward
 python prediction.py \
@@ -32,11 +32,11 @@ python prediction.py \
     --num_beams=5 \
     --num_return_sequences=5 \
     --batch_size=16 \
-    --output_dir="./"
+    --output_dir="output"
 ```
 
 ### Task Retrosynthesis
-To predict the reactants of reactions from their products, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or contents of the column should be smiles of products. For multiple compounds, concatenate them with ".".(ex. "CCN(CC)CCNC(=S)NC1CCCc2cc(C)cnc21")
+To predict the reactants of reactions from their products, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or the contents of the column should be SMILES of products. For multiple compounds, concatenate them with ".".(ex. "CCN(CC)CCNC(=S)NC1CCCc2cc(C)cnc21")
 ```
 cd task_retrosynthesis
 python prediction.py \
@@ -45,49 +45,74 @@ python prediction.py \
     --num_beams=5 \
     --num_return_sequences=5 \
     --batch_size=16 \
-    --output_dir="./"
+    --output_dir="output"
 ```
 
 ### Task yield
-To predict the yields of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}PRODUCT:{SMILES of products}". If there are multiple compounds, concatenate them with ".".(ex. "REACTANT:CC(C)n1ncnc1-c1cn2c(n1)-c1cnc(O)cc1OCC2.CCN(C(C)C)C(C)C.Cl.NC(=O)\[C@@H]1C\[C@H](F)CN1REAGENT: PRODUCT:O=C(NNC(=O)C(F)(F)F)C(F)(F)F")
-When running the command for the first time, you should include the 'download_pretrained_model' argument.
+To predict the yields of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or the contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}PRODUCT:{SMILES of products}". If there are multiple compounds, concatenate them with ".".(ex. "REACTANT:C1CCNCC1.CC1(C)OC(=O)C(Oc2ccc(Br)cn2)=C1c1ccc(S(C)(=O)=O)cc1REAGENT:C1CN2CCN1CC2.COCCOC.Cl[Ni]ClPRODUCT:COC(=O)CC1CCc2cc(N3CCCCC3)cc3[nH]c(=O)c(=O)n1c23")
 ```
-cd yield_prediction/
-python prediction.py \
-    --data="../data/yield_prediction_demo_input.csv" \
-    --batch_size=10 \
-    --output_dir="./" \
-    --download_pretrained_model
+cd task_yield/
+python prediction_with_PreTrainedModel.py \
+    --data="../data/task_yield_demo_input.csv" \
+    --batch_size=16 \
+    --output_dir="output"
 ```
 
 
 # Fine-tuning
-If your dataset is very specific and different from ORD's data, ReactionT5 may not predict well. In that case, you can conduct fine-tuning of ReactionT5 on your dataset. From our study, ReactionT5's performance drastically improved its performance by fine-tuning using relatively small data (200 reactions).
+If your dataset is very specific and different from ORD's data, ReactionT5 may not predict well. In that case, you can fine-tune ReactionT5 on your dataset. From our study, ReactionT5's performance drastically improved its performance by fine-tuning using relatively small data (100 reactions).
 
-### Product prediction
-Specify your training and validation data used for fine-tuning and run the following command. We expect these data to contain columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '.
+### Task Forward
+Specify your training and validation data used for fine-tuning and run the following command. The code expects these data to contain columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '.
 ```
-cd forward_reaction_prediction/
-pip install sacrebleu
-python finetune-pretrained-ReactionT5.py \
+cd task_forward
+python finetune.py \
     --epochs=50 \
     --batch_size=32 \
-    --train_data_path='your_train.csv' \
-    --valid_data_path='your_validation.csv'
+    --train_data_path='../data/demo_reaction_data.csv' \
+    --valid_data_path='../data/demo_reaction_data.csv' \
+    --output_dir='output'
 ```
 
-### Yield prediction
+### Task Retrosynthesis
+Specify your training and validation data used for fine-tuning and run the following command. The code expects these data to contain columns named 'REACTANT' and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '.
+```
+cd task_retrosynthesis
+python finetune.py \
+    --epochs=20 \
+    --batch_size=32 \
+    --train_data_path='../data/demo_reaction_data.csv' \
+    --valid_data_path='../data/demo_reaction_data.csv' \
+    --output_dir='output'
+```
+
+### Task Yield
 Specify your training and validation data used for fine-tuning and run the following command. We expect these data to contain columns named 'REACTANT', 'REAGENT', 'PRODUCT', and 'YIELD'; except 'YIELD ' have SMILES information, and 'YIELD' has numerical information. If there is no reagent information, fill in the blank with ' '.
 ```
 cd task_yield
-python finetuning.py \
+python finetune.py \
     --epochs=200 \
-    --batch_size=6 \
-    --train_data_path='your_train.csv' \
-    --valid_data_path='your_validation.csv' \
+    --batch_size=32 \
+    --train_data_path='../data/demo_reaction_data.csv' \
+    --valid_data_path='../data/demo_reaction_data.csv' \
     --download_pretrained_model \
-    --output_dir='output/'
+    --output_dir='output'
 ```
+
+## Project Structure
+
+project/
+├── CompoundT5/ # Codes used for data processing and compound pretraining
+│ ├── README.md # More detailed README file
+│ └── requirements.yaml # Required Packages for compound pretraining
+├── data/ # Datasets
+├── multitask_no_pretraining/ # Multitask (forward, retrosynthesis, and yield prediction)
+├── multitask_pretraining/ # Multitask (forward, retrosynthesis, and yield prediction)
+├── task_forward/ # Forward prediction
+├── task_retrosynthesis/ # Retrosynthesis prediction
+├── task_yield/ # Yield prediction
+├── requirements.yaml # Required packages for prediction and finetuning
+└── README.md # This README file
 
 ## Citation
 arxiv link: https://arxiv.org/abs/2311.06708
