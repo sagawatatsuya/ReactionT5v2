@@ -101,18 +101,18 @@ python finetune.py \
 
 ## Project Structure
 
-project/
-├── CompoundT5/ # Codes used for data processing and compound pretraining
-│ ├── README.md # More detailed README file
-│ └── requirements.yaml # Required Packages for compound pretraining
-├── data/ # Datasets
-├── multitask_no_pretraining/ # Multitask (forward, retrosynthesis, and yield prediction)
-├── multitask_pretraining/ # Multitask (forward, retrosynthesis, and yield prediction)
-├── task_forward/ # Forward prediction
-├── task_retrosynthesis/ # Retrosynthesis prediction
-├── task_yield/ # Yield prediction
-├── requirements.yaml # Required packages for prediction and finetuning
-└── README.md # This README file
+project/  
+├── CompoundT5/ # Codes used for data processing and compound pretraining  
+│ ├── README.md # More detailed README file  
+│ └── requirements.yaml # Required Packages for compound pretraining  
+├── data/ # Datasets  
+├── multitask_no_pretraining/ # Multitask (forward, retrosynthesis, and yield prediction)  
+├── multitask_pretraining/ # Multitask (forward, retrosynthesis, and yield prediction)  
+├── task_forward/ # Forward prediction  
+├── task_retrosynthesis/ # Retrosynthesis prediction  
+├── task_yield/ # Yield prediction  
+├── requirements.yaml # Required packages for prediction and finetuning  
+└── README.md # This README file  
 
 ## Citation
 arxiv link: https://arxiv.org/abs/2311.06708
