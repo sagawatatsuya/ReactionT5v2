@@ -1,0 +1,22 @@
+module:cuda/12.2/12.2.0 is provided for EXPERIMENTAL use
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Traceback (most recent call last):
+  File "/home/acf15718oa/ReactionT5_neword/task_forward/prediction.py", line 197, in <module>
+    output = model.generate(
+             ^^^^^^^^^^^^^^^
+  File "/home/acf15718oa/reactiont5/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf15718oa/reactiont5/lib/python3.11/site-packages/transformers/generation/utils.py", line 1655, in generate
+    result = self._beam_search(
+             ^^^^^^^^^^^^^^^^^^
+  File "/home/acf15718oa/reactiont5/lib/python3.11/site-packages/transformers/generation/utils.py", line 3248, in _beam_search
+    model_kwargs["past_key_values"] = self._temporary_reorder_cache(
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf15718oa/reactiont5/lib/python3.11/site-packages/transformers/generation/utils.py", line 2888, in _temporary_reorder_cache
+    past_key_values = self._reorder_cache(past_key_values, beam_idx)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/acf15718oa/reactiont5/lib/python3.11/site-packages/transformers/models/t5/modeling_t5.py", line 1852, in _reorder_cache
+    layer_past_state.index_select(0, beam_idx.to(layer_past_state.device)),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 160.00 MiB. GPU 
