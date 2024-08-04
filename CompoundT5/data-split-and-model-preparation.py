@@ -1,22 +1,33 @@
+# https://github.com/huggingface/transformers/blob/main/examples/flax/language-modeling/t5_tokenizer_model.py
+
+import os
+import sys
 import json
+import argparse
+from typing import Iterator, List, Union
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from transformers import AutoTokenizer, T5Config
 import datasets
 from datasets import load_dataset
-import argparse
-import sys
-sys.path.append('../')
-from utils import seed_everything
-
-# https://github.com/huggingface/transformers/blob/main/examples/flax/language-modeling/t5_tokenizer_model.py
-#!/usr/bin/env python3
-import json
-from typing import Iterator, List, Union
-from tokenizers import AddedToken, Regex, Tokenizer, decoders, normalizers, pre_tokenizers, trainers
+from tokenizers import (
+    AddedToken,
+    Regex,
+    Tokenizer,
+    decoders,
+    normalizers,
+    pre_tokenizers,
+    trainers,
+)
 from tokenizers.implementations.base_tokenizer import BaseTokenizer
 from tokenizers.models import Unigram
 from tokenizers.processors import TemplateProcessing
+
+sys.path.append("../")
+from utils import seed_everything
+
+seed_everything(seed=42)
 
 
 class SentencePieceUnigramTokenizer(BaseTokenizer):
@@ -52,21 +63,27 @@ class SentencePieceUnigramTokenizer(BaseTokenizer):
                 normalizers.Nmt(),
                 normalizers.NFKC(),
                 normalizers.Replace(Regex(" {2,}"), " "),
-#                 normalizers.Lowercase(),
+                #                 normalizers.Lowercase(),
             ]
         )
         tokenizer.pre_tokenizer = pre_tokenizers.Sequence(
             [
-                pre_tokenizers.Metaspace(replacement=replacement, add_prefix_space=add_prefix_space),
+                pre_tokenizers.Metaspace(
+                    replacement=replacement, add_prefix_space=add_prefix_space
+                ),
                 pre_tokenizers.Digits(individual_digits=True),
                 pre_tokenizers.Punctuation(),
             ]
         )
-        tokenizer.decoder = decoders.Metaspace(replacement=replacement, add_prefix_space=add_prefix_space)
+        tokenizer.decoder = decoders.Metaspace(
+            replacement=replacement, add_prefix_space=add_prefix_space
+        )
 
         tokenizer.post_processor = TemplateProcessing(
             single=f"$A {self.special_tokens['eos']['token']}",
-            special_tokens=[(self.special_tokens["eos"]["token"], self.special_tokens["eos"]["id"])],
+            special_tokens=[
+                (self.special_tokens["eos"]["token"], self.special_tokens["eos"]["id"])
+            ],
         )
 
         parameters = {
@@ -121,72 +138,74 @@ class SentencePieceUnigramTokenizer(BaseTokenizer):
         tokenizer_json["model"]["unk_id"] = self.special_tokens["unk"]["id"]
 
         self._tokenizer = Tokenizer.from_str(json.dumps(tokenizer_json))
-        
+
 
 def create_normal_tokenizer(dataset, model_name):
-    if type(dataset) == datasets.dataset_dict.DatasetDict:
+    if isinstance(dataset, datasets.dataset_dict.DatasetDict):
         training_corpus = (
-        dataset['train'][i : i + 1000]['smiles']
-        for i in range(0, len(dataset), 1000)
+            dataset["train"][i : i + 1000]["smiles"]
+            for i in range(0, len(dataset), 1000)
         )
     else:
         training_corpus = (
-        dataset[i : i + 1000]['smiles']
-        for i in range(0, len(dataset), 1000)
+            dataset[i : i + 1000]["smiles"] for i in range(0, len(dataset), 1000)
         )
 
-    if 'deberta' in model_name:
+    if "deberta" in model_name:
         # Train tokenizer
         old_tokenizer = AutoTokenizer.from_pretrained(model_name)
         tokenizer = old_tokenizer.train_new_from_iterator(training_corpus, 1000)
-    elif 't5' in model_name:
-        tokenizer = SentencePieceUnigramTokenizer(unk_token="<unk>", eos_token="</s>", pad_token="<pad>")
+    elif "t5" in model_name:
+        tokenizer = SentencePieceUnigramTokenizer(
+            unk_token="<unk>", eos_token="</s>", pad_token="<pad>"
+        )
         tokenizer.train_from_iterator(training_corpus, 1000)
-    
+
     return tokenizer
 
 
 def create_character_level_tokenizer(dataset, model_name):
-    df = dataset['train'].to_pandas()
-    df['smiles'] = [' '.join(list(i)) for i in df['smiles']]
-    dataset = datasets.Dataset.from_pandas(df)    
-    
+    df = dataset["train"].to_pandas()
+    df["smiles"] = [" ".join(list(i)) for i in df["smiles"]]
+    dataset = datasets.Dataset.from_pandas(df)
+
     tokenizer = create_normal_tokenizer(dataset, model_name)
-    
+
     return tokenizer
-
-
-seed_everything(seed=42)
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--use_character_level_tokenizer", action="store_true", default=False, required=False)
-    
+    parser.add_argument(
+        "--use_character_level_tokenizer",
+        action="store_true",
+        default=False,
+        required=False,
+    )
     return parser.parse_args()
+
 
 CFG = parse_args()
 
 
 # Split into train and validation data
-all = pd.read_csv('../data/ZINC-canonicalized.csv')
-train, valid = train_test_split(all, test_size=0.1)
+all_data = pd.read_csv("../data/ZINC-canonicalized.csv")
+train, valid = train_test_split(all_data, test_size=0.1)
 # Save train and validation data
-train.to_csv('../data/ZINC-canonicalized-train.csv', index=False)
-valid.to_csv('../data/ZINC-canonicalized-valid.csv', index=False)
+train.to_csv("../data/ZINC-canonicalized-train.csv", index=False)
+valid.to_csv("../data/ZINC-canonicalized-valid.csv", index=False)
 
-
-# ZINC data
 # Initialize a dataset
-dataset = load_dataset('csv',data_files='../data/ZINC-canonicalized.csv')
+dataset = load_dataset("csv", data_files="../data/ZINC-canonicalized.csv")
 
 if CFG.use_character_level_tokenizer:
-    tokenizer = create_character_level_tokenizer(dataset, 't5')
+    tokenizer = create_character_level_tokenizer(dataset, "t5")
 else:
-    tokenizer = create_normal_tokenizer(dataset, 't5')
+    tokenizer = create_normal_tokenizer(dataset, "t5")
 # Save files to disk
-tokenizer.save('./compound_pretraining/CompoundT5/CompoundT5-config/tokenizer.json')
+tokenizer.save("./compound_pretraining/CompoundT5/CompoundT5-config/tokenizer.json")
 
-config = T5Config.from_pretrained('google/t5-v1_1-base', vocab_size=tokenizer.get_vocab_size())
-config.save_pretrained('./compound_pretraining/CompoundT5/CompoundT5-config/')
-
+config = T5Config.from_pretrained(
+    "google/t5-v1_1-base", vocab_size=tokenizer.get_vocab_size()
+)
+config.save_pretrained("./compound_pretraining/CompoundT5/CompoundT5-config/")

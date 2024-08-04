@@ -11,3 +11,5 @@ __pycache__
 *.tgz
 *.rar
 *.safetensors
+
+!./data/task_*

@@ -1,14 +1,14 @@
 # ReactionT5
-ReactionT5 is a T5 model pretrained on a large amount of chemical reactions in the [Open Reaction Database (ORD)](https://github.com/open-reaction-database/ord-data). Unlike other models for chemical reaction prediction that are trained on small and potentially biased datasets (e.g. patent datasets or high-throughput reaction datasets created by a single reaction), ReactionT5 leverages the vast and diverse dataset provided by ORD to ensure greater generalizability and performance. This allows ReactionT5 to predict both the products and yields of unseen chemical reactions with high accuracy, making it highly practical for real-world applications.
+ReactionT5 is a T5 model pretrained on a vast array of chemical reactions from the [Open Reaction Database (ORD)](https://github.com/open-reaction-database/ord-data). Unlike other models that are trained on smaller, potentially biased datasets (e.g. patent datasets or high-throughput reaction datasets created by a single reaction), ReactionT5 leverages the extyensive and diverse dataset provided by ORD. This ensures greater generalizability and performance, enabling ReactionT5 to condact product, retrosynthesis, and yield prediction of unseen chemical reactions with high accuracy. This makes it highly practical for real-world applications.
 
 ![model image](https://github.com/sagawatatsuya/ReactionT5/blob/main/model-image.png)
 
 
-In this repository, we will show how to use ReactionT5 for product prediction and yield prediction on your own datasets. The pretrained models, datasets, and demo is available at [Hugging Face Hub](https://huggingface.co/sagawa).
+In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models, datasets, and demo is available at [Hugging Face Hub](https://huggingface.co/sagawa).
 
 
 # Installation
-Reaction T5 is based on the transformers library. In addition, RDKit is used for validity check of predicted products. To install these and other necessary libraries, use the following commands:
+Reaction T5 is based on the transformers library. Additionally, RDKit is used for validity check of predicted compounds. To install these and other necessary libraries, use the following commands:
 ```
 pip install rdkit
 pip install pytorch
@@ -20,21 +20,35 @@ pip install sentencepiece==0.1.96
 
 
 # Use ReactionT5
-You can use ReactionT5 to predict the products and yields of chemical reactions.
+You can use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction.
 
-### Forward prediction
-To predict the products of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}". If there are no catalyst, reagent, or solvents, fill the blank with a space. And if there are multiple compounds, concatenate them with ".".(ex. "REACTANT:COC(=O)C1=CCCN(C)C1.O.\[Al+3].\[H-].\[Li+].\[Na+].\[OH-]REAGENT:C1CCOC1")
+### Task Forward
+To predict the products of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}". If there are no catalyst, reagent, or solvents, fill the blank with a space. For multiple compounds, concatenate them with ".".(ex. "REACTANT:COC(=O)C1=CCCN(C)C1.O.\[Al+3].\[H-].\[Li+].\[Na+].\[OH-]REAGENT:C1CCOC1")
 ```
-cd forward_reaction_prediction/
+cd task_forward
 python prediction.py \
-    --input_data="../data/forward_reaction_prediction_demo_input.csv" \
+    --input_data="../data/task_forward_demo_input.csv" \
+    --input_max_length="150" \
     --num_beams=5 \
     --num_return_sequences=5 \
     --batch_size=16 \
     --output_dir="./"
 ```
 
-### Yield prediction
+### Task Retrosynthesis
+To predict the reactants of reactions from their products, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or contents of the column should be smiles of products. For multiple compounds, concatenate them with ".".(ex. "CCN(CC)CCNC(=S)NC1CCCc2cc(C)cnc21")
+```
+cd task_retrosynthesis
+python prediction.py \
+    --input_data="../data/task_retrosynthesis_demo_input.csv" \
+    --input_max_length="100" \
+    --num_beams=5 \
+    --num_return_sequences=5 \
+    --batch_size=16 \
+    --output_dir="./"
+```
+
+### Task yield
 To predict the yields of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}PRODUCT:{SMILES of products}". If there are multiple compounds, concatenate them with ".".(ex. "REACTANT:CC(C)n1ncnc1-c1cn2c(n1)-c1cnc(O)cc1OCC2.CCN(C(C)C)C(C)C.Cl.NC(=O)\[C@@H]1C\[C@H](F)CN1REAGENT: PRODUCT:O=C(NNC(=O)C(F)(F)F)C(F)(F)F")
 When running the command for the first time, you should include the 'download_pretrained_model' argument.
 ```
@@ -65,6 +79,7 @@ python finetune-pretrained-ReactionT5.py \
 ### Yield prediction
 Specify your training and validation data used for fine-tuning and run the following command. We expect these data to contain columns named 'REACTANT', 'REAGENT', 'PRODUCT', and 'YIELD'; except 'YIELD ' have SMILES information, and 'YIELD' has numerical information. If there is no reagent information, fill in the blank with ' '.
 ```
+cd task_yield
 python finetuning.py \
     --epochs=200 \
     --batch_size=6 \
