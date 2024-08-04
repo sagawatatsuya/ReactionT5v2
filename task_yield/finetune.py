@@ -119,6 +119,12 @@ def parse_args():
         "--seed", type=int, default=42, help="Random seed for reproducibility."
     )
     parser.add_argument(
+        "--sampling_num",
+        type=int,
+        default=-1,
+        help="Number of samples used for training. If you want to use all samples, set -1.",
+    )
+    parser.add_argument(
         "--checkpoint",
         type=str,
         help="Path to the checkpoint file for resuming training.",
@@ -203,22 +209,23 @@ if __name__ == "__main__":
     train = preprocess(train, CFG)
     valid = preprocess(valid, CFG)
 
+    if CFG.sampling_num > 0:
+        train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
+            drop=True
+        )
+
     LOGGER = get_logger(os.path.join(CFG.output_dir, "train"))
     CFG.logger = LOGGER
 
-    # load tokenizer
-    if CFG.download_pretrained_model:
-        tokenizer = AutoTokenizer.from_pretrained("./", return_tensors="pt")
-    else:
-        try:  # load pretrained tokenizer from local directory
-            tokenizer = AutoTokenizer.from_pretrained(
-                os.path.abspath(CFG.model_name_or_path), return_tensors="pt"
-            )
-        except:  # load pretrained tokenizer from huggingface model hub
-            tokenizer = AutoTokenizer.from_pretrained(
-                CFG.model_name_or_path, return_tensors="pt"
-            )
-
+    try:  # load pretrained tokenizer from local directory
+        tokenizer = AutoTokenizer.from_pretrained(
+            os.path.abspath(CFG.model_name_or_path), return_tensors="pt"
+        )
+    except:  # load pretrained tokenizer from huggingface model hub
+        tokenizer = AutoTokenizer.from_pretrained(
+            CFG.model_name_or_path, return_tensors="pt"
+        )
+    tokenizer.save_pretrained(CFG.output_dir)
     CFG.tokenizer = tokenizer
 
     train_loop(train, valid, CFG)

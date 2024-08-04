@@ -27,11 +27,11 @@ The pre-processed data is also available on [Hugging Face Hub](https://huggingfa
 
 To download the data, you can run the following command:
 ```
-python data-download-and-preprocess.py
+python preprocess_data.py
 ```
 To complete the preparation for model pre-training and fine-tuning, you can run the following command:
 ```
-python data-split-and-model-preparation.py
+python prepare_model.py
 ```
 
 # Compound pretraining

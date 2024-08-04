@@ -21,7 +21,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 sys.path.append("../")
 from utils import seed_everything
 from train import prepare_input, inference_fn
-from finetuning import preprocess, download_pretrained_model
+from finetune import preprocess, download_pretrained_model
 from models import ReactionT5Yield
 
 

@@ -424,6 +424,7 @@ def train_loop(train_ds, valid_ds, cfg):
         model = ReactionT5Yield(
             cfg, config_path=os.path.join(cfg.model_name_or_path, "config.pth"), pretrained=False
         )
+        torch.save(model.config, os.path.join(cfg.output_dir, "config.pth"))
         pth_files = glob.glob(os.path.join(cfg.model_name_or_path, "*.pth"))
         for pth_file in pth_files:
             state = torch.load(
@@ -614,7 +615,7 @@ if __name__ == "__main__":
             + ["REACTANT:", "PRODUCT:", "REAGENT:"]
         }
     )
-    tokenizer.save_pretrained(os.path.join(CFG.output_dir))
+    tokenizer.save_pretrained(CFG.output_dir)
     CFG.tokenizer = tokenizer
 
     train_loop(train, valid, CFG)

@@ -1,0 +1,211 @@
+module:cuda/12.2/12.2.0 is provided for EXPERIMENTAL use
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Detected kernel version 4.18.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+[15:38:22] SMILES Parse Error: syntax error while parsing: COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si](
+[15:38:22] SMILES Parse Error: Failed parsing SMILES 'COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si](' for input: 'COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si]('
+[15:38:22] SMILES Parse Error: extra open parentheses for input: 'CCC(=O)Nc1nc(C)c(S(=O)(=O)N2Cc3cc4c(cc3CC2C(=O)NC(Cc2ccc(-c3ccc(C#N)cc3)cc2)C(=O)OC)OCC(c2ccc(OCc3ccc(Cl)c(Cl'
+[15:38:22] SMILES Parse Error: unclosed ring for input: 'COc1cc2c(c3c1sc1ccc(Br)cc13)n1cc(Cc3cccnc3)c(=O)c(c13)c21'
+[15:38:23] SMILES Parse Error: syntax error while parsing: COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)[
+[15:38:23] SMILES Parse Error: Failed parsing SMILES 'COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)[' for input: 'COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)['
+[15:38:23] SMILES Parse Error: unclosed ring for input: 'CCC(c1ccccc1)N1Cc2cc3c(cc2CC1C(=O)NC(Cc1ccc(-c2ccc(OC)cc2)cc1)C(=O)OC)N(C)C(=O)C(c1ccc(OCc2ccc(Cl)c(Cl)c2)cc1)O'
+[15:38:23] SMILES Parse Error: extra open parentheses for input: 'CC(C)(C)OC(=O)CCC(NC(=O)CC(O)C=CCCSC(c1ccccc1)(c1ccccc1)c1ccccc1)C(=O)NC(CSC(c1ccccc1)(c1ccccc1)c1ccccc1)C(=O)NC1(C(O)CC(=O'
+[15:38:23] SMILES Parse Error: unclosed ring for input: 'CC(O)C1C(=O)N(C(C(=O)OCc2ccc([N+](=O)[O-])cc2)=P(c2ccccc2)(c2ccccc2)c2ccccc2)C1C(C)C(=O)c1cn2cnc(C(=O)c3cccnc3)c2'
+[15:38:23] SMILES Parse Error: extra open parentheses for input: 'CC(C)n1nc(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C2OC(=O)C(C)(C)C)c2c(CCc3ccc(OC(=O)C'
+[15:38:23] SMILES Parse Error: extra open parentheses for input: 'CCCCCCCCOc1ccc(-c2c3ccc(nc4c(-c5ccc(O)cc5)c5ccc([nH]5)c(-c5ccc(O)cc5)c5ccc2[nH]5)cc1'
+[15:38:23] SMILES Parse Error: unclosed ring for input: 'CCC(Oc1cccc(N(C)C)c1)C(=O)OC1CC(C(C)(C)C)C=C2C=CC(C)C(CCC3CC(C(C)(C)C)C(O[SiH](C)C)C(=O)O3)(O[SiH](C)C)C2'
+[15:38:23] SMILES Parse Error: unclosed ring for input: 'CCC(c1ccccc1)N1Cc2cc3c(cc2CC1C(=O)NC(Cc1ccc(-c2ccc(C#N)cc2)cc1)C(=O)OC)N(C)C(=O)C(c1ccc(OCc2ccc(Cl)c(Cl)c2)cc1)'
+[15:38:24] SMILES Parse Error: syntax error while parsing: C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C(
+[15:38:24] SMILES Parse Error: Failed parsing SMILES 'C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C(' for input: 'C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C('
+[15:38:24] SMILES Parse Error: unclosed ring for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(NC(=O)C4CC4)C(Oc4ccccc4)C3)C(C)CCC1=O)C(C)CC'
+[15:38:24] SMILES Parse Error: extra open parentheses for input: 'COc1cccc(Nc2c(C(N)=O)cnc3c(C)cc(S(=O)(=O)c4cccc(C(=O)N5CCN(C(=O)c6cccc(CC(C)(C)NCC(O[Si](C)(C)C(C)(C)C)c7ccc(OC'
+[15:38:24] SMILES Parse Error: extra open parentheses for input: 'CC(=O)Oc1cc(C(=O)OC(c2ccccc2)c2ccccc2)c(CON=C(C(=O)NC2C(=O)N3C(C(=O)OC(c4ccccc4)c4ccccc4)=C(CSc4cc(C)nc5nc(C(=O)'
+[15:38:24] SMILES Parse Error: extra open parentheses for input: 'c1ccc(-c2c3ccc(cc4ccc(cc5ccc(cc1n2)[nH]5)[nH]4)[nH]3'
+[15:38:24] SMILES Parse Error: extra open parentheses for input: 'Cc1cc(OCCCC(=O)NC(C)(C)C(=O)N2CCN(CCO)CC2)ccc1Cc1c(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C'
+[15:38:24] SMILES Parse Error: syntax error while parsing: CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1=
+[15:38:24] SMILES Parse Error: Failed parsing SMILES 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1=' for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1='
+[15:38:24] SMILES Parse Error: extra open parentheses for input: 'COc1cc(OCCO)c(F)c([C@@H](Nc2ccc(C(N)=NC(=O)OCC(C)(C)C)cc2)c2nc(OCOC(=O)C(C)(C)C(=O)OCC(C)(C)C)n(-c3ncccn3)n2'
+[15:38:25] SMILES Parse Error: unclosed ring for input: 'O=[N+]([O-])c1cc([N+](=O)[O-])c(C=Cc2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-])'
+[15:38:25] SMILES Parse Error: unclosed ring for input: 'Cc1ccc(C(=O)Nc2ccc(S(=O)(=O)O)c3cc(S(=O)(=O)O)cc(S(=O)(=O)O)c23)c(NC(=O)c2ccc([N+](=O)[O-])cc2S(=O)(=O)O)'
+[15:38:25] SMILES Parse Error: unclosed ring for input: 'Cc1ccc(C2SCCCl)cc1'
+[15:38:25] SMILES Parse Error: syntax error while parsing: CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)=
+[15:38:25] SMILES Parse Error: Failed parsing SMILES 'CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)=' for input: 'CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)='
+[15:38:25] SMILES Parse Error: extra open parentheses for input: 'COCCOC1CC(c2ncc(-c3ccc(-c4ccc5cc(-c6cnc(C7CC8(CC8)CN7C(=O)C(NC(=O)OC)C(C)C)[nH]6)ccc5c4)cc3)[nH]2)N(C(=O)C'
+[15:38:25] SMILES Parse Error: syntax error while parsing: CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[
+[15:38:25] SMILES Parse Error: Failed parsing SMILES 'CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[' for input: 'CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC['
+[15:38:26] SMILES Parse Error: extra open parentheses for input: 'COc1cccc(Nc2c(C(N)=O)cnc3c(C)cc(S(=O)(=O)c4cccc(C(=O)Nc5ccc(CCNCC(O)c6ccc(OCc7ccccc7)c7[nH]c(=O)ccc67)cc5)c4)cc2'
+[15:38:26] SMILES Parse Error: unclosed ring for input: 'Cc1cc(OCc2ccccc2)ccc1Cc1c(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C2OC(=O)C(C)(C)C)n[nH]'
+[15:38:26] SMILES Parse Error: extra open parentheses for input: 'COC(=O)C(Cc1ccc(-c2ccc(C#N)cc2)cc1)NC(=O)C1Cc2cc3c(cc2CN1S(=O)(=O)c1sc(NC(C)=O)nc1C)OC(c1ccc(OCc2ccc(C)c(C)c2)'
+[15:38:26] SMILES Parse Error: extra open parentheses for input: 'COC(=O)C(Cc1ccc(-c2ccc(C#N)cc2)cc1)NC(=O)C1Cc2cc3c(cc2CN1S(=O)(=O)c1ccc(OC)cc1[N+](=O)[O-])OC(c1ccc(OCc2ccc(Cl)'
+[15:38:26] SMILES Parse Error: syntax error while parsing: O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-
+[15:38:26] SMILES Parse Error: Failed parsing SMILES 'O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-' for input: 'O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-'
+[15:38:26] Can't kekulize mol.  Unkekulized atoms: 3 4 17
+[15:38:27] SMILES Parse Error: unclosed ring for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OCC=Cc4ccccc4C)C(OC)C3)C(C)C(O)CC1=O)C(C)C'
+[15:38:27] SMILES Parse Error: extra open parentheses for input: 'C#Cc1ccc(-c2c3nc(c(-c4c(C)cc(C)cc4C)c4ccc([nH]4)c(-c4c(C)cc(C)cc4C)c4nc(c(-c5ccc(Br)cc5)c5ccc2[nH]5)C=C4)C=C'
+[15:38:27] Can't kekulize mol.  Unkekulized atoms: 1 2 5 9 10 11 12 13 14 15 16
+[15:38:27] SMILES Parse Error: extra open parentheses for input: 'CCOC(=O)C(C(=O)OCC)c1cc(-c2nnc(N(CC(NC(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)c3ccc(C(F)(F)F)cc3)C(=O)OC(C)(C)'
+[15:38:27] SMILES Parse Error: extra open parentheses for input: 'COC(=O)NC(C(=O)N1CCCC1c1nc(-c2ccc(C#Cc3ccc(-c4cn(COCC[Si](C)(C)C)c(C5CNCN5C(=O)C(NC(=O)OC)C(C)C)n4)cc3)cc2)c'
+[15:38:27] SMILES Parse Error: extra open parentheses for input: 'COCC1CC(c2ncc(-c3ccc4c(c3)COc3cc5c(ccc6nc(C7CCCN7C(=O)C(NC(=O)OC)c7ccccc7)[nH]c65)cc3-4)[nH]2)N(C(=O)C(NC(=O'
+[15:38:27] SMILES Parse Error: syntax error while parsing: C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]=
+[15:38:27] SMILES Parse Error: Failed parsing SMILES 'C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]=' for input: 'C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]='
+[15:38:27] SMILES Parse Error: extra open parentheses for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OCc4ccc(C(=O)O)cc4)C(OC)C3)C(C)C(O[Si](C)'
+[15:38:27] SMILES Parse Error: syntax error while parsing: Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C(
+[15:38:27] SMILES Parse Error: Failed parsing SMILES 'Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C(' for input: 'Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C('
+[15:38:30] SMILES Parse Error: extra open parentheses for input: 'CC(=O)Oc1cc(C(=O)OC(c2ccccc2)c2ccccc2)c(CON=C(C(=O)NC2C(=O)N3C(C(=O)OC(c4ccccc4)c4ccccc4)=C(CSc4cc(C)nc5nc(C(=O)OC(c6ccccc6)c6ccccc6)nn45)CSC23)c2csc(NC(c3ccccc3)(c3ccccc3)c'
+Some non-default generation parameters are set in the model config. These should go into a GenerationConfig file (https://huggingface.co/docs/transformers/generation_strategies#save-a-custom-decoding-strategy-with-your-model) instead. This warning will be raised to an exception in v4.41.
+Non-default generation parameters: {'max_length': 150}
+[16:03:24] SMILES Parse Error: syntax error while parsing: COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si](
+[16:03:24] SMILES Parse Error: Failed parsing SMILES 'COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si](' for input: 'COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si]('
+[16:03:24] SMILES Parse Error: extra open parentheses for input: 'CCC(=O)Nc1nc(C)c(S(=O)(=O)N2Cc3cc4c(cc3CC2C(=O)NC(Cc2ccc(-c3ccc(C#N)cc3)cc2)C(=O)OC)OCC(c2ccc(OCc3ccc(Cl)c(Cl'
+[16:03:24] SMILES Parse Error: unclosed ring for input: 'COc1cc2c(c3c1sc1ccc(Br)cc13)n1cc(Cc3cccnc3)c(=O)c(c13)c21'
+[16:03:25] SMILES Parse Error: syntax error while parsing: COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)[
+[16:03:25] SMILES Parse Error: Failed parsing SMILES 'COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)[' for input: 'COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)['
+[16:03:25] SMILES Parse Error: unclosed ring for input: 'CCC(c1ccccc1)N1Cc2cc3c(cc2CC1C(=O)NC(Cc1ccc(-c2ccc(OC)cc2)cc1)C(=O)OC)N(C)C(=O)C(c1ccc(OCc2ccc(Cl)c(Cl)c2)cc1)O'
+[16:03:25] SMILES Parse Error: extra open parentheses for input: 'CC(C)(C)OC(=O)CCC(NC(=O)CC(O)C=CCCSC(c1ccccc1)(c1ccccc1)c1ccccc1)C(=O)NC(CSC(c1ccccc1)(c1ccccc1)c1ccccc1)C(=O)NC1(C(O)CC(=O'
+[16:03:25] SMILES Parse Error: unclosed ring for input: 'CC(O)C1C(=O)N(C(C(=O)OCc2ccc([N+](=O)[O-])cc2)=P(c2ccccc2)(c2ccccc2)c2ccccc2)C1C(C)C(=O)c1cn2cnc(C(=O)c3cccnc3)c2'
+[16:03:25] SMILES Parse Error: extra open parentheses for input: 'CC(C)n1nc(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C2OC(=O)C(C)(C)C)c2c(CCc3ccc(OC(=O)C'
+[16:03:25] SMILES Parse Error: extra open parentheses for input: 'CCCCCCCCOc1ccc(-c2c3ccc(nc4c(-c5ccc(O)cc5)c5ccc([nH]5)c(-c5ccc(O)cc5)c5ccc2[nH]5)cc1'
+[16:03:26] SMILES Parse Error: unclosed ring for input: 'CCC(Oc1cccc(N(C)C)c1)C(=O)OC1CC(C(C)(C)C)C=C2C=CC(C)C(CCC3CC(C(C)(C)C)C(O[SiH](C)C)C(=O)O3)(O[SiH](C)C)C2'
+[16:03:26] SMILES Parse Error: unclosed ring for input: 'CCC(c1ccccc1)N1Cc2cc3c(cc2CC1C(=O)NC(Cc1ccc(-c2ccc(C#N)cc2)cc1)C(=O)OC)N(C)C(=O)C(c1ccc(OCc2ccc(Cl)c(Cl)c2)cc1)'
+[16:03:26] SMILES Parse Error: syntax error while parsing: C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C(
+[16:03:26] SMILES Parse Error: Failed parsing SMILES 'C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C(' for input: 'C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C('
+[16:03:26] SMILES Parse Error: unclosed ring for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(NC(=O)C4CC4)C(Oc4ccccc4)C3)C(C)CCC1=O)C(C)CC'
+[16:03:26] SMILES Parse Error: extra open parentheses for input: 'COc1cccc(Nc2c(C(N)=O)cnc3c(C)cc(S(=O)(=O)c4cccc(C(=O)N5CCN(C(=O)c6cccc(CC(C)(C)NCC(O[Si](C)(C)C(C)(C)C)c7ccc(OC'
+[16:03:26] SMILES Parse Error: extra open parentheses for input: 'CC(=O)Oc1cc(C(=O)OC(c2ccccc2)c2ccccc2)c(CON=C(C(=O)NC2C(=O)N3C(C(=O)OC(c4ccccc4)c4ccccc4)=C(CSc4cc(C)nc5nc(C(=O)'
+[16:03:27] SMILES Parse Error: extra open parentheses for input: 'c1ccc(-c2c3ccc(cc4ccc(cc5ccc(cc1n2)[nH]5)[nH]4)[nH]3'
+[16:03:27] SMILES Parse Error: extra open parentheses for input: 'Cc1cc(OCCCC(=O)NC(C)(C)C(=O)N2CCN(CCO)CC2)ccc1Cc1c(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C'
+[16:03:27] SMILES Parse Error: syntax error while parsing: CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1=
+[16:03:27] SMILES Parse Error: Failed parsing SMILES 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1=' for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1='
+[16:03:27] SMILES Parse Error: extra open parentheses for input: 'COc1cc(OCCO)c(F)c([C@@H](Nc2ccc(C(N)=NC(=O)OCC(C)(C)C)cc2)c2nc(OCOC(=O)C(C)(C)C(=O)OCC(C)(C)C)n(-c3ncccn3)n2'
+[16:03:27] SMILES Parse Error: unclosed ring for input: 'O=[N+]([O-])c1cc([N+](=O)[O-])c(C=Cc2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-])'
+[16:03:27] SMILES Parse Error: unclosed ring for input: 'Cc1ccc(C(=O)Nc2ccc(S(=O)(=O)O)c3cc(S(=O)(=O)O)cc(S(=O)(=O)O)c23)c(NC(=O)c2ccc([N+](=O)[O-])cc2S(=O)(=O)O)'
+[16:03:27] SMILES Parse Error: unclosed ring for input: 'Cc1ccc(C2SCCCl)cc1'
+[16:03:27] SMILES Parse Error: syntax error while parsing: CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)=
+[16:03:27] SMILES Parse Error: Failed parsing SMILES 'CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)=' for input: 'CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)='
+[16:03:28] SMILES Parse Error: extra open parentheses for input: 'COCCOC1CC(c2ncc(-c3ccc(-c4ccc5cc(-c6cnc(C7CC8(CC8)CN7C(=O)C(NC(=O)OC)C(C)C)[nH]6)ccc5c4)cc3)[nH]2)N(C(=O)C'
+[16:03:28] SMILES Parse Error: syntax error while parsing: CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[
+[16:03:28] SMILES Parse Error: Failed parsing SMILES 'CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[' for input: 'CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC['
+[16:03:28] SMILES Parse Error: extra open parentheses for input: 'COc1cccc(Nc2c(C(N)=O)cnc3c(C)cc(S(=O)(=O)c4cccc(C(=O)Nc5ccc(CCNCC(O)c6ccc(OCc7ccccc7)c7[nH]c(=O)ccc67)cc5)c4)cc2'
+[16:03:28] SMILES Parse Error: unclosed ring for input: 'Cc1cc(OCc2ccccc2)ccc1Cc1c(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C2OC(=O)C(C)(C)C)n[nH]'
+[16:03:28] SMILES Parse Error: extra open parentheses for input: 'COC(=O)C(Cc1ccc(-c2ccc(C#N)cc2)cc1)NC(=O)C1Cc2cc3c(cc2CN1S(=O)(=O)c1sc(NC(C)=O)nc1C)OC(c1ccc(OCc2ccc(C)c(C)c2)'
+[16:03:28] SMILES Parse Error: extra open parentheses for input: 'COC(=O)C(Cc1ccc(-c2ccc(C#N)cc2)cc1)NC(=O)C1Cc2cc3c(cc2CN1S(=O)(=O)c1ccc(OC)cc1[N+](=O)[O-])OC(c1ccc(OCc2ccc(Cl)'
+[16:03:28] SMILES Parse Error: syntax error while parsing: O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-
+[16:03:28] SMILES Parse Error: Failed parsing SMILES 'O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-' for input: 'O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-'
+[16:03:29] Can't kekulize mol.  Unkekulized atoms: 3 4 17
+[16:03:29] SMILES Parse Error: unclosed ring for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OCC=Cc4ccccc4C)C(OC)C3)C(C)C(O)CC1=O)C(C)C'
+[16:03:29] SMILES Parse Error: extra open parentheses for input: 'C#Cc1ccc(-c2c3nc(c(-c4c(C)cc(C)cc4C)c4ccc([nH]4)c(-c4c(C)cc(C)cc4C)c4nc(c(-c5ccc(Br)cc5)c5ccc2[nH]5)C=C4)C=C'
+[16:03:29] Can't kekulize mol.  Unkekulized atoms: 1 2 5 9 10 11 12 13 14 15 16
+[16:03:29] SMILES Parse Error: extra open parentheses for input: 'CCOC(=O)C(C(=O)OCC)c1cc(-c2nnc(N(CC(NC(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)c3ccc(C(F)(F)F)cc3)C(=O)OC(C)(C)'
+[16:03:29] SMILES Parse Error: extra open parentheses for input: 'COC(=O)NC(C(=O)N1CCCC1c1nc(-c2ccc(C#Cc3ccc(-c4cn(COCC[Si](C)(C)C)c(C5CNCN5C(=O)C(NC(=O)OC)C(C)C)n4)cc3)cc2)c'
+[16:03:29] SMILES Parse Error: extra open parentheses for input: 'COCC1CC(c2ncc(-c3ccc4c(c3)COc3cc5c(ccc6nc(C7CCCN7C(=O)C(NC(=O)OC)c7ccccc7)[nH]c65)cc3-4)[nH]2)N(C(=O)C(NC(=O'
+[16:03:29] SMILES Parse Error: syntax error while parsing: C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]=
+[16:03:29] SMILES Parse Error: Failed parsing SMILES 'C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]=' for input: 'C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]='
+[16:03:29] SMILES Parse Error: extra open parentheses for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OCc4ccc(C(=O)O)cc4)C(OC)C3)C(C)C(O[Si](C)'
+[16:03:30] SMILES Parse Error: syntax error while parsing: Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C(
+[16:03:30] SMILES Parse Error: Failed parsing SMILES 'Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C(' for input: 'Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C('
+[16:03:32] SMILES Parse Error: extra open parentheses for input: 'CC(=O)Oc1cc(C(=O)OC(c2ccccc2)c2ccccc2)c(CON=C(C(=O)NC2C(=O)N3C(C(=O)OC(c4ccccc4)c4ccccc4)=C(CSc4cc(C)nc5nc(C(=O)OC(c6ccccc6)c6ccccc6)nn45)CSC23)c2csc(NC(c3ccccc3)(c3ccccc3)c'
+Some non-default generation parameters are set in the model config. These should go into a GenerationConfig file (https://huggingface.co/docs/transformers/generation_strategies#save-a-custom-decoding-strategy-with-your-model) instead. This warning will be raised to an exception in v4.41.
+Non-default generation parameters: {'max_length': 150}
+[16:28:27] SMILES Parse Error: syntax error while parsing: COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si](
+[16:28:27] SMILES Parse Error: Failed parsing SMILES 'COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si](' for input: 'COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si]('
+[16:28:27] SMILES Parse Error: extra open parentheses for input: 'CCC(=O)Nc1nc(C)c(S(=O)(=O)N2Cc3cc4c(cc3CC2C(=O)NC(Cc2ccc(-c3ccc(C#N)cc3)cc2)C(=O)OC)OCC(c2ccc(OCc3ccc(Cl)c(Cl'
+[16:28:27] SMILES Parse Error: unclosed ring for input: 'COc1cc2c(c3c1sc1ccc(Br)cc13)n1cc(Cc3cccnc3)c(=O)c(c13)c21'
+[16:28:28] SMILES Parse Error: syntax error while parsing: COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)[
+[16:28:28] SMILES Parse Error: Failed parsing SMILES 'COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)[' for input: 'COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)['
+[16:28:28] SMILES Parse Error: unclosed ring for input: 'CCC(c1ccccc1)N1Cc2cc3c(cc2CC1C(=O)NC(Cc1ccc(-c2ccc(OC)cc2)cc1)C(=O)OC)N(C)C(=O)C(c1ccc(OCc2ccc(Cl)c(Cl)c2)cc1)O'
+[16:28:28] SMILES Parse Error: extra open parentheses for input: 'CC(C)(C)OC(=O)CCC(NC(=O)CC(O)C=CCCSC(c1ccccc1)(c1ccccc1)c1ccccc1)C(=O)NC(CSC(c1ccccc1)(c1ccccc1)c1ccccc1)C(=O)NC1(C(O)CC(=O'
+[16:28:28] SMILES Parse Error: unclosed ring for input: 'CC(O)C1C(=O)N(C(C(=O)OCc2ccc([N+](=O)[O-])cc2)=P(c2ccccc2)(c2ccccc2)c2ccccc2)C1C(C)C(=O)c1cn2cnc(C(=O)c3cccnc3)c2'
+[16:28:28] SMILES Parse Error: extra open parentheses for input: 'CC(C)n1nc(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C2OC(=O)C(C)(C)C)c2c(CCc3ccc(OC(=O)C'
+[16:28:29] SMILES Parse Error: extra open parentheses for input: 'CCCCCCCCOc1ccc(-c2c3ccc(nc4c(-c5ccc(O)cc5)c5ccc([nH]5)c(-c5ccc(O)cc5)c5ccc2[nH]5)cc1'
+[16:28:29] SMILES Parse Error: unclosed ring for input: 'CCC(Oc1cccc(N(C)C)c1)C(=O)OC1CC(C(C)(C)C)C=C2C=CC(C)C(CCC3CC(C(C)(C)C)C(O[SiH](C)C)C(=O)O3)(O[SiH](C)C)C2'
+[16:28:29] SMILES Parse Error: unclosed ring for input: 'CCC(c1ccccc1)N1Cc2cc3c(cc2CC1C(=O)NC(Cc1ccc(-c2ccc(C#N)cc2)cc1)C(=O)OC)N(C)C(=O)C(c1ccc(OCc2ccc(Cl)c(Cl)c2)cc1)'
+[16:28:29] SMILES Parse Error: syntax error while parsing: C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C(
+[16:28:29] SMILES Parse Error: Failed parsing SMILES 'C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C(' for input: 'C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C('
+[16:28:29] SMILES Parse Error: unclosed ring for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(NC(=O)C4CC4)C(Oc4ccccc4)C3)C(C)CCC1=O)C(C)CC'
+[16:28:29] SMILES Parse Error: extra open parentheses for input: 'COc1cccc(Nc2c(C(N)=O)cnc3c(C)cc(S(=O)(=O)c4cccc(C(=O)N5CCN(C(=O)c6cccc(CC(C)(C)NCC(O[Si](C)(C)C(C)(C)C)c7ccc(OC'
+[16:28:29] SMILES Parse Error: extra open parentheses for input: 'CC(=O)Oc1cc(C(=O)OC(c2ccccc2)c2ccccc2)c(CON=C(C(=O)NC2C(=O)N3C(C(=O)OC(c4ccccc4)c4ccccc4)=C(CSc4cc(C)nc5nc(C(=O)'
+[16:28:30] SMILES Parse Error: extra open parentheses for input: 'c1ccc(-c2c3ccc(cc4ccc(cc5ccc(cc1n2)[nH]5)[nH]4)[nH]3'
+[16:28:30] SMILES Parse Error: extra open parentheses for input: 'Cc1cc(OCCCC(=O)NC(C)(C)C(=O)N2CCN(CCO)CC2)ccc1Cc1c(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C'
+[16:28:30] SMILES Parse Error: syntax error while parsing: CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1=
+[16:28:30] SMILES Parse Error: Failed parsing SMILES 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1=' for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1='
+[16:28:30] SMILES Parse Error: extra open parentheses for input: 'COc1cc(OCCO)c(F)c([C@@H](Nc2ccc(C(N)=NC(=O)OCC(C)(C)C)cc2)c2nc(OCOC(=O)C(C)(C)C(=O)OCC(C)(C)C)n(-c3ncccn3)n2'
+[16:28:30] SMILES Parse Error: unclosed ring for input: 'O=[N+]([O-])c1cc([N+](=O)[O-])c(C=Cc2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-])'
+[16:28:30] SMILES Parse Error: unclosed ring for input: 'Cc1ccc(C(=O)Nc2ccc(S(=O)(=O)O)c3cc(S(=O)(=O)O)cc(S(=O)(=O)O)c23)c(NC(=O)c2ccc([N+](=O)[O-])cc2S(=O)(=O)O)'
+[16:28:30] SMILES Parse Error: unclosed ring for input: 'Cc1ccc(C2SCCCl)cc1'
+[16:28:30] SMILES Parse Error: syntax error while parsing: CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)=
+[16:28:30] SMILES Parse Error: Failed parsing SMILES 'CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)=' for input: 'CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)='
+[16:28:31] SMILES Parse Error: extra open parentheses for input: 'COCCOC1CC(c2ncc(-c3ccc(-c4ccc5cc(-c6cnc(C7CC8(CC8)CN7C(=O)C(NC(=O)OC)C(C)C)[nH]6)ccc5c4)cc3)[nH]2)N(C(=O)C'
+[16:28:31] SMILES Parse Error: syntax error while parsing: CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[
+[16:28:31] SMILES Parse Error: Failed parsing SMILES 'CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[' for input: 'CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC['
+[16:28:31] SMILES Parse Error: extra open parentheses for input: 'COc1cccc(Nc2c(C(N)=O)cnc3c(C)cc(S(=O)(=O)c4cccc(C(=O)Nc5ccc(CCNCC(O)c6ccc(OCc7ccccc7)c7[nH]c(=O)ccc67)cc5)c4)cc2'
+[16:28:31] SMILES Parse Error: unclosed ring for input: 'Cc1cc(OCc2ccccc2)ccc1Cc1c(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C2OC(=O)C(C)(C)C)n[nH]'
+[16:28:31] SMILES Parse Error: extra open parentheses for input: 'COC(=O)C(Cc1ccc(-c2ccc(C#N)cc2)cc1)NC(=O)C1Cc2cc3c(cc2CN1S(=O)(=O)c1sc(NC(C)=O)nc1C)OC(c1ccc(OCc2ccc(C)c(C)c2)'
+[16:28:31] SMILES Parse Error: extra open parentheses for input: 'COC(=O)C(Cc1ccc(-c2ccc(C#N)cc2)cc1)NC(=O)C1Cc2cc3c(cc2CN1S(=O)(=O)c1ccc(OC)cc1[N+](=O)[O-])OC(c1ccc(OCc2ccc(Cl)'
+[16:28:31] SMILES Parse Error: syntax error while parsing: O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-
+[16:28:31] SMILES Parse Error: Failed parsing SMILES 'O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-' for input: 'O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-'
+[16:28:32] Can't kekulize mol.  Unkekulized atoms: 3 4 17
+[16:28:32] SMILES Parse Error: unclosed ring for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OCC=Cc4ccccc4C)C(OC)C3)C(C)C(O)CC1=O)C(C)C'
+[16:28:32] SMILES Parse Error: extra open parentheses for input: 'C#Cc1ccc(-c2c3nc(c(-c4c(C)cc(C)cc4C)c4ccc([nH]4)c(-c4c(C)cc(C)cc4C)c4nc(c(-c5ccc(Br)cc5)c5ccc2[nH]5)C=C4)C=C'
+[16:28:32] Can't kekulize mol.  Unkekulized atoms: 1 2 5 9 10 11 12 13 14 15 16
+[16:28:32] SMILES Parse Error: extra open parentheses for input: 'CCOC(=O)C(C(=O)OCC)c1cc(-c2nnc(N(CC(NC(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)c3ccc(C(F)(F)F)cc3)C(=O)OC(C)(C)'
+[16:28:32] SMILES Parse Error: extra open parentheses for input: 'COC(=O)NC(C(=O)N1CCCC1c1nc(-c2ccc(C#Cc3ccc(-c4cn(COCC[Si](C)(C)C)c(C5CNCN5C(=O)C(NC(=O)OC)C(C)C)n4)cc3)cc2)c'
+[16:28:33] SMILES Parse Error: extra open parentheses for input: 'COCC1CC(c2ncc(-c3ccc4c(c3)COc3cc5c(ccc6nc(C7CCCN7C(=O)C(NC(=O)OC)c7ccccc7)[nH]c65)cc3-4)[nH]2)N(C(=O)C(NC(=O'
+[16:28:33] SMILES Parse Error: syntax error while parsing: C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]=
+[16:28:33] SMILES Parse Error: Failed parsing SMILES 'C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]=' for input: 'C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]='
+[16:28:33] SMILES Parse Error: extra open parentheses for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OCc4ccc(C(=O)O)cc4)C(OC)C3)C(C)C(O[Si](C)'
+[16:28:33] SMILES Parse Error: syntax error while parsing: Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C(
+[16:28:33] SMILES Parse Error: Failed parsing SMILES 'Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C(' for input: 'Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C('
+[16:28:35] SMILES Parse Error: extra open parentheses for input: 'CC(=O)Oc1cc(C(=O)OC(c2ccccc2)c2ccccc2)c(CON=C(C(=O)NC2C(=O)N3C(C(=O)OC(c4ccccc4)c4ccccc4)=C(CSc4cc(C)nc5nc(C(=O)OC(c6ccccc6)c6ccccc6)nn45)CSC23)c2csc(NC(c3ccccc3)(c3ccccc3)c'
+Some non-default generation parameters are set in the model config. These should go into a GenerationConfig file (https://huggingface.co/docs/transformers/generation_strategies#save-a-custom-decoding-strategy-with-your-model) instead. This warning will be raised to an exception in v4.41.
+Non-default generation parameters: {'max_length': 150}
+[16:53:25] SMILES Parse Error: syntax error while parsing: COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si](
+[16:53:25] SMILES Parse Error: Failed parsing SMILES 'COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si](' for input: 'COc1ccc(Cn2c(=O)ccn(C3OC(C(O)C(NCCCNC(=O)C(N)CCC(=O)OC(C)(C)C)C(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)C3O[Si]('
+[16:53:25] SMILES Parse Error: extra open parentheses for input: 'CCC(=O)Nc1nc(C)c(S(=O)(=O)N2Cc3cc4c(cc3CC2C(=O)NC(Cc2ccc(-c3ccc(C#N)cc3)cc2)C(=O)OC)OCC(c2ccc(OCc3ccc(Cl)c(Cl'
+[16:53:25] SMILES Parse Error: unclosed ring for input: 'COc1cc2c(c3c1sc1ccc(Br)cc13)n1cc(Cc3cccnc3)c(=O)c(c13)c21'
+[16:53:25] SMILES Parse Error: syntax error while parsing: COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)[
+[16:53:25] SMILES Parse Error: Failed parsing SMILES 'COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)[' for input: 'COC(=O)NC(C(=O)N1CC(C)CC1c1ncc(-c2ccc3c(c2)COc2cc4c(ccc5nc(C6CCC(C)N6C(=O)C(NC(=O)OC)C(C)C)[nH]c54)cc2-3)['
+[16:53:26] SMILES Parse Error: unclosed ring for input: 'CCC(c1ccccc1)N1Cc2cc3c(cc2CC1C(=O)NC(Cc1ccc(-c2ccc(OC)cc2)cc1)C(=O)OC)N(C)C(=O)C(c1ccc(OCc2ccc(Cl)c(Cl)c2)cc1)O'
+[16:53:26] SMILES Parse Error: extra open parentheses for input: 'CC(C)(C)OC(=O)CCC(NC(=O)CC(O)C=CCCSC(c1ccccc1)(c1ccccc1)c1ccccc1)C(=O)NC(CSC(c1ccccc1)(c1ccccc1)c1ccccc1)C(=O)NC1(C(O)CC(=O'
+[16:53:26] SMILES Parse Error: unclosed ring for input: 'CC(O)C1C(=O)N(C(C(=O)OCc2ccc([N+](=O)[O-])cc2)=P(c2ccccc2)(c2ccccc2)c2ccccc2)C1C(C)C(=O)c1cn2cnc(C(=O)c3cccnc3)c2'
+[16:53:26] SMILES Parse Error: extra open parentheses for input: 'CC(C)n1nc(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C2OC(=O)C(C)(C)C)c2c(CCc3ccc(OC(=O)C'
+[16:53:26] SMILES Parse Error: extra open parentheses for input: 'CCCCCCCCOc1ccc(-c2c3ccc(nc4c(-c5ccc(O)cc5)c5ccc([nH]5)c(-c5ccc(O)cc5)c5ccc2[nH]5)cc1'
+[16:53:26] SMILES Parse Error: unclosed ring for input: 'CCC(Oc1cccc(N(C)C)c1)C(=O)OC1CC(C(C)(C)C)C=C2C=CC(C)C(CCC3CC(C(C)(C)C)C(O[SiH](C)C)C(=O)O3)(O[SiH](C)C)C2'
+[16:53:26] SMILES Parse Error: unclosed ring for input: 'CCC(c1ccccc1)N1Cc2cc3c(cc2CC1C(=O)NC(Cc1ccc(-c2ccc(C#N)cc2)cc1)C(=O)OC)N(C)C(=O)C(c1ccc(OCc2ccc(Cl)c(Cl)c2)cc1)'
+[16:53:27] SMILES Parse Error: syntax error while parsing: C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C(
+[16:53:27] SMILES Parse Error: Failed parsing SMILES 'C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C(' for input: 'C=CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OS(=O)(=O)c4ccccc4[N+](=O)[O-])C(OC)C3)C('
+[16:53:27] SMILES Parse Error: unclosed ring for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(NC(=O)C4CC4)C(Oc4ccccc4)C3)C(C)CCC1=O)C(C)CC'
+[16:53:27] SMILES Parse Error: extra open parentheses for input: 'COc1cccc(Nc2c(C(N)=O)cnc3c(C)cc(S(=O)(=O)c4cccc(C(=O)N5CCN(C(=O)c6cccc(CC(C)(C)NCC(O[Si](C)(C)C(C)(C)C)c7ccc(OC'
+[16:53:27] SMILES Parse Error: extra open parentheses for input: 'CC(=O)Oc1cc(C(=O)OC(c2ccccc2)c2ccccc2)c(CON=C(C(=O)NC2C(=O)N3C(C(=O)OC(c4ccccc4)c4ccccc4)=C(CSc4cc(C)nc5nc(C(=O)'
+[16:53:27] SMILES Parse Error: extra open parentheses for input: 'c1ccc(-c2c3ccc(cc4ccc(cc5ccc(cc1n2)[nH]5)[nH]4)[nH]3'
+[16:53:27] SMILES Parse Error: extra open parentheses for input: 'Cc1cc(OCCCC(=O)NC(C)(C)C(=O)N2CCN(CCO)CC2)ccc1Cc1c(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C'
+[16:53:27] SMILES Parse Error: syntax error while parsing: CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1=
+[16:53:27] SMILES Parse Error: Failed parsing SMILES 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1=' for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(O[Si](C)(C)C(C)(C)C)C(O)C3)C(C)C(O)CC1='
+[16:53:27] SMILES Parse Error: extra open parentheses for input: 'COc1cc(OCCO)c(F)c([C@@H](Nc2ccc(C(N)=NC(=O)OCC(C)(C)C)cc2)c2nc(OCOC(=O)C(C)(C)C(=O)OCC(C)(C)C)n(-c3ncccn3)n2'
+[16:53:27] SMILES Parse Error: unclosed ring for input: 'O=[N+]([O-])c1cc([N+](=O)[O-])c(C=Cc2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-])'
+[16:53:28] SMILES Parse Error: unclosed ring for input: 'Cc1ccc(C(=O)Nc2ccc(S(=O)(=O)O)c3cc(S(=O)(=O)O)cc(S(=O)(=O)O)c23)c(NC(=O)c2ccc([N+](=O)[O-])cc2S(=O)(=O)O)'
+[16:53:28] SMILES Parse Error: unclosed ring for input: 'Cc1ccc(C2SCCCl)cc1'
+[16:53:28] SMILES Parse Error: syntax error while parsing: CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)=
+[16:53:28] SMILES Parse Error: Failed parsing SMILES 'CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)=' for input: 'CCOc1cc(C(C)(C)C)c(S(=O)(=O)N(C)C)cc1C1=N[C@@](C)(c2ccc(Cl)cc2)[C@@](C)(c2ccc(Cl)cc2)N1C(=O)N1CCN(CCCS(C)(=O)='
+[16:53:28] SMILES Parse Error: extra open parentheses for input: 'COCCOC1CC(c2ncc(-c3ccc(-c4ccc5cc(-c6cnc(C7CC8(CC8)CN7C(=O)C(NC(=O)OC)C(C)C)[nH]6)ccc5c4)cc3)[nH]2)N(C(=O)C'
+[16:53:28] SMILES Parse Error: syntax error while parsing: CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[
+[16:53:28] SMILES Parse Error: Failed parsing SMILES 'CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[' for input: 'CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC[C@@H](O)CC2)c(O[Si](C)(C)C(C)(C)C)c1.CC(C)(C)[Si](C)(C)Oc1ccc([C@H]2CC['
+[16:53:28] SMILES Parse Error: extra open parentheses for input: 'COc1cccc(Nc2c(C(N)=O)cnc3c(C)cc(S(=O)(=O)c4cccc(C(=O)Nc5ccc(CCNCC(O)c6ccc(OCc7ccccc7)c7[nH]c(=O)ccc67)cc5)c4)cc2'
+[16:53:29] SMILES Parse Error: unclosed ring for input: 'Cc1cc(OCc2ccccc2)ccc1Cc1c(OC2OC(COC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C(OC(=O)C(C)(C)C)C2OC(=O)C(C)(C)C)n[nH]'
+[16:53:29] SMILES Parse Error: extra open parentheses for input: 'COC(=O)C(Cc1ccc(-c2ccc(C#N)cc2)cc1)NC(=O)C1Cc2cc3c(cc2CN1S(=O)(=O)c1sc(NC(C)=O)nc1C)OC(c1ccc(OCc2ccc(C)c(C)c2)'
+[16:53:29] SMILES Parse Error: extra open parentheses for input: 'COC(=O)C(Cc1ccc(-c2ccc(C#N)cc2)cc1)NC(=O)C1Cc2cc3c(cc2CN1S(=O)(=O)c1ccc(OC)cc1[N+](=O)[O-])OC(c1ccc(OCc2ccc(Cl)'
+[16:53:29] SMILES Parse Error: syntax error while parsing: O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-
+[16:53:29] SMILES Parse Error: Failed parsing SMILES 'O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-' for input: 'O=[N+]([O-])c1cc([N+](=O)[O-])c(/C=C/c2c([N+](=O)[O-])cc([N+](=O)[O-])cc2[N+](=O)[O-])c([N+](=O)[O-'
+[16:53:29] Can't kekulize mol.  Unkekulized atoms: 3 4 17
+[16:53:29] SMILES Parse Error: unclosed ring for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OCC=Cc4ccccc4C)C(OC)C3)C(C)C(O)CC1=O)C(C)C'
+[16:53:30] SMILES Parse Error: extra open parentheses for input: 'C#Cc1ccc(-c2c3nc(c(-c4c(C)cc(C)cc4C)c4ccc([nH]4)c(-c4c(C)cc(C)cc4C)c4nc(c(-c5ccc(Br)cc5)c5ccc2[nH]5)C=C4)C=C'
+[16:53:30] Can't kekulize mol.  Unkekulized atoms: 1 2 5 9 10 11 12 13 14 15 16
+[16:53:30] SMILES Parse Error: extra open parentheses for input: 'CCOC(=O)C(C(=O)OCC)c1cc(-c2nnc(N(CC(NC(=O)OC(C)(C)C)C(O[Si](C)(C)C(C)(C)C)c3ccc(C(F)(F)F)cc3)C(=O)OC(C)(C)'
+[16:53:30] SMILES Parse Error: extra open parentheses for input: 'COC(=O)NC(C(=O)N1CCCC1c1nc(-c2ccc(C#Cc3ccc(-c4cn(COCC[Si](C)(C)C)c(C5CNCN5C(=O)C(NC(=O)OC)C(C)C)n4)cc3)cc2)c'
+[16:53:30] SMILES Parse Error: extra open parentheses for input: 'COCC1CC(c2ncc(-c3ccc4c(c3)COc3cc5c(ccc6nc(C7CCCN7C(=O)C(NC(=O)OC)c7ccccc7)[nH]c65)cc3-4)[nH]2)N(C(=O)C(NC(=O'
+[16:53:30] SMILES Parse Error: syntax error while parsing: C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]=
+[16:53:30] SMILES Parse Error: Failed parsing SMILES 'C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]=' for input: 'C=CCOC1CC(C=C(C)C2OC(=O)C3CCCCN3C(=O)C(=O)C3(O)OC(C(OC)CC(C)CC(C)=CC(CC)C(=O)CC(O)C2C)C(OC)CC3C)CCC1N=[N+]='
+[16:53:30] SMILES Parse Error: extra open parentheses for input: 'CCC1C=C(C)CC(C)CC(OC)C2OC(O)(C(=O)C(=O)N3CCCCC3C(=O)OC(C(C)=CC3CCC(OCc4ccc(C(=O)O)cc4)C(OC)C3)C(C)C(O[Si](C)'
+[16:53:30] SMILES Parse Error: syntax error while parsing: Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C(
+[16:53:30] SMILES Parse Error: Failed parsing SMILES 'Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C(' for input: 'Cc1cc(SCC2=C(C(=O)O)N3C(=O)C(NC(=O)/C(=N\OCc4cc(Cl)c5c(c4Cl)OC(c4ccccc4)(c4ccccc4)O5)c4csc(N)n4)C3SC2)n2nc(C('
+[16:53:32] SMILES Parse Error: extra open parentheses for input: 'CC(=O)Oc1cc(C(=O)OC(c2ccccc2)c2ccccc2)c(CON=C(C(=O)NC2C(=O)N3C(C(=O)OC(c4ccccc4)c4ccccc4)=C(CSc4cc(C)nc5nc(C(=O)OC(c6ccccc6)c6ccccc6)nn45)CSC23)c2csc(NC(c3ccccc3)(c3ccccc3)c'
+Some non-default generation parameters are set in the model config. These should go into a GenerationConfig file (https://huggingface.co/docs/transformers/generation_strategies#save-a-custom-decoding-strategy-with-your-model) instead. This warning will be raised to an exception in v4.41.
+Non-default generation parameters: {'max_length': 150}
