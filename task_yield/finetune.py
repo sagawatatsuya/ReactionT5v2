@@ -68,7 +68,7 @@ def parse_args():
     parser.add_argument("--lr", type=float, default=1e-5, help="Learning rate.")
     parser.add_argument("--batch_size", type=int, default=32, help="Batch size.")
     parser.add_argument(
-        "--max_len", type=int, default=300, help="Maximum input token length."
+        "--input_max_length", type=int, default=300, help="Maximum input token length."
     )
     parser.add_argument(
         "--num_workers", type=int, default=4, help="Number of data loading workers."

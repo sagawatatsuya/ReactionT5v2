@@ -37,7 +37,7 @@ To predict the products of reactions from their inputs, use the following comman
 cd task_forward
 python prediction.py \
     --input_data="../data/task_forward_demo_input.csv" \
-    --input_max_length="150" \
+    --input_max_length=150 \
     --num_beams=5 \
     --num_return_sequences=5 \
     --batch_size=16 \
@@ -50,7 +50,7 @@ To predict the reactants of reactions from their products, use the following com
 cd task_retrosynthesis
 python prediction.py \
     --input_data="../data/task_retrosynthesis_demo_input.csv" \
-    --input_max_length="100" \
+    --input_max_length=100 \
     --num_beams=5 \
     --num_return_sequences=5 \
     --batch_size=16 \
@@ -60,7 +60,7 @@ python prediction.py \
 ### Task yield
 To predict the yields of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or the contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}PRODUCT:{SMILES of products}". If there are multiple compounds, concatenate them with ".".(ex. "REACTANT:C1CCNCC1.CC1(C)OC(=O)C(Oc2ccc(Br)cn2)=C1c1ccc(S(C)(=O)=O)cc1REAGENT:C1CN2CCN1CC2.COCCOC.Cl[Ni]ClPRODUCT:COC(=O)CC1CCc2cc(N3CCCCC3)cc3[nH]c(=O)c(=O)n1c23")
 ```
-cd task_yield/
+cd task_yield
 python prediction_with_PreTrainedModel.py \
     --data="../data/task_yield_demo_input.csv" \
     --batch_size=16 \

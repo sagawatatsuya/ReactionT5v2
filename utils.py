@@ -178,7 +178,7 @@ def get_accuracy_score_multitask(eval_preds, cfg):
 def preprocess_dataset(examples, cfg):
     inputs = examples['input']
     targets = examples[cfg.target_column]
-    model_inputs = cfg.tokenizer(inputs, max_length=cfg.input_max_len, truncation=True)
-    labels = cfg.tokenizer(targets, max_length=cfg.target_max_len, truncation=True)
+    model_inputs = cfg.tokenizer(inputs, max_length=cfg.input_max_length, truncation=True)
+    labels = cfg.tokenizer(targets, max_length=cfg.target_max_length, truncation=True)
     model_inputs['labels'] = labels['input_ids']
     return model_inputs

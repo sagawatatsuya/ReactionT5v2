@@ -51,7 +51,7 @@ def parse_args():
     )
     parser.add_argument("--debug", action="store_true", help="Enable debug mode.")
     parser.add_argument(
-        "--max_len", type=int, default=400, help="Maximum input token length."
+        "--input_max_length", type=int, default=400, help="Maximum input token length."
     )
     parser.add_argument(
         "--batch_size", type=int, default=5, required=False, help="Batch size."

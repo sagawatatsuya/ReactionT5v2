@@ -59,16 +59,22 @@ def parse_args():
     parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate.")
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size.")
     parser.add_argument(
-        "--input_max_len",
+        "--input_max_length",
         type=int,
         default=400,
         help="Max input token length.",
     )
     parser.add_argument(
-        "--target_max_len",
+        "--target_max_length",
         type=int,
         default=150,
         help="Max target token length.",
+    )
+    parser.add_argument(
+        "--eval_beams",
+        type=int,
+        default=5,
+        help="Number of beams used for beam search during evaluation.",
     )
     parser.add_argument(
         "--target_column",
@@ -135,7 +141,6 @@ def parse_args():
         default=False,
         help="Disable tqdm.",
     )
-    #     parser.add_argument("--multitask", action="store_true", default=False, required=False)
     parser.add_argument(
         "--seed",
         type=int,
@@ -298,8 +303,8 @@ if __name__ == "__main__":
         load_best_model_at_end=True,
     )
 
-    model.config.eval_beams = 5
-    model.config.max_length = 150
+    model.config.eval_beams = CFG.eval_beams
+    model.config.max_length = CFG.target_max_len
     trainer = Seq2SeqTrainer(
         model,
         args,

@@ -90,7 +90,7 @@ def parse_args():
     parser.add_argument("--lr", type=float, default=5e-4, help="Learning rate.")
     parser.add_argument("--batch_size", type=int, default=5, help="Batch size.")
     parser.add_argument(
-        "--max_len", type=int, default=400, help="Maximum input token length."
+        "--input_max_length", type=int, default=400, help="Maximum input token length."
     )
     parser.add_argument(
         "--num_workers", type=int, default=4, help="Number of data loading workers."
@@ -231,7 +231,7 @@ def prepare_input(cfg, text):
     inputs = cfg.tokenizer(
         text,
         add_special_tokens=True,
-        max_length=cfg.max_len,
+        max_length=cfg.input_max_length,
         padding="max_length",
         truncation=True,
         return_attention_mask=True,
