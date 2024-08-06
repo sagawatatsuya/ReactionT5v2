@@ -7,7 +7,16 @@ ReactionT5 is a T5 model pretrained on a vast array of chemical reactions from t
 In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models, datasets, and demo is available at [Hugging Face Hub](https://huggingface.co/sagawa).
 
 
-# Installation
+- [ReactionT5](#reactiont5)  
+  - [Set up](#set-up)  
+  - [Usage](#usage)  
+  - [Fine-tuning](#fine-tuning)  
+  - [Project Structure](#project-structure) 
+  - [Authors](#authors)
+  - [Citation](#citation)  
+
+
+# Set up
 Reaction T5 is based on the transformers library. Additionally, RDKit is used for validity check of predicted compounds. To install these and other necessary libraries, use the following commands:
 ```
 pip install rdkit
@@ -19,7 +28,7 @@ pip install sentencepiece==0.1.96
 ```
 
 
-# Use ReactionT5
+# Usage
 You can use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction.
 
 ### Task Forward
@@ -99,7 +108,7 @@ python finetune.py \
     --output_dir='output'
 ```
 
-## Project Structure
+# Project Structure
 
 project/  
 ├── CompoundT5/ # Codes used for data processing and compound pretraining  
@@ -114,7 +123,10 @@ project/
 ├── requirements.yaml # Required packages for prediction and finetuning  
 └── README.md # This README file  
 
-## Citation
+# Authors
+Tatsuya Sagawa, Ryosuke Kojima
+
+# Citation
 arxiv link: https://arxiv.org/abs/2311.06708
 ```
 @misc{sagawa2023reactiont5,  
