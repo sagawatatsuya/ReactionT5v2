@@ -112,15 +112,13 @@ python finetune.py \
 ```
 ReactionT5v2/  
 ├── CompoundT5/                     # Codes used for data processing and compound pretraining  
-│ ├── README.md                     # More detailed README file for CompoundT5 creation  
-│ └── requirements.yaml             # Required Packages for compound pretraining  
+│ └── README.md                     # More detailed README file for CompoundT5 creation  
 ├── data/                           # Datasets  
 ├── multitask_no_pretraining/       # Multitask (forward, retrosynthesis, and yield prediction and finetuning)  
 ├── multitask_pretraining/          # Multitask (forward, retrosynthesis, and yield prediction and finetuning)  
 ├── task_forward/                   # Forward prediction and finetuning  
 ├── task_retrosynthesis/            # Retrosynthesis prediction and finetuning  
 ├── task_yield/                     # Yield prediction and finetuning  
-├── requirements.yaml               # Required packages for prediction and finetuning  
 └── README.md                       # This README file  
 ```
 
