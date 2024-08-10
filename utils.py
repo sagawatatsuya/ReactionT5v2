@@ -182,3 +182,9 @@ def preprocess_dataset(examples, cfg):
     labels = cfg.tokenizer(targets, max_length=cfg.target_max_length, truncation=True)
     model_inputs['labels'] = labels['input_ids']
     return model_inputs
+
+
+def filter_out(df, col_names):
+    for col_name in col_names:
+        df = df[~df[col_name].isna()].reset_index(drop=True)
+    return df

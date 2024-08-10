@@ -11,8 +11,8 @@ from datasets.utils.logging import disable_progress_bar
 
 # Append the utils module path
 sys.path.append("../")
-from utils import seed_everything, canonicalize, get_logger
-from train import train_loop
+from utils import seed_everything, get_logger
+from train import train_loop, preprocess_df
 
 # Suppress warnings and logging
 warnings.filterwarnings("ignore")
@@ -125,45 +125,18 @@ def parse_args():
         help="Number of samples used for training. If you want to use all samples, set -1.",
     )
     parser.add_argument(
+        "--sampling_frac",
+        type=float,
+        default=-1.0,
+        help="Ratio of samples used for training. If you want to use all samples, set -1.0.",
+    )
+    parser.add_argument(
         "--checkpoint",
         type=str,
         help="Path to the checkpoint file for resuming training.",
     )
 
     return parser.parse_args()
-
-
-def preprocess(df, cfg):
-    """
-    Preprocess the input DataFrame for training.
-
-    Args:
-        df (pd.DataFrame): Input DataFrame.
-        cfg (argparse.Namespace): Configuration object.
-
-    Returns:
-        pd.DataFrame: Preprocessed DataFrame.
-    """
-    for col in ["REAGENT", "REACTANT", "PRODUCT"]:
-        df[col] = df[col].apply(lambda x: canonicalize(x) if x != " " else " ")
-    if "YIELD" in df.columns:
-        df["YIELD"] = df["YIELD"].clip(0, 100) / 100
-    else:
-        df["YIELD"] = None
-    df["input"] = (
-        "REACTANT:"
-        + df["REACTANT"]
-        + "REAGENT:"
-        + df["REAGENT"]
-        + "PRODUCT:"
-        + df["PRODUCT"]
-    )
-    df = df[["input", "YIELD"]].drop_duplicates().reset_index(drop=True)
-
-    if cfg.debug:
-        df = df.head(1000)
-
-    return df
 
 
 def download_pretrained_model():
@@ -206,11 +179,15 @@ if __name__ == "__main__":
 
     train = pd.read_csv(CFG.train_data_path).drop_duplicates().reset_index(drop=True)
     valid = pd.read_csv(CFG.valid_data_path).drop_duplicates().reset_index(drop=True)
-    train = preprocess(train, CFG)
-    valid = preprocess(valid, CFG)
+    train = preprocess_df(train, CFG)
+    valid = preprocess_df(valid, CFG)
 
     if CFG.sampling_num > 0:
         train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
+            drop=True
+        )
+    elif CFG.sampling_frac > 0:
+        train = train.sample(frac=CFG.sampling_frac, random_state=CFG.seed).reset_index(
             drop=True
         )
 

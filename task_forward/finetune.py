@@ -18,7 +18,7 @@ from datasets import Dataset, DatasetDict
 import argparse
 
 sys.path.append("../")
-from utils import seed_everything, get_accuracy_score, preprocess_dataset
+from utils import seed_everything, get_accuracy_score, preprocess_dataset, filter_out
 
 # Suppress warnings and disable progress bars
 warnings.filterwarnings("ignore")
@@ -150,14 +150,14 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed_everything(seed=CFG.seed)
 
-    train = pd.read_csv(CFG.train_data_path)
+    train = filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"])
+    valid = filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"])
     if CFG.sampling_num > 0:
         train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
             drop=True
         )
-    valid = pd.read_csv(CFG.valid_data_path)
 
-    for col in ["REACTANT", "REAGENT"]:
+    for col in ["REAGENT"]:
         train[col] = train[col].fillna(" ")
         valid[col] = valid[col].fillna(" ")
     train["input"] = "REACTANT:" + train["REACTANT"] + "REAGENT:" + train["REAGENT"]

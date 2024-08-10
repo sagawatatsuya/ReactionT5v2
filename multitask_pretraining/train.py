@@ -24,6 +24,7 @@ from utils import (
     canonicalize,
     space_clean,
     preprocess_dataset,
+    filter_out,
 )
 
 # Suppress warnings and disable progress bars
@@ -37,18 +38,50 @@ def parse_args():
         description="Training script for reaction prediction model."
     )
     parser.add_argument(
-        "--train_data_path",
+        "--train_data_path_FORWARD",
         type=str,
         required=True,
         help="Path to training data CSV.",
     )
     parser.add_argument(
-        "--valid_data_path",
+        "--valid_data_path_FORWARD",
         type=str,
         required=True,
         help="Path to validation data CSV.",
     )
-    parser.add_argument("--test_data_path", type=str, help="Path to test data CSV.")
+    parser.add_argument(
+        "--test_data_path_FORWARD", type=str, help="Path to test data CSV."
+    )
+    parser.add_argument(
+        "--train_data_path_RETROSYNTHESIS",
+        type=str,
+        required=True,
+        help="Path to training data CSV.",
+    )
+    parser.add_argument(
+        "--valid_data_path_RETROSYNTHESIS",
+        type=str,
+        required=True,
+        help="Path to validation data CSV.",
+    )
+    parser.add_argument(
+        "--test_data_path_RETROSYNTHESIS", type=str, help="Path to test data CSV."
+    )
+    parser.add_argument(
+        "--train_data_path_YIELD",
+        type=str,
+        required=True,
+        help="Path to training data CSV.",
+    )
+    parser.add_argument(
+        "--valid_data_path_YIELD",
+        type=str,
+        required=True,
+        help="Path to validation data CSV.",
+    )
+    parser.add_argument(
+        "--test_data_path_YIELD", type=str, help="Path to test data CSV."
+    )
     parser.add_argument(
         "--USPTO_MIT_test_data_path", type=str, help="Path to USPTO_MIT test data CSV."
     )
@@ -171,9 +204,11 @@ def parse_args():
 
 def preprocess_df_FORWARD(df):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
-    df = df[~(df["PRODUCT"].isna() | df["REACTANT"].isna())]
     for col in ["CATALYST", "REAGENT", "SOLVENT"]:
+        if col not in df.columns:
+            df[col] = None
         df[col] = df[col].fillna(" ")
+
     df = (
         df[["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]]
         .drop_duplicates()
@@ -186,7 +221,6 @@ def preprocess_df_FORWARD(df):
         "TASK_FORWARD" + "REACTANT:" + df["REACTANT"] + "REAGENT:" + df["REAGENT"]
     )
     df["target"] = df["PRODUCT"]
-    # df.rename(columns={"PRODUCT": "target"}, inplace=True)
 
     return df
 
@@ -204,13 +238,9 @@ def preprocess_USPTO_MIT(df):
 
 def preprocess_df_RETROSYNTHESIS(df):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
-    df = df[~(df["PRODUCT"].isna() | df["REACTANT"].isna())]
-    for col in ["REACTANT", "PRODUCT"]:
-        df[col] = df[col].str.replace("\n", "")
     df = df.drop_duplicates(subset=["REACTANT", "PRODUCT"]).reset_index(drop=True)
     df["input"] = "TASK_RETROSYNTHESIS" + "PRODUCT:" + df["PRODUCT"]
     df["target"] = df["REACTANT"]
-    # df.rename(columns={"REACTANT": "target"}, inplace=True)
 
     return df
 
@@ -225,18 +255,16 @@ def preprocess_USPTO_50k(df):
 
 
 def preprocess_df_YIELD(df):
-    df = df[
-        ~(df["YIELD"].isna() | df["REACTANT"].isna() | df["PRODUCT"].isna())
-    ].reset_index(drop=True)
-    for col in [
-        "CATALYST",
-        "REAGENT",
-    ]:
+    for col in ["CATALYST", "REAGENT", "SOLVENT"]:
+        if col not in df.columns:
+            df[col] = None
         df[col] = df[col].fillna(" ")
     df["REAGENT"] = df["CATALYST"] + "." + df["REAGENT"]
     df["REAGENT"] = df["REAGENT"].apply(lambda x: space_clean(x))
     df["REAGENT"] = df["REAGENT"].apply(lambda x: canonicalize(x) if x != " " else " ")
-    df = df.drop_duplicates(subset=["REACTANT", "REAGENT", "PRODUCT"]).reset_index(drop=True)
+    df = df.drop_duplicates(subset=["REACTANT", "REAGENT", "PRODUCT"]).reset_index(
+        drop=True
+    )
     if max(df["YIELD"]) > 1:
         df["YIELD"] = df["YIELD"] / 100
     df["YIELD"] = df["YIELD"].apply(lambda x: round(x * 10) / 10)
@@ -254,7 +282,6 @@ def preprocess_df_YIELD(df):
     )
 
     df["target"] = df["YIELD"]
-    # df.rename(columns={"YIELD": "target"}, inplace=True)
 
     return df
 
@@ -294,14 +321,20 @@ if __name__ == "__main__":
     valid_dfs = []
 
     # FORWARD
-    train = preprocess_df_FORWARD(pd.read_csv(CFG.train_data_path))
-    valid = preprocess_df_FORWARD(pd.read_csv(CFG.valid_data_path))
-
-    train_copy = preprocess_USPTO_MIT(train.copy())
-    USPTO_test = preprocess_USPTO_MIT(pd.read_csv(CFG.USPTO_MIT_test_data_path))
+    train = preprocess_df_FORWARD(
+        filter_out(pd.read_csv(CFG.train_data_path_FORWARD), ["REACTANT", "PRODUCT"])
+    )
+    valid = preprocess_df_FORWARD(
+        filter_out(pd.read_csv(CFG.valid_data_path_FORWARD), ["REACTANT", "PRODUCT"])
+    )
+    if CFG.USPTO_MIT_test_data_path:
+        train_copy = preprocess_USPTO_MIT(train.copy())
+        USPTO_test = preprocess_USPTO_MIT(pd.read_csv(CFG.USPTO_MIT_test_data_path))
+        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(
+            drop=True
+        )
     train["pair"] = train["input"] + " - " + train["target"]
     valid["pair"] = valid["input"] + " - " + valid["target"]
-    train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(drop=True)
     valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
 
     train.to_csv("train_FORWARD.csv", index=False)
@@ -309,21 +342,33 @@ if __name__ == "__main__":
     train_dfs.append(train[["input", "target"]])
     valid_dfs.append(valid[["input", "target"]])
 
-    if CFG.test_data_path:
-        test = preprocess_df_FORWARD(pd.read_csv(CFG.test_data_path))
+    if CFG.test_data_path_FORWARD:
+        test = preprocess_df_FORWARD(
+            filter_out(pd.read_csv(CFG.test_data_path_FORWARD), ["REACTANT", "PRODUCT"])
+        )
         test["pair"] = test["input"] + " - " + test["target"]
         test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
         test.to_csv("test_FORWARD.csv", index=False)
 
     # RETROSYNTHESIS
-    train = preprocess_df_RETROSYNTHESIS(pd.read_csv(CFG.train_data_path))
-    valid = preprocess_df_RETROSYNTHESIS(pd.read_csv(CFG.valid_data_path))
-
-    train_copy = preprocess_USPTO_50k(train.copy())
-    USPTO_test = preprocess_USPTO_50k(pd.read_csv(CFG.USPTO_50k_test_data_path))
+    train = preprocess_df_RETROSYNTHESIS(
+        filter_out(
+            pd.read_csv(CFG.train_data_path_RETROSYNTHESIS), ["REACTANT", "PRODUCT"]
+        )
+    )
+    valid = preprocess_df_RETROSYNTHESIS(
+        filter_out(
+            pd.read_csv(CFG.valid_data_path_RETROSYNTHESIS), ["REACTANT", "PRODUCT"]
+        )
+    )
+    if CFG.USPTO_50k_test_data_path:
+        train_copy = preprocess_USPTO_50k(train.copy())
+        USPTO_test = preprocess_USPTO_50k(pd.read_csv(CFG.USPTO_50k_test_data_path))
+        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(
+            drop=True
+        )
     train["pair"] = train["input"] + " - " + train["target"]
     valid["pair"] = valid["input"] + " - " + valid["target"]
-    train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(drop=True)
     valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
 
     train.to_csv("train_RETROSYNTHESIS.csv", index=False)
@@ -331,19 +376,31 @@ if __name__ == "__main__":
     train_dfs.append(train[["input", "target"]])
     valid_dfs.append(valid[["input", "target"]])
 
-    if CFG.test_data_path:
-        test = preprocess_df_RETROSYNTHESIS(pd.read_csv(CFG.test_data_path))
+    if CFG.test_data_path_RETROSYNTHESIS:
+        test = preprocess_df_RETROSYNTHESIS(
+            filter_out(
+                pd.read_csv(CFG.test_data_path_RETROSYNTHESIS), ["REACTANT", "PRODUCT"]
+            )
+        )
         test["pair"] = test["input"] + " - " + test["target"]
         test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
         test.to_csv("test_RETROSYNTHESIS.csv", index=False)
 
     # YIELD
-    train = preprocess_df_YIELD(pd.read_csv(CFG.train_data_path))
-    valid = preprocess_df_YIELD(pd.read_csv(CFG.valid_data_path))
-
-    train_copy = preprocess_CN(train.copy())
-    CN_test = preprocess_CN(pd.read_csv(CFG.CN_test_data_path))
-    train = train[~train_copy["pair"].isin(CN_test["pair"])].reset_index(drop=True)
+    train = preprocess_df_YIELD(
+        filter_out(
+            pd.read_csv(CFG.train_data_path_YIELD), ["REACTANT", "PRODUCT", "YIELD"]
+        )
+    )
+    valid = preprocess_df_YIELD(
+        filter_out(
+            pd.read_csv(CFG.valid_data_path_YIELD), ["REACTANT", "PRODUCT", "YIELD"]
+        )
+    )
+    if CFG.CN_test_data_path:
+        train_copy = preprocess_CN(train.copy())
+        CN_test = preprocess_CN(pd.read_csv(CFG.CN_test_data_path))
+        train = train[~train_copy["pair"].isin(CN_test["pair"])].reset_index(drop=True)
     train["pair"] = train["input"] + " - " + train["target"].astype(str)
     valid["pair"] = valid["input"] + " - " + valid["target"].astype(str)
     valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
@@ -353,8 +410,12 @@ if __name__ == "__main__":
     train_dfs.append(train[["input", "target"]])
     valid_dfs.append(valid[["input", "target"]])
 
-    if CFG.test_data_path:
-        test = preprocess_df_YIELD(pd.read_csv(CFG.test_data_path))
+    if CFG.test_data_path_YIELD:
+        test = preprocess_df_YIELD(
+            filter_out(
+                pd.read_csv(CFG.test_data_path_YIELD), ["REACTANT", "PRODUCT", "YIELD"]
+            )
+        )
         test["pair"] = test["input"] + " - " + test["target"].astype(str)
         test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
         test.to_csv("test_YIELD.csv", index=False)

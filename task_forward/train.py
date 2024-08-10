@@ -18,7 +18,7 @@ from datasets import Dataset, DatasetDict
 import argparse
 
 sys.path.append("../")
-from utils import seed_everything, canonicalize, space_clean, get_accuracy_score, preprocess_dataset
+from utils import seed_everything, canonicalize, space_clean, get_accuracy_score, preprocess_dataset, filter_out
 
 # Suppress warnings and disable progress bars
 warnings.filterwarnings("ignore")
@@ -40,6 +40,11 @@ def parse_args():
         help="Path to validation data CSV.",
     )
     parser.add_argument("--test_data_path", type=str, help="Path to test data CSV.")
+    parser.add_argument(
+        "--USPTO_test_data_path",
+        type=str,
+        help="The path to data used for USPTO testing. CSV file that contains ['REACTANT', 'REAGENT', 'PRODUCT'] columns is expected.",
+    )
     parser.add_argument("--model", type=str, default="t5", help="Model name.")
     parser.add_argument(
         "--pretrained_model_name_or_path",
@@ -153,9 +158,15 @@ def parse_args():
 
 def preprocess_df(df):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
-    df = df[~(df["PRODUCT"].isna() | df["REACTANT"].isna())]
-    for col in ["CATALYST", "REAGENT", "SOLVENT"]:
+    for col in [
+        "CATALYST",
+        "REAGENT",
+        "SOLVENT"
+    ]:
+        if col not in df.columns:
+            df[col] = None
         df[col] = df[col].fillna(" ")
+        
     df = (
         df[["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]]
         .drop_duplicates()
@@ -168,6 +179,17 @@ def preprocess_df(df):
     return df
 
 
+def preprocess_USPTO(df):
+    df["REACTANT"] = df["REACTANT"].apply(lambda x: str(sorted(x.split("."))))
+    df["REAGENT"] = df["REAGENT"].apply(lambda x: str(sorted(x.split("."))))
+    df["PRODUCT"] = df["PRODUCT"].apply(lambda x: str(sorted(x.split("."))))
+
+    df["input"] = "REACTANT:" + df["REACTANT"] + "REAGENT:" + df["REAGENT"]
+    df["pair"] = df["input"] + " - " + df["PRODUCT"].astype(str)
+
+    return df
+
+
 if __name__ == "__main__":
     CFG = parse_args()
     CFG.disable_tqdm = True
@@ -175,8 +197,12 @@ if __name__ == "__main__":
     seed_everything(seed=CFG.seed)
 
     # Load and preprocess data
-    train = preprocess_df(pd.read_csv(CFG.train_data_path))
-    valid = preprocess_df(pd.read_csv(CFG.valid_data_path))
+    train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"]))
+    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"]))
+    if CFG.USPTO_test_data_path:
+        train_copy = preprocess_USPTO(train.copy())
+        USPTO_test = preprocess_USPTO(pd.read_csv(CFG.USPTO_test_data_path))
+        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(drop=True)
     train["pair"] = train["input"] + " - " + train["PRODUCT"]
     valid["pair"] = valid["input"] + " - " + valid["PRODUCT"]
     valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
@@ -184,7 +210,7 @@ if __name__ == "__main__":
     valid.to_csv("valid.csv", index=False)
 
     if CFG.test_data_path:
-        test = preprocess_df(pd.read_csv(CFG.test_data_path))
+        test = preprocess_df(filter_out(pd.read_csv(CFG.test_data_path), ["REACTANT", "PRODUCT"]))
         test["pair"] = test["input"] + " - " + test["PRODUCT"]
         test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
         test.to_csv("test.csv", index=False)
@@ -304,7 +330,7 @@ if __name__ == "__main__":
     )
 
     model.config.eval_beams = CFG.eval_beams
-    model.config.max_length = CFG.target_max_len
+    model.config.max_length = CFG.target_max_length
     trainer = Seq2SeqTrainer(
         model,
         args,

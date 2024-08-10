@@ -20,8 +20,8 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 # Append the utils module path
 sys.path.append("../")
 from utils import seed_everything
-from train import prepare_input, inference_fn
-from finetune import preprocess, download_pretrained_model
+from train import prepare_input, inference_fn, preprocess_df
+from finetune import download_pretrained_model
 from models import ReactionT5Yield
 
 
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     if CFG.data.endswith(".csv"):
         test_ds = pd.read_csv(CFG.data)
         if "input" not in test_ds.columns:
-            test_ds = preprocess(test_ds, CFG)
+            test_ds = preprocess_df(test_ds, CFG)
     else:
         test_ds = pd.DataFrame.from_dict({"input": [CFG.data]}, orient="index").T
 

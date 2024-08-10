@@ -27,7 +27,8 @@ from utils import (
     AverageMeter,
     timeSince,
     get_optimizer_params,
-    space_clean
+    space_clean,
+    filter_out
 )
 from models import ReactionT5Yield
 
@@ -60,13 +61,11 @@ def parse_args():
     parser.add_argument(
         "--test_data_path",
         type=str,
-        required=True,
         help="Path to testing data CSV file.",
     )
     parser.add_argument(
         "--CN_test_data_path",
         type=str,
-        required=True,
         help="Path to CN testing data CSV file.",
     )
     parser.add_argument(
@@ -141,6 +140,18 @@ def parse_args():
         "--seed", type=int, default=42, help="Random seed for reproducibility."
     )
     parser.add_argument(
+        "--sampling_num",
+        type=int,
+        default=-1,
+        help="Number of samples used for training. If you want to use all samples, set -1.",
+    )
+    parser.add_argument(
+        "--sampling_frac",
+        type=float,
+        default=-1.0,
+        help="Ratio of samples used for training. If you want to use all samples, set -1.0.",
+    )
+    parser.add_argument(
         "--checkpoint",
         type=str,
         help="Path to the checkpoint file for resuming training.",
@@ -160,21 +171,25 @@ def preprocess_df(df, cfg):
     Returns:
         pd.DataFrame: Preprocessed DataFrame.
     """
-    df = df[~(df["YIELD"].isna() | df["REACTANT"].isna() | df["PRODUCT"].isna())].reset_index(drop=True)
-    df["YIELD"] = df["YIELD"].apply(lambda x: 100 if x > 100 else x) / 100
+    if "YIELD" in df.columns:
+        df["YIELD"] = df["YIELD"].clip(0, 100) / 100
+    else:
+        df["YIELD"] = None
 
     for col in [
         "CATALYST",
         "REAGENT",
     ]:
+        if col not in df.columns:
+            df[col] = None
         df[col] = df[col].fillna(" ")
 
     df["REAGENT"] = df["CATALYST"] + "." + df["REAGENT"]
-    df["REAGENT"] = df["REAGENT"].apply(lambda x: space_clean(x))
-    df["REAGENT"] = df["REAGENT"].apply(lambda x: canonicalize(x) if x != " " else " ")
-    df["REACTANT"] = df["REACTANT"].apply(lambda x: ".".join(sorted(x.split("."))))
-    df["REAGENT"] = df["REAGENT"].apply(lambda x: ".".join(sorted(x.split("."))))
-    df["PRODUCT"] = df["PRODUCT"].apply(lambda x: ".".join(sorted(x.split("."))))
+
+    for col in ["REAGENT", "REACTANT", "PRODUCT"]:
+        df[col] = df[col].apply(lambda x: space_clean(x))
+        df[col] = df[col].apply(lambda x: canonicalize(x) if x != " " else " ")
+        df[col] = df[col].apply(lambda x: ".".join(sorted(x.split("."))))
 
     df["input"] = (
         "REACTANT:"
@@ -521,25 +536,35 @@ if __name__ == "__main__":
         os.makedirs(CFG.output_dir)
     seed_everything(seed=CFG.seed)
 
-    train = preprocess_df(pd.read_csv(CFG.train_data_path))
-    valid = preprocess_df(pd.read_csv(CFG.valid_data_path))
+    train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["YIELD", "REACTANT", "PRODUCT"]), CFG)
+    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["YIELD", "REACTANT", "PRODUCT"]), CFG)
 
-    train_copy = preprocess_CN(train.copy())
-    CN_test = preprocess_CN(pd.read_csv(CFG.CN_test_data_path))
+    if CFG.CN_test_data_path:
+        train_copy = preprocess_CN(train.copy())
+        CN_test = preprocess_CN(pd.read_csv(CFG.CN_test_data_path))
 
-    print(len(train))
-    train = train[~train_copy["pair"].isin(CN_test["pair"])].reset_index(drop=True)
-    print(len(train))
+        print(len(train))
+        train = train[~train_copy["pair"].isin(CN_test["pair"])].reset_index(drop=True)
+        print(len(train))
 
     train["pair"] = train["input"] + " - " + train["YIELD"].astype(str)
     valid["pair"] = valid["input"] + " - " + valid["YIELD"].astype(str)
     valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
 
+    if CFG.sampling_num > 0:
+        train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
+            drop=True
+        )
+    elif CFG.sampling_frac > 0:
+        train = train.sample(frac=CFG.sampling_frac, random_state=CFG.seed).reset_index(
+            drop=True
+        )
+
     train.to_csv("train.csv", index=False)
     valid.to_csv("valid.csv", index=False)
 
     if CFG.test_data_path:
-        test = pd.read_csv(CFG.test_data_path)
+        test = filter_out(pd.read_csv(CFG.test_data_path), ["YIELD", "REACTANT", "PRODUCT"])
         test = preprocess_df(test, CFG)
         test["pair"] = test["input"] + " - " + test["YIELD"].astype(str)
         test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)

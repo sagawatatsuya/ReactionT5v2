@@ -2,7 +2,6 @@ import os
 import warnings
 import sys
 
-import numpy as np
 import pandas as pd
 import torch
 from tqdm.auto import tqdm
@@ -19,7 +18,8 @@ from datasets import Dataset, DatasetDict
 import argparse
 
 sys.path.append("../")
-from utils import seed_everything, get_accuracy_score, preprocess_dataset
+from utils import seed_everything, get_accuracy_score, preprocess_dataset, filter_out
+from train import preprocess_df
 
 # Suppress warnings and disable progress bars
 warnings.filterwarnings("ignore")
@@ -186,35 +186,20 @@ def parse_args():
     return parser.parse_args()
 
 
-def preprocess_df(df):
-    df = df[~df["PRODUCT"].isna()]
-    for col in ["REACTANT", "PRODUCT"]:
-        df[col] = df[col].fillna(" ")
-        df[col] = df[col].str.replace("\n", "")
-
-    if CFG.debug:
-        df = df.head(1000)
-
-    return df
-
-
 if __name__ == "__main__":
     CFG = parse_args()
     CFG.disable_tqdm = True
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed_everything(seed=CFG.seed)
 
-    train = preprocess_df(pd.read_csv(CFG.train_data_path))
+    train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"]))
     if CFG.sampling_num > 0:
         train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
             drop=True
         )
-    valid = preprocess_df(pd.read_csv(CFG.valid_data_path))
+    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"]))
     train.to_csv("train.csv", index=False)
     valid.to_csv("valid.csv", index=False)
-
-    train = train.rename(columns={"PRODUCT": "input"})
-    valid = valid.rename(columns={"PRODUCT": "input"})
 
     dataset = DatasetDict(
         {
