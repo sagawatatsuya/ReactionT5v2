@@ -159,6 +159,8 @@ def parse_args():
 def preprocess_df(df):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
     for col in [
+        "REACTANT",
+        "PRODUCT",
         "CATALYST",
         "REAGENT",
         "SOLVENT"

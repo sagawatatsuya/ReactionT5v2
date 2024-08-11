@@ -15,7 +15,6 @@ pip install datasets
 pip install sentencepiece==0.1.96
 pip install "jax[cuda11_cudnn82]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 pip install flax
-conda install -c conda-forge optuna
 ```
 This will install all the necessary libraries for the project.
 

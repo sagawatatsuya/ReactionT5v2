@@ -204,7 +204,13 @@ def parse_args():
 
 def preprocess_df_FORWARD(df):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
-    for col in ["CATALYST", "REAGENT", "SOLVENT"]:
+    for col in [
+        "REACTANT",
+        "PRODUCT",
+        "CATALYST",
+        "REAGENT",
+        "SOLVENT"
+    ]:
         if col not in df.columns:
             df[col] = None
         df[col] = df[col].fillna(" ")
@@ -238,6 +244,16 @@ def preprocess_USPTO_MIT(df):
 
 def preprocess_df_RETROSYNTHESIS(df):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
+    for col in [
+        "REACTANT",
+        "PRODUCT",
+        "CATALYST",
+        "REAGENT",
+        "SOLVENT"
+    ]:
+        if col not in df.columns:
+            df[col] = None
+        df[col] = df[col].fillna(" ")
     df = df.drop_duplicates(subset=["REACTANT", "PRODUCT"]).reset_index(drop=True)
     df["input"] = "TASK_RETROSYNTHESIS" + "PRODUCT:" + df["PRODUCT"]
     df["target"] = df["REACTANT"]
@@ -255,7 +271,13 @@ def preprocess_USPTO_50k(df):
 
 
 def preprocess_df_YIELD(df):
-    for col in ["CATALYST", "REAGENT", "SOLVENT"]:
+    for col in [
+        "REACTANT",
+        "PRODUCT",
+        "CATALYST",
+        "REAGENT",
+        "SOLVENT"
+    ]:
         if col not in df.columns:
             df[col] = None
         df[col] = df[col].fillna(" ")
@@ -265,11 +287,14 @@ def preprocess_df_YIELD(df):
     df = df.drop_duplicates(subset=["REACTANT", "REAGENT", "PRODUCT"]).reset_index(
         drop=True
     )
-    if max(df["YIELD"]) > 1:
-        df["YIELD"] = df["YIELD"] / 100
-    df["YIELD"] = df["YIELD"].apply(lambda x: round(x * 10) / 10)
-    # convert YIELD value 0.1 to 10%, 0.2 to 20%, ..., 1.0 to 100%
-    df["YIELD"] = df["YIELD"].apply(lambda x: str(int(x * 100)) + "%")
+    if "YIELD" not in df.columns:
+        df["YIELD"] = None
+    else:
+        if max(df["YIELD"]) > 1:
+            df["YIELD"] = df["YIELD"] / 100
+        df["YIELD"] = df["YIELD"].apply(lambda x: round(x * 10) / 10)
+        # convert YIELD value 0.1 to 10%, 0.2 to 20%, ..., 1.0 to 100%
+        df["YIELD"] = df["YIELD"].apply(lambda x: str(int(x * 100)) + "%")
 
     df["input"] = (
         "TASK_YIELD"

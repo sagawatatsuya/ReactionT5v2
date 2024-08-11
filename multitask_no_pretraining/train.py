@@ -21,7 +21,10 @@ sys.path.append("../")
 from utils import (
     seed_everything,
     get_accuracy_score_multitask,
+    canonicalize,
+    space_clean,
     preprocess_dataset,
+    filter_out,
 )
 
 # Suppress warnings and disable progress bars
@@ -78,6 +81,15 @@ def parse_args():
     )
     parser.add_argument(
         "--test_data_path_YIELD", type=str, help="Path to test data CSV."
+    )
+    parser.add_argument(
+        "--USPTO_MIT_test_data_path", type=str, help="Path to USPTO_MIT test data CSV."
+    )
+    parser.add_argument(
+        "--USPTO_50k_test_data_path", type=str, help="Path to USPTO_50k test data CSV."
+    )
+    parser.add_argument(
+        "--CN_test_data_path", type=str, help="Path to CN test data CSV."
     )
     parser.add_argument("--model", type=str, default="t5", help="Model name.")
     parser.add_argument(
@@ -191,36 +203,90 @@ def parse_args():
 
 
 def preprocess_df_FORWARD(df):
-    for col in ["REACTANT", "REAGENT"]:
+    """Preprocess the dataframe by filling NaNs and formatting the input."""
+    for col in [
+        "REACTANT",
+        "PRODUCT",
+        "CATALYST",
+        "REAGENT",
+        "SOLVENT"
+    ]:
+        if col not in df.columns:
+            df[col] = None
         df[col] = df[col].fillna(" ")
-        df[col] = df[col].str.replace("\n", "")
+
+    df["REAGENT"] = df["CATALYST"] + "." + df["REAGENT"] + "." + df["SOLVENT"]
+    df["REAGENT"] = df["REAGENT"].apply(lambda x: space_clean(x))
+    df["REAGENT"] = df["REAGENT"].apply(lambda x: canonicalize(x) if x != " " else " ")
     df["input"] = (
         "TASK_FORWARD" + "REACTANT:" + df["REACTANT"] + "REAGENT:" + df["REAGENT"]
     )
-    df.rename(columns={"PRODUCT": "target"}, inplace=True)
+    df["target"] = df["PRODUCT"]
+
+    return df
+
+
+def preprocess_USPTO_MIT(df):
+    df["REACTANT"] = df["REACTANT"].apply(lambda x: str(sorted(x.split("."))))
+    df["REAGENT"] = df["REAGENT"].apply(lambda x: str(sorted(x.split("."))))
+    df["PRODUCT"] = df["PRODUCT"].apply(lambda x: str(sorted(x.split("."))))
+
+    df["input"] = "REACTANT:" + df["REACTANT"] + "REAGENT:" + df["REAGENT"]
+    df["pair"] = df["input"] + " - " + df["PRODUCT"].astype(str)
 
     return df
 
 
 def preprocess_df_RETROSYNTHESIS(df):
-    for col in ["REACTANT", "PRODUCT"]:
+    """Preprocess the dataframe by filling NaNs and formatting the input."""
+    for col in [
+        "REACTANT",
+        "PRODUCT",
+        "CATALYST",
+        "REAGENT",
+        "SOLVENT"
+    ]:
+        if col not in df.columns:
+            df[col] = None
         df[col] = df[col].fillna(" ")
-        df[col] = df[col].str.replace("\n", "")
     df["input"] = "TASK_RETROSYNTHESIS" + "PRODUCT:" + df["PRODUCT"]
-    df.rename(columns={"REACTANT": "target"}, inplace=True)
+    df["target"] = df["REACTANT"]
+
+    return df
+
+
+def preprocess_USPTO_50k(df):
+    df["REACTANT"] = df["REACTANT"].apply(lambda x: str(sorted(x.split("."))))
+    df["PRODUCT"] = df["PRODUCT"].apply(lambda x: str(sorted(x.split("."))))
+
+    df["pair"] = df["REACTANT"] + " - " + df["PRODUCT"].astype(str)
 
     return df
 
 
 def preprocess_df_YIELD(df):
-    for col in ["REACTANT", "REAGENT", "PRODUCT"]:
+    for col in [
+        "REACTANT",
+        "PRODUCT",
+        "CATALYST",
+        "REAGENT",
+        "SOLVENT"
+    ]:
+        if col not in df.columns:
+            df[col] = None
         df[col] = df[col].fillna(" ")
-        df[col] = df[col].str.replace("\n", "")
-    if max(df["YIELD"]) > 1:
-        df["YIELD"] = df["YIELD"] / 100
-    df["YIELD"] = df["YIELD"].apply(lambda x: round(x * 10) / 10)
-    # convert YIELD value 0.1 to 10%, 0.2 to 20%, ..., 1.0 to 100%
-    df["YIELD"] = df["YIELD"].apply(lambda x: str(int(x * 100)) + "%")
+    df["REAGENT"] = df["CATALYST"] + "." + df["REAGENT"]
+    df["REAGENT"] = df["REAGENT"].apply(lambda x: space_clean(x))
+    df["REAGENT"] = df["REAGENT"].apply(lambda x: canonicalize(x) if x != " " else " ")
+
+    if "YIELD" not in df.columns:
+        df["YIELD"] = None
+    else:
+        if max(df["YIELD"]) > 1:
+            df["YIELD"] = df["YIELD"] / 100
+        df["YIELD"] = df["YIELD"].apply(lambda x: round(x * 10) / 10)
+        # convert YIELD value 0.1 to 10%, 0.2 to 20%, ..., 1.0 to 100%
+        df["YIELD"] = df["YIELD"].apply(lambda x: str(int(x * 100)) + "%")
 
     df["input"] = (
         "TASK_YIELD"
@@ -231,8 +297,34 @@ def preprocess_df_YIELD(df):
         + "PRODUCT:"
         + df["PRODUCT"]
     )
-    df.rename(columns={"YIELD": "target"}, inplace=True)
 
+    df["target"] = df["YIELD"]
+
+    return df
+
+
+def preprocess_CN(df):
+    """
+    Preprocess the CN test DataFrame.
+
+    Args:
+        df (pd.DataFrame): Input DataFrame.
+
+    Returns:
+        pd.DataFrame: Preprocessed DataFrame.
+    """
+    df["REACTANT"] = df["REACTANT"].apply(lambda x: ".".join(sorted(x.split("."))))
+    df["REAGENT"] = df["REAGENT"].apply(lambda x: ".".join(sorted(x.split("."))))
+    df["PRODUCT"] = df["PRODUCT"].apply(lambda x: ".".join(sorted(x.split("."))))
+    df["input"] = (
+        "REACTANT:"
+        + df["REACTANT"]
+        + "REAGENT:"
+        + df["REAGENT"]
+        + "PRODUCT:"
+        + df["PRODUCT"]
+    )
+    df["pair"] = df["input"]
     return df
 
 
@@ -246,24 +338,56 @@ if __name__ == "__main__":
     valid_dfs = []
 
     # FORWARD
-    train = preprocess_df_FORWARD(pd.read_csv(CFG.train_data_path_FORWARD))
-    valid = preprocess_df_FORWARD(pd.read_csv(CFG.valid_data_path_FORWARD))
+    train = preprocess_df_FORWARD(
+        filter_out(pd.read_csv(CFG.train_data_path_FORWARD), ["REACTANT", "PRODUCT"])
+    )
+    valid = preprocess_df_FORWARD(
+        filter_out(pd.read_csv(CFG.valid_data_path_FORWARD), ["REACTANT", "PRODUCT"])
+    )
+    if CFG.USPTO_MIT_test_data_path:
+        train_copy = preprocess_USPTO_MIT(train.copy())
+        USPTO_test = preprocess_USPTO_MIT(pd.read_csv(CFG.USPTO_MIT_test_data_path))
+        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(
+            drop=True
+        )
+    train["pair"] = train["input"] + " - " + train["target"]
+    valid["pair"] = valid["input"] + " - " + valid["target"]
+    valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
+
     train.to_csv("train_FORWARD.csv", index=False)
     valid.to_csv("valid_FORWARD.csv", index=False)
     train_dfs.append(train[["input", "target"]])
     valid_dfs.append(valid[["input", "target"]])
 
     if CFG.test_data_path_FORWARD:
-        test = preprocess_df_FORWARD(pd.read_csv(CFG.test_data_path_FORWARD))
+        test = preprocess_df_FORWARD(
+            filter_out(pd.read_csv(CFG.test_data_path_FORWARD), ["REACTANT", "PRODUCT"])
+        )
+        test["pair"] = test["input"] + " - " + test["target"]
+        test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
         test.to_csv("test_FORWARD.csv", index=False)
 
     # RETROSYNTHESIS
     train = preprocess_df_RETROSYNTHESIS(
-        pd.read_csv(CFG.train_data_path_RETROSYNTHESIS)
+        filter_out(
+            pd.read_csv(CFG.train_data_path_RETROSYNTHESIS), ["REACTANT", "PRODUCT"]
+        )
     )
     valid = preprocess_df_RETROSYNTHESIS(
-        pd.read_csv(CFG.valid_data_path_RETROSYNTHESIS)
+        filter_out(
+            pd.read_csv(CFG.valid_data_path_RETROSYNTHESIS), ["REACTANT", "PRODUCT"]
+        )
     )
+    if CFG.USPTO_50k_test_data_path:
+        train_copy = preprocess_USPTO_50k(train.copy())
+        USPTO_test = preprocess_USPTO_50k(pd.read_csv(CFG.USPTO_50k_test_data_path))
+        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(
+            drop=True
+        )
+    train["pair"] = train["input"] + " - " + train["target"]
+    valid["pair"] = valid["input"] + " - " + valid["target"]
+    valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
+
     train.to_csv("train_RETROSYNTHESIS.csv", index=False)
     valid.to_csv("valid_RETROSYNTHESIS.csv", index=False)
     train_dfs.append(train[["input", "target"]])
@@ -271,20 +395,46 @@ if __name__ == "__main__":
 
     if CFG.test_data_path_RETROSYNTHESIS:
         test = preprocess_df_RETROSYNTHESIS(
-            pd.read_csv(CFG.test_data_path_RETROSYNTHESIS)
+            filter_out(
+                pd.read_csv(CFG.test_data_path_RETROSYNTHESIS), ["REACTANT", "PRODUCT"]
+            )
         )
+        test["pair"] = test["input"] + " - " + test["target"]
+        test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
         test.to_csv("test_RETROSYNTHESIS.csv", index=False)
 
     # YIELD
-    train = preprocess_df_YIELD(pd.read_csv(CFG.train_data_path_YIELD))
-    valid = preprocess_df_YIELD(pd.read_csv(CFG.valid_data_path_YIELD))
+    train = preprocess_df_YIELD(
+        filter_out(
+            pd.read_csv(CFG.train_data_path_YIELD), ["REACTANT", "PRODUCT", "YIELD"]
+        )
+    )
+    valid = preprocess_df_YIELD(
+        filter_out(
+            pd.read_csv(CFG.valid_data_path_YIELD), ["REACTANT", "PRODUCT", "YIELD"]
+        )
+    )
+    if CFG.CN_test_data_path:
+        train_copy = preprocess_CN(train.copy())
+        CN_test = preprocess_CN(pd.read_csv(CFG.CN_test_data_path))
+        train = train[~train_copy["pair"].isin(CN_test["pair"])].reset_index(drop=True)
+    train["pair"] = train["input"] + " - " + train["target"].astype(str)
+    valid["pair"] = valid["input"] + " - " + valid["target"].astype(str)
+    valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
+
     train.to_csv("train_YIELD.csv", index=False)
     valid.to_csv("valid_YIELD.csv", index=False)
     train_dfs.append(train[["input", "target"]])
     valid_dfs.append(valid[["input", "target"]])
 
     if CFG.test_data_path_YIELD:
-        test = preprocess_df_YIELD(pd.read_csv(CFG.test_data_path_YIELD))
+        test = preprocess_df_YIELD(
+            filter_out(
+                pd.read_csv(CFG.test_data_path_YIELD), ["REACTANT", "PRODUCT", "YIELD"]
+            )
+        )
+        test["pair"] = test["input"] + " - " + test["target"].astype(str)
+        test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
         test.to_csv("test_YIELD.csv", index=False)
 
     train = pd.concat(train_dfs, axis=0).reset_index(drop=True)
