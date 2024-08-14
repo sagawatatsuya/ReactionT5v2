@@ -21,10 +21,10 @@ ReactionT5 is based on the transformers library. Additionally, RDKit is used for
 ```
 pip install rdkit
 pip install pytorch
-pip install tokenizers==0.12.1
-pip install transformers==4.21.0
+pip install tokenizers==0.19.1
+pip install transformers==4.40.2
 pip install datasets
-pip install sentencepiece==0.1.96
+pip install accelerate -U
 ```
 
 
@@ -79,8 +79,7 @@ python finetune.py \
     --epochs=50 \
     --batch_size=32 \
     --train_data_path='../data/demo_reaction_data.csv' \
-    --valid_data_path='../data/demo_reaction_data.csv' \
-    --output_dir='output'
+    --valid_data_path='../data/demo_reaction_data.csv'
 ```
 
 ### Task: Retrosynthesis
@@ -91,8 +90,7 @@ python finetune.py \
     --epochs=20 \
     --batch_size=32 \
     --train_data_path='../data/demo_reaction_data.csv' \
-    --valid_data_path='../data/demo_reaction_data.csv' \
-    --output_dir='output'
+    --valid_data_path='../data/demo_reaction_data.csv'
 ```
 
 ### Task: Yield
