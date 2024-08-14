@@ -25,6 +25,7 @@ pip install tokenizers==0.19.1
 pip install transformers==4.40.2
 pip install datasets
 pip install accelerate -U
+pip install sentencepiece
 ```
 
 

@@ -107,6 +107,9 @@ if __name__ == "__main__":
 
     seed_everything(seed=CFG.seed)
 
+    if CFG.model_name_or_path is None:
+        CFG.download_pretrained_model = True
+
     if CFG.download_pretrained_model:
         download_pretrained_model()
         CFG.model_name_or_path = "."

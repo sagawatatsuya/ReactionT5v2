@@ -156,7 +156,7 @@ def download_pretrained_model():
         shell=True,
     )
     subprocess.run(
-        "wget hhttps://huggingface.co/sagawa/ReactionT5v2-yield/resolve/main/tokenizer.json",
+        "wget https://huggingface.co/sagawa/ReactionT5v2-yield/resolve/main/tokenizer.json",
         shell=True,
     )
     subprocess.run(
