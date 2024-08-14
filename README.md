@@ -1,7 +1,7 @@
 # ReactionT5v2
 ReactionT5 is a T5 model pretrained on a vast array of chemical reactions from the [Open Reaction Database (ORD)](https://github.com/open-reaction-database/ord-data). Unlike other models that are trained on smaller, potentially biased datasets (e.g. patent datasets or high-throughput reaction datasets created by a single reaction), ReactionT5 leverages the extyensive and diverse dataset provided by ORD. This ensures greater generalizability and performance, enabling ReactionT5 to condact product, retrosynthesis, and yield prediction of unseen chemical reactions with high accuracy. This makes it highly practical for real-world applications.
 
-![model image](https://github.com/sagawatatsuya/ReactionT5/blob/main/model-image.png)
+![model image](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/model-image.png)
 
 
 In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models, datasets, and demo is available at [Hugging Face Hub](https://huggingface.co/sagawa).
