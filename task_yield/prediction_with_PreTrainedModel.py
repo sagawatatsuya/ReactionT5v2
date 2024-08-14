@@ -40,6 +40,7 @@ def parse_args():
     parser.add_argument(
         "--model_name_or_path",
         type=str,
+        default="sagawa/ReactionT5v2-yield",
         help="The name of a finetuned model or path to a model which you want to use for prediction. You can use your local models or models uploaded to hugging face.",
     )
     parser.add_argument("--debug", action="store_true", help="Enable debug mode.")
