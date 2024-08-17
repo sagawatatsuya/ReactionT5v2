@@ -1,11 +1,11 @@
-input,YIELD
-REACTANT:C1CCNCC1.CC1(C)OC(=O)C(Oc2ccc(Br)cn2)=C1c1ccc(S(C)(=O)=O)cc1REAGENT:C1CN2CCN1CC2.COCCOC.Cl[Ni]ClPRODUCT:COC(=O)CC1CCc2cc(N3CCCCC3)cc3[nH]c(=O)c(=O)n1c23,7
-REACTANT:CCN(CC)CC.Cc1cc(Cl)nc(Cl)n1.O.O=S1(=O)CCNCC1REAGENT: PRODUCT:Cn1nnnc1-c1cc(Br)cc([N+](=O)[O-])c1,39
-REACTANT:CC(C)n1ncnc1-c1cn2c(n1)-c1cnc(O)cc1OCC2.CCN(C(C)C)C(C)C.Cl.NC(=O)[C@@H]1C[C@H](F)CN1REAGENT: PRODUCT:O=C(NNC(=O)C(F)(F)F)C(F)(F)F,22
-REACTANT:CC(=O)Nc1nc(-c2ccc(CCNC(NC(=O)OC(C)(C)C)NC(=O)OC(C)(C)C)cc2)cs1.ClREAGENT: PRODUCT:C[C@H](CO)CO[Si](c1ccccc1)(c1ccccc1)C(C)(C)C,44
-REACTANT:CCCCCC.CCCN.CCOC(C)=O.Cc1cc(C)c(S(=O)(=O)Cl)c(C)c1REAGENT: PRODUCT:Cc1ccc(C#CC(C)(C)O)cc1F,85
-REACTANT:CN.CSc1ncc(C#N)c(Cl)n1REAGENT: PRODUCT:CNC(=O)c1ncn2c(C)cc(C)[n+](C)c12.[Cl-],81
-REACTANT:CC(C)OB1OC(C)(C)C(C)(C)O1.Fc1cc2c(cc1I)OC(F)(F)O2REAGENT: PRODUCT:Cn1nnnc1-c1cc(Br)cc([N+](=O)[O-])c1,100
-REACTANT:CC(=O)Nc1cccc(B(O)O)c1.COc1ccc(C=C2C(=O)Nc3ccccc32)cc1Br.O.O=C([O-])[O-].[Na+]REAGENT:c1ccc([P](c2ccccc2)(c2ccccc2)[Pd]([P](c2ccccc2)(c2ccccc2)c2ccccc2)([P](c2ccccc2)(c2ccccc2)c2ccccc2)[P](c2ccccc2)(c2ccccc2)c2ccccc2)cc1PRODUCT:COc1nc(N2CCCC2)ccc1[N+](=O)[O-],22
-REACTANT:CCOC(=O)C1CNc2cc(OC(F)(F)F)ccc2O1.COc1ccc(CBr)cc1.O=C([O-])[O-].[I-].[K+].[Na+]REAGENT: PRODUCT:Cn1nnnc1-c1cc(Br)cc([N+](=O)[O-])c1,58
-REACTANT:C=CC(=O)O.CC(C)(C)c1ccc(-c2nnn(C(C)(C)C)n2)cc1.[H][H]REAGENT:[Pd]PRODUCT:CC(C)(O)C(F)(F)C(F)(F)C(F)(F)F,78
+REACTANT,REAGENT,PRODUCT,YIELD
+C1CCNCC1.CC1(C)OC(=O)C(Oc2ccc(Br)cn2)=C1c1ccc(S(C)(=O)=O)cc1,C1CN2CCN1CC2.COCCOC.Cl[Ni]Cl,COC(=O)CC1CCc2cc(N3CCCCC3)cc3[nH]c(=O)c(=O)n1c23,7
+CCN(CC)CC.Cc1cc(Cl)nc(Cl)n1.O.O=S1(=O)CCNCC1,,Cn1nnnc1-c1cc(Br)cc([N+](=O)[O-])c1,39
+CC(C)n1ncnc1-c1cn2c(n1)-c1cnc(O)cc1OCC2.CCN(C(C)C)C(C)C.Cl.NC(=O)[C@@H]1C[C@H](F)CN1,,O=C(NNC(=O)C(F)(F)F)C(F)(F)F,22
+CC(=O)Nc1nc(-c2ccc(CCNC(NC(=O)OC(C)(C)C)NC(=O)OC(C)(C)C)cc2)cs1.Cl,,C[C@H](CO)CO[Si](c1ccccc1)(c1ccccc1)C(C)(C)C,44
+CCCCCC.CCCN.CCOC(C)=O.Cc1cc(C)c(S(=O)(=O)Cl)c(C)c1,,Cc1ccc(C#CC(C)(C)O)cc1F,85
+CN.CSc1ncc(C#N)c(Cl)n1,,CNC(=O)c1ncn2c(C)cc(C)[n+](C)c12.[Cl-],81
+CC(C)OB1OC(C)(C)C(C)(C)O1.Fc1cc2c(cc1I)OC(F)(F)O2,,Cn1nnnc1-c1cc(Br)cc([N+](=O)[O-])c1,100
+CC(=O)Nc1cccc(B(O)O)c1.COc1ccc(C=C2C(=O)Nc3ccccc32)cc1Br.O.O=C([O-])[O-].[Na+],c1ccc([P](c2ccccc2)(c2ccccc2)[Pd]([P](c2ccccc2)(c2ccccc2)c2ccccc2)([P](c2ccccc2)(c2ccccc2)c2ccccc2)[P](c2ccccc2)(c2ccccc2)c2ccccc2)cc1,COc1nc(N2CCCC2)ccc1[N+](=O)[O-],22
+CCOC(=O)C1CNc2cc(OC(F)(F)F)ccc2O1.COc1ccc(CBr)cc1.O=C([O-])[O-].[I-].[K+].[Na+],,Cn1nnnc1-c1cc(Br)cc([N+](=O)[O-])c1,58
+C=CC(=O)O.CC(C)(C)c1ccc(-c2nnn(C(C)(C)C)n2)cc1.[H][H],[Pd],CC(C)(O)C(F)(F)C(F)(F)C(F)(F)F,78

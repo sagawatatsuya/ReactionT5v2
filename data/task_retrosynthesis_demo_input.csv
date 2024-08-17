@@ -1,4 +1,4 @@
-input,REACTANT
+PRODUCT,REACTANT
 CCN(CC)CCNC(=S)NC1CCCc2cc(C)cnc21,CCN(CC)CCN=C=S.Cc1cnc2c(c1)CCCC2N
 NC(=O)CCCNC(=O)c1ccc2[nH]nc(-c3ccc(F)cc3)c2c1,COC(=O)CCCNC(=O)c1ccc2c(c1)c(-c1ccc(F)cc1)nn2C(C)=O.N
 Cc1occc(=O)c1O,COC1C=CC(=O)C(C)O1.ClCl.[Na+].[OH-]
