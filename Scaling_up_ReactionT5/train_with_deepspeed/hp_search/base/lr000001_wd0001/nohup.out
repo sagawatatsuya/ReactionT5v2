@@ -1,0 +1,229 @@
+[2024-04-22 12:00:40,998] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+[2024-04-22 12:00:41,669] [WARNING] [runner.py:202:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2024-04-22 12:00:41,669] [INFO] [runner.py:568:main] cmd = /home/sagawa/miniconda3/envs/deepspeed/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbM119 --master_addr=127.0.0.1 --master_port=12348 --enable_each_rank_log=None /data1/Scaling_up_ReactionT5/train_with_deepspeed/train_with_deepspeed.py --do_train --do_eval --num_train_epochs=10 --output_dir=./output --overwrite_output_dir --save_total_limit=2 --deepspeed=/data1/Scaling_up_ReactionT5/train_with_deepspeed/deepspeed_configs/ds_config_zero0.json --per_device_train_batch_size=32 --per_device_eval_batch_size=128 --learning_rate=0.00001 --weight_decay=0.001 --warmup_steps=10000 --logging_steps=32 --save_steps=512 --eval_steps=512 --config_name=/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/base --tokenizer_name=/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/base --train_files_dir=/media/sagawa//7182ee6c-8215-4bea-a609-999c7c2c02cf/preprocessed_ZINC22/ --max_seq_length=512 --num_workers=2 --local_rank=1
+[2024-04-22 12:00:43,056] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+[2024-04-22 12:00:43,703] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [3]}
+[2024-04-22 12:00:43,703] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=1, node_rank=0
+[2024-04-22 12:00:43,703] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})
+[2024-04-22 12:00:43,703] [INFO] [launch.py:163:main] dist_world_size=1
+[2024-04-22 12:00:43,703] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=3
+[2024-04-22 12:00:43,704] [INFO] [launch.py:253:main] process 306777 spawned with command: ['/home/sagawa/miniconda3/envs/deepspeed/bin/python', '-u', '/data1/Scaling_up_ReactionT5/train_with_deepspeed/train_with_deepspeed.py', '--local_rank=0', '--do_train', '--do_eval', '--num_train_epochs=10', '--output_dir=./output', '--overwrite_output_dir', '--save_total_limit=2', '--deepspeed=/data1/Scaling_up_ReactionT5/train_with_deepspeed/deepspeed_configs/ds_config_zero0.json', '--per_device_train_batch_size=32', '--per_device_eval_batch_size=128', '--learning_rate=0.00001', '--weight_decay=0.001', '--warmup_steps=10000', '--logging_steps=32', '--save_steps=512', '--eval_steps=512', '--config_name=/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/base', '--tokenizer_name=/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/base', '--train_files_dir=/media/sagawa//7182ee6c-8215-4bea-a609-999c7c2c02cf/preprocessed_ZINC22/', '--max_seq_length=512', '--num_workers=2', '--local_rank=1']
+[2024-04-22 12:00:48,304] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+[2024-04-22 12:00:48,792] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-04-22 12:00:48,792] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+max_steps is given, it will override any value given in num_train_epochs
+training started
+{'loss': 52.2119, 'grad_norm': 1246302.545561069, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 26.9819, 'grad_norm': 778724.2331506064, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 23.0005, 'grad_norm': 440532.03971561475, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 20.7959, 'grad_norm': 390024.9208037866, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 19.5601, 'grad_norm': 482810.2640831075, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 18.5884, 'grad_norm': 279617.26607632794, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 18.0576, 'grad_norm': 419022.58085215406, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 17.1477, 'grad_norm': 477799.2792292596, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 16.7324, 'grad_norm': 316659.87696580694, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 16.3032, 'grad_norm': 266074.60674029007, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 15.5691, 'grad_norm': 213796.05281669722, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 15.4065, 'grad_norm': 304936.56158617645, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 15.2937, 'grad_norm': 243443.49872609045, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 14.2649, 'grad_norm': 171806.77832961074, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 13.9092, 'grad_norm': 162063.9942491854, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 13.7544, 'grad_norm': 310931.8797164421, 'learning_rate': 1e-05, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
+[2024-04-23 12:00:39,019] [INFO] [launch.py:316:sigkill_handler] Killing subprocess 306777
+[2024-04-23 12:00:39,091] [INFO] [launch.py:325:sigkill_handler] Main process received SIGTERM, exiting
+[2024-04-23 15:02:11,996] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+[2024-04-23 15:02:12,709] [WARNING] [runner.py:202:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2024-04-23 15:02:12,709] [INFO] [runner.py:568:main] cmd = /home/sagawa/miniconda3/envs/deepspeed/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbM119 --master_addr=127.0.0.1 --master_port=12348 --enable_each_rank_log=None /data1/Scaling_up_ReactionT5/train_with_deepspeed/train_with_deepspeed.py --do_train --do_eval --num_train_epochs=10 --output_dir=./output --overwrite_output_dir --save_total_limit=2 --deepspeed=/data1/Scaling_up_ReactionT5/train_with_deepspeed/deepspeed_configs/ds_config_zero0.json --per_device_train_batch_size=32 --per_device_eval_batch_size=128 --learning_rate=0.00001 --weight_decay=0.001 --warmup_steps=10000 --logging_steps=32 --save_steps=1024 --eval_steps=1024 --config_name=/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/base --tokenizer_name=/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/base --train_files_dir=/media/sagawa//7182ee6c-8215-4bea-a609-999c7c2c02cf/preprocessed_ZINC22/ --max_seq_length=512 --num_workers=2 --local_rank=1
+[2024-04-23 15:02:14,109] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+[2024-04-23 15:02:14,798] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [3]}
+[2024-04-23 15:02:14,798] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=1, node_rank=0
+[2024-04-23 15:02:14,798] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})
+[2024-04-23 15:02:14,798] [INFO] [launch.py:163:main] dist_world_size=1
+[2024-04-23 15:02:14,798] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=3
+[2024-04-23 15:02:14,799] [INFO] [launch.py:253:main] process 377534 spawned with command: ['/home/sagawa/miniconda3/envs/deepspeed/bin/python', '-u', '/data1/Scaling_up_ReactionT5/train_with_deepspeed/train_with_deepspeed.py', '--local_rank=0', '--do_train', '--do_eval', '--num_train_epochs=10', '--output_dir=./output', '--overwrite_output_dir', '--save_total_limit=2', '--deepspeed=/data1/Scaling_up_ReactionT5/train_with_deepspeed/deepspeed_configs/ds_config_zero0.json', '--per_device_train_batch_size=32', '--per_device_eval_batch_size=128', '--learning_rate=0.00001', '--weight_decay=0.001', '--warmup_steps=10000', '--logging_steps=32', '--save_steps=1024', '--eval_steps=1024', '--config_name=/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/base', '--tokenizer_name=/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/base', '--train_files_dir=/media/sagawa//7182ee6c-8215-4bea-a609-999c7c2c02cf/preprocessed_ZINC22/', '--max_seq_length=512', '--num_workers=2', '--local_rank=1']
+output_dir already exists
+[2024-04-23 15:02:19,163] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.2
+[93m [WARNING] [0m using untested triton version (2.2.0), only 1.0.0 is known to be compatible
+[2024-04-23 15:02:19,619] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-04-23 15:02:19,619] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+max_steps is given, it will override any value given in num_train_epochs
+training started
+{'loss': 52.2119, 'grad_norm': 1246302.545561069, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 26.9819, 'grad_norm': 778724.2331506064, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 23.0005, 'grad_norm': 440532.03971561475, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 20.7959, 'grad_norm': 390024.9208037866, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 19.5601, 'grad_norm': 482810.2640831075, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 18.5884, 'grad_norm': 279617.26607632794, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 18.0576, 'grad_norm': 419022.58085215406, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 17.1477, 'grad_norm': 477799.2792292596, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 16.7324, 'grad_norm': 316659.87696580694, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 16.3032, 'grad_norm': 266074.60674029007, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 15.5691, 'grad_norm': 213796.05281669722, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 15.4065, 'grad_norm': 304936.56158617645, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 15.2937, 'grad_norm': 243443.49872609045, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 14.2649, 'grad_norm': 171806.77832961074, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 13.9092, 'grad_norm': 162063.9942491854, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 13.7544, 'grad_norm': 310931.8797164421, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 13.4575, 'grad_norm': 196538.94950365435, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 12.9373, 'grad_norm': 157683.16577238042, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 13.0173, 'grad_norm': 308634.2816473893, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 12.6973, 'grad_norm': 258984.11154354623, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 12.2688, 'grad_norm': 122156.98639046398, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 11.9121, 'grad_norm': 216731.37079804574, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 11.5139, 'grad_norm': 190579.6832823478, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 11.3853, 'grad_norm': 157205.74737585135, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 11.3923, 'grad_norm': 239204.62677799523, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 11.1506, 'grad_norm': 88806.07524263191, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 11.0132, 'grad_norm': 186804.14654926694, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 11.0569, 'grad_norm': 136771.89907287245, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 10.9331, 'grad_norm': 136870.51704439492, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 10.6448, 'grad_norm': 141455.57934560234, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 10.6196, 'grad_norm': 213476.6913365485, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 10.615, 'grad_norm': 373464.3630441866, 'learning_rate': 1e-05, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
+{'eval_loss': 6.28125, 'eval_runtime': 100317.4671, 'eval_samples_per_second': 212.494, 'eval_steps_per_second': 1.66, 'epoch': 0.0}
+/home/sagawa/miniconda3/envs/deepspeed/lib/python3.11/site-packages/torch/nn/modules/module.py:1877: UserWarning: Positional args are being deprecated, use kwargs instead. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+{'loss': 10.3628, 'grad_norm': 206872.49112436385, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 10.4783, 'grad_norm': 315348.34225028043, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 10.4634, 'grad_norm': 323318.71893844934, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 10.2288, 'grad_norm': 206598.7745946234, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 10.1672, 'grad_norm': 446974.18269962753, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.9802, 'grad_norm': 186497.22121254247, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.8591, 'grad_norm': 196493.35296645534, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.7666, 'grad_norm': 326164.22003647184, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.7749, 'grad_norm': 339703.6029482172, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.6511, 'grad_norm': 380927.31384346803, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.5784, 'grad_norm': 259725.7164317773, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.6531, 'grad_norm': 369254.015030304, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.3508, 'grad_norm': 276529.4281048583, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.375, 'grad_norm': 308209.6996267314, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.2542, 'grad_norm': 505897.9813045314, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.2268, 'grad_norm': 298813.18707178906, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.2224, 'grad_norm': 349584.6576038485, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.1831, 'grad_norm': 205580.27827590855, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.0945, 'grad_norm': 259166.20903196465, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.9712, 'grad_norm': 276243.218284178, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.8113, 'grad_norm': 237678.92258254622, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.072, 'grad_norm': 271135.11152928905, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.0815, 'grad_norm': 264462.1007252268, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 9.033, 'grad_norm': 376781.2649270131, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.8414, 'grad_norm': 247748.42623919935, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.7708, 'grad_norm': 285250.1408939179, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.6187, 'grad_norm': 242599.11729435457, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.6787, 'grad_norm': 167662.3496435619, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.4882, 'grad_norm': 314246.6006944228, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.4097, 'grad_norm': 190087.05222607875, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.3647, 'grad_norm': 317932.0702288462, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.1943, 'grad_norm': 291941.885943076, 'learning_rate': 1e-05, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
+{'eval_loss': 5.5390625, 'eval_runtime': 100620.1826, 'eval_samples_per_second': 211.855, 'eval_steps_per_second': 1.655, 'epoch': 0.0}
+/home/sagawa/miniconda3/envs/deepspeed/lib/python3.11/site-packages/torch/nn/modules/module.py:1877: UserWarning: Positional args are being deprecated, use kwargs instead. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+{'loss': 8.4299, 'grad_norm': 166048.58334836827, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.245, 'grad_norm': 301387.67157267727, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.9896, 'grad_norm': 207298.8073289376, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.9275, 'grad_norm': 183676.51015848486, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.0903, 'grad_norm': 277421.8695344691, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.2445, 'grad_norm': 299579.2031233143, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.1388, 'grad_norm': 263142.15048144606, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.1173, 'grad_norm': 304351.2669531704, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 8.0836, 'grad_norm': 246059.89495242818, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.7767, 'grad_norm': 282155.2178783869, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.6296, 'grad_norm': 247616.36546884375, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.5415, 'grad_norm': 395345.2715993958, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.5293, 'grad_norm': 322448.0563191535, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.4209, 'grad_norm': 283136.40099429106, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.3522, 'grad_norm': 192806.8921589682, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.2562, 'grad_norm': 230937.11753635446, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.2296, 'grad_norm': 229731.29569999818, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.3562, 'grad_norm': 156423.93249116326, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.3322, 'grad_norm': 170336.51549799883, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.1117, 'grad_norm': 242913.48985184004, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.0967, 'grad_norm': 250595.74585375548, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.1918, 'grad_norm': 236676.2116985989, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.1305, 'grad_norm': 177048.94654303935, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.1006, 'grad_norm': 258123.02208055754, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 7.0571, 'grad_norm': 322345.1685383232, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.9454, 'grad_norm': 198691.23753200594, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.9677, 'grad_norm': 299003.39208778215, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.8182, 'grad_norm': 190490.4420489385, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.8403, 'grad_norm': 132750.01709981056, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.8381, 'grad_norm': 284936.835442524, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.7524, 'grad_norm': 302938.32211854606, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.6564, 'grad_norm': 171489.495794932, 'learning_rate': 1e-05, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
+{'eval_loss': 3.9375, 'eval_runtime': 100424.7466, 'eval_samples_per_second': 212.267, 'eval_steps_per_second': 1.658, 'epoch': 0.0}
+/home/sagawa/miniconda3/envs/deepspeed/lib/python3.11/site-packages/torch/nn/modules/module.py:1877: UserWarning: Positional args are being deprecated, use kwargs instead. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+{'loss': 6.6368, 'grad_norm': 348622.9854498983, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.7123, 'grad_norm': 197540.5110452031, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.6661, 'grad_norm': 292789.4419954381, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.6951, 'grad_norm': 220391.97139641907, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.5076, 'grad_norm': 175169.90097616657, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.512, 'grad_norm': 131958.07334149737, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.5087, 'grad_norm': 181246.3588379088, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.5439, 'grad_norm': 138933.85902651664, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.5901, 'grad_norm': 128767.44520258217, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.55, 'grad_norm': 122022.3418231268, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.5469, 'grad_norm': 74557.23782437223, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.5608, 'grad_norm': 87811.63877300093, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.6401, 'grad_norm': 150715.90992327253, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.5625, 'grad_norm': 82918.80635899193, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.3385, 'grad_norm': 151159.24688883574, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.3597, 'grad_norm': 110134.50867008032, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.3712, 'grad_norm': 96656.01969872336, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.413, 'grad_norm': 146639.69533519907, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.2917, 'grad_norm': 98477.26527478309, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.2227, 'grad_norm': 89026.14016119087, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.2213, 'grad_norm': 94402.78877236626, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.15, 'grad_norm': 96887.52035221049, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.3076, 'grad_norm': 131832.6513728674, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.1886, 'grad_norm': 154724.91946677497, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.1799, 'grad_norm': 90846.80661421182, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.1246, 'grad_norm': 110672.08811620028, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.2445, 'grad_norm': 86914.02685412751, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.2008, 'grad_norm': 100205.39933556475, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.179, 'grad_norm': 105835.50262553677, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.1802, 'grad_norm': 134995.56875690405, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.1829, 'grad_norm': 102132.63948415316, 'learning_rate': 1e-05, 'epoch': 0.0}
+{'loss': 6.0468, 'grad_norm': 125704.54559800134, 'learning_rate': 1e-05, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
+[2024-04-27 15:02:09,784] [INFO] [launch.py:316:sigkill_handler] Killing subprocess 377534
+[2024-04-27 15:02:10,438] [INFO] [launch.py:325:sigkill_handler] Main process received SIGTERM, exiting

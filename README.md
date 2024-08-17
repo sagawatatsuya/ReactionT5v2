@@ -33,11 +33,12 @@ pip install sentencepiece
 You can use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction.
 
 ### Task: Forward
-To predict the products of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or the contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}". If there are no catalyst, reagent, or solvents, fill the blank with a space. For multiple compounds, concatenate them with ".".(ex. "REACTANT:COC(=O)C1=CCCN(C)C1.O.\[Al+3].\[H-].\[Li+].\[Na+].\[OH-]REAGENT:C1CCOC1")
+To predict the products of reactions from their inputs, use the following command. The code expects these data to contain columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
 ```
 cd task_forward
 python prediction.py \
     --input_data="../data/task_forward_demo_input.csv" \
+    --model_name_or_path="sagawa/ReactionT5v2-forward" \
     --input_max_length=150 \
     --num_beams=5 \
     --num_return_sequences=5 \
@@ -46,11 +47,12 @@ python prediction.py \
 ```
 
 ### Task: Retrosynthesis
-To predict the reactants of reactions from their products, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or the contents of the column should be SMILES of products. For multiple compounds, concatenate them with ".".(ex. "CCN(CC)CCNC(=S)NC1CCCc2cc(C)cnc21")
+To predict the reactants of reactions from their products, use the following command. The code expects 'input_data' as a CSV file that contains a "PRODUCT" column. The format of the contents of the column should be SMILES of each compound. For multiple compounds, concatenate them with ".".
 ```
 cd task_retrosynthesis
 python prediction.py \
     --input_data="../data/task_retrosynthesis_demo_input.csv" \
+    --model_name_or_path="sagawa/ReactionT5v2-retrosynthesis" \
     --input_max_length=100 \
     --num_beams=5 \
     --num_return_sequences=5 \
@@ -59,11 +61,12 @@ python prediction.py \
 ```
 
 ### Task: Yield
-To predict the yields of reactions from their inputs, use the following command. The code expects 'input_data' as a string or CSV file that contains an 'input' column. The format of the string or the contents of the column should follow this template: "REACTANT:{SMILES of reactants}REAGENT:{SMILES of reagents, catalysts, or solvents}PRODUCT:{SMILES of products}". If there are multiple compounds, concatenate them with ".".(ex. "REACTANT:C1CCNCC1.CC1(C)OC(=O)C(Oc2ccc(Br)cn2)=C1c1ccc(S(C)(=O)=O)cc1REAGENT:C1CN2CCN1CC2.COCCOC.Cl[Ni]ClPRODUCT:COC(=O)CC1CCc2cc(N3CCCCC3)cc3[nH]c(=O)c(=O)n1c23")
+To predict the yields of reactions from their inputs, use the following command. The code expects 'input_data' as a CSV file that contains columns named 'REACTANT', 'REAGENT', 'PRODUCT', and 'YIELD'; except 'YIELD' have SMILES information, and 'YIELD' has numerical information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
 ```
 cd task_yield
 python prediction_with_PreTrainedModel.py \
     --data="../data/task_yield_demo_input.csv" \
+    --model_name_or_path="sagawa/ReactionT5v2-yield" \
     --batch_size=16 \
     --output_dir="output"
 ```
@@ -73,10 +76,11 @@ python prediction_with_PreTrainedModel.py \
 If your dataset is very specific and different from ORD's data, ReactionT5 may not predict well. In that case, you can fine-tune ReactionT5 on your dataset. From our study, ReactionT5's performance drastically improved its performance by fine-tuning using relatively small data (100 reactions).
 
 ### Task: Forward
-Specify your training and validation data used for fine-tuning and run the following command. The code expects these data to contain columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '.
+Specify your training and validation data used for fine-tuning and run the following command. The code expects these data to contain columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
 ```
 cd task_forward
 python finetune.py \
+    --model_name_or_path='sagawa/ReactionT5v2-forward' \
     --epochs=50 \
     --batch_size=32 \
     --train_data_path='../data/demo_reaction_data.csv' \
@@ -84,10 +88,11 @@ python finetune.py \
 ```
 
 ### Task: Retrosynthesis
-Specify your training and validation data used for fine-tuning and run the following command. The code expects these data to contain columns named 'REACTANT' and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '.
+Specify your training and validation data used for fine-tuning and run the following command. The code expects these data to contain columns named 'REACTANT' and 'PRODUCT'; each has SMILES information. For multiple compounds, concatenate them with ".".
 ```
 cd task_retrosynthesis
 python finetune.py \
+    --model_name_or_path='sagawa/ReactionT5v2-retrosynthesis' \
     --epochs=20 \
     --batch_size=32 \
     --train_data_path='../data/demo_reaction_data.csv' \
@@ -95,7 +100,7 @@ python finetune.py \
 ```
 
 ### Task: Yield
-Specify your training and validation data used for fine-tuning and run the following command. We expect these data to contain columns named 'REACTANT', 'REAGENT', 'PRODUCT', and 'YIELD'; except 'YIELD ' have SMILES information, and 'YIELD' has numerical information. If there is no reagent information, fill in the blank with ' '.
+Specify your training and validation data used for fine-tuning and run the following command. We expect these data to contain columns named 'REACTANT', 'REAGENT', 'PRODUCT', and 'YIELD'; except 'YIELD ' have SMILES information, and 'YIELD' has numerical information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
 ```
 cd task_yield
 python finetune.py \

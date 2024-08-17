@@ -10,6 +10,7 @@ import gc
 
 sys.path.append("../")
 from utils import seed_everything
+from train import preprocess_df
 
 warnings.filterwarnings("ignore")
 
@@ -23,12 +24,6 @@ def parse_args():
         type=str,
         required=True,
         help="Path to the input data.",
-    )
-    parser.add_argument(
-        "--input_column",
-        type=str,
-        default="input",
-        help="Column name used for model input.",
     )
     parser.add_argument(
         "--input_max_length",
@@ -51,7 +46,7 @@ def parse_args():
     parser.add_argument(
         "--model_name_or_path",
         type=str,
-        default="sagawa/ReactionT5-product-prediction",
+        default="sagawa/ReactionT5v2-retrosynthesis",
         help="Name or path of the finetuned model for prediction. Can be a local model or one from Hugging Face.",
     )
     parser.add_argument(
@@ -98,7 +93,7 @@ def prepare_input(cfg, text):
 class ProductDataset(Dataset):
     def __init__(self, cfg, df):
         self.cfg = cfg
-        self.inputs = df[cfg.input_column].values
+        self.inputs = df["input"].values
 
     def __len__(self):
         return len(self.inputs)
@@ -146,7 +141,7 @@ def save_single_prediction(input_compound, output, scores, cfg):
 
 def save_multiple_predictions(input_data, sequences, scores, cfg):
     output_list = [
-        [input_data.loc[i // cfg.num_return_sequences, cfg.input_column]]
+        [input_data.loc[i // cfg.num_return_sequences, "input"]]
         + sequences[i : i + cfg.num_return_sequences]
         + scores[i : i + cfg.num_return_sequences]
         for i in range(0, len(sequences), cfg.num_return_sequences)
@@ -181,6 +176,7 @@ if __name__ == "__main__":
         output_df = save_single_prediction(input_compound, sequences, scores, CFG)
     else:
         input_data = pd.read_csv(CFG.input_data)
+        input_data = preprocess_df(input_data, drop_duplicates=False)
         dataset = ProductDataset(CFG, input_data)
         dataloader = DataLoader(
             dataset,

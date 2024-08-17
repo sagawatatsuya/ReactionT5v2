@@ -109,8 +109,7 @@ if __name__ == "__main__":
 
     if CFG.data.endswith(".csv"):
         test_ds = pd.read_csv(CFG.data)
-        if "input" not in test_ds.columns:
-            test_ds = preprocess_df(test_ds, CFG)
+        test_ds = preprocess_df(test_ds, CFG, drop_duplicates=False)
     else:
         test_ds = pd.DataFrame.from_dict({"input": [CFG.data]}, orient="index").T
 

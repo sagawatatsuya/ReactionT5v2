@@ -1,0 +1,22 @@
+timeout 24h nohup deepspeed --include localhost:0 --master_port 12345 /data1/Scaling_up_ReactionT5/train_with_deepspeed/train_with_deepspeed.py \
+    --do_train \
+    --do_eval \
+    --num_train_epochs="10" \
+    --output_dir="./output" \
+    --overwrite_output_dir \
+    --save_total_limit="2" \
+    --deepspeed="/data1/Scaling_up_ReactionT5/train_with_deepspeed/deepspeed_configs/ds_config_zero0.json" \
+    --per_device_train_batch_size="128" \
+    --per_device_eval_batch_size="512" \
+    --learning_rate="0.01" \
+    --weight_decay="0.001" \
+    --warmup_steps="10000" \
+    --logging_steps="32" \
+    --save_steps="512" \
+    --eval_steps="512" \
+    --config_name="/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/small" \
+    --tokenizer_name="/data1/Scaling_up_ReactionT5/train_with_deepspeed/T5configs/small" \
+    --train_files_dir="/media/sagawa//7182ee6c-8215-4bea-a609-999c7c2c02cf/preprocessed_ZINC22//" \
+    --max_seq_length="512" \
+    --num_workers="2" \
+    --local_rank=1

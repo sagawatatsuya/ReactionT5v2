@@ -6,7 +6,7 @@ from transformers import AutoTokenizer, T5EncoderModel
 import argparse
 from torch.utils.data import DataLoader
 import sys
-import gc
+import numpy as np
 
 sys.path.append("../")
 from utils import seed_everything
@@ -61,48 +61,35 @@ def parse_args():
     return parser.parse_args()
 
 
-def predict_single_input(input_compound):
-    inp = tokenizer(input_compound, return_tensors="pt").to(device)
-    with torch.no_grad():
-        output = model.generate(
-            **inp,
-            min_length=CFG.output_min_length,
-            max_length=CFG.output_max_length,
-            num_beams=CFG.num_beams,
-            num_return_sequences=CFG.num_return_sequences,
-            return_dict_in_generate=True,
-            output_scores=True,
-        )
-    return output
-
 def create_embedding(dataloader, model, device):
     outputs = []
     outputs_cls = []
     model.eval()
     model.to(device)
-    tk0 = tqdm(dataloader, total=len(dataloader))
-    for inputs in tk0:
+    for inputs in dataloader:
         for k, v in inputs.items():
             inputs[k] = v.to(device)
         with torch.no_grad():
             output = model(**inputs)
         outputs.append(output[0].detach().cpu().numpy())
         outputs_cls.append(output[0][:, 0, :].detach().cpu().numpy())
-    
+
     return outputs, outputs_cls
 
 
 if __name__ == "__main__":
     CFG = parse_args()
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    CFG.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     if not os.path.exists(CFG.output_dir):
         os.makedirs(CFG.output_dir)
 
     seed_everything(seed=CFG.seed)
 
-    tokenizer = AutoTokenizer.from_pretrained(CFG.model_name_or_path, return_tensors="pt")
-    model = T5EncoderModel.from_pretrained(CFG.model_name_or_path).to(device)
+    CFG.tokenizer = AutoTokenizer.from_pretrained(
+        CFG.model_name_or_path, return_tensors="pt"
+    )
+    model = T5EncoderModel.from_pretrained(CFG.model_name_or_path).to(CFG.device)
     model.eval()
 
     input_data = pd.read_csv(CFG.input_data)
@@ -116,27 +103,10 @@ if __name__ == "__main__":
         drop_last=False,
     )
 
-    all_sequences, all_scores = [], []
-    for inputs in dataloader:
-        inputs = {k: v[0].to(device) for k, v in inputs.items()}
-        with torch.no_grad():
-            output = model.generate(
-                **inputs,
-                min_length=CFG.output_min_length,
-                max_length=CFG.output_max_length,
-                num_beams=CFG.num_beams,
-                num_return_sequences=CFG.num_return_sequences,
-                return_dict_in_generate=True,
-                output_scores=True,
-            )
-        sequences, scores = decode_output(output)
-        all_sequences.extend(sequences)
-        if scores:
-            all_scores.extend(scores)
-        del output
-        torch.cuda.empty_cache()
-        gc.collect()
+    outputs, outputs_cls = create_embedding(dataloader, model, CFG.device)
 
-    output_df = save_multiple_predictions(input_data, all_sequences, all_scores)
+    outputs = np.concatenate(outputs, axis=0)
+    outputs_cls = np.concatenate(outputs_cls, axis=0)
 
-    output_df.to_csv(os.path.join(CFG.output_dir, "output.csv"), index=False)
+    np.save(os.path.join(CFG.output_dir, "embedding.npy"), outputs)
+    np.save(os.path.join(CFG.output_dir, "embedding_cls.npy"), outputs_cls)

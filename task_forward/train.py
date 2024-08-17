@@ -156,7 +156,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def preprocess_df(df):
+def preprocess_df(df, drop_duplicates=True):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
     for col in [
         "REACTANT",
@@ -168,12 +168,12 @@ def preprocess_df(df):
         if col not in df.columns:
             df[col] = None
         df[col] = df[col].fillna(" ")
-        
-    df = (
-        df[["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]]
-        .drop_duplicates()
-        .reset_index(drop=True)
-    )
+    if drop_duplicates:
+        df = (
+            df[["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]]
+            .drop_duplicates()
+            .reset_index(drop=True)
+        )
     df["REAGENT"] = df["CATALYST"] + "." + df["REAGENT"] + "." + df["SOLVENT"]
     df["REAGENT"] = df["REAGENT"].apply(lambda x: space_clean(x))
     df["REAGENT"] = df["REAGENT"].apply(lambda x: canonicalize(x) if x != " " else " ")

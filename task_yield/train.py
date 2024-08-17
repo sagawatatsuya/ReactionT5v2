@@ -160,7 +160,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def preprocess_df(df, cfg):
+def preprocess_df(df, cfg, drop_duplicates=True):
     """
     Preprocess the input DataFrame for training.
 
@@ -199,7 +199,8 @@ def preprocess_df(df, cfg):
         + "PRODUCT:"
         + df["PRODUCT"]
     )
-    df = df.loc[df[["input", "YIELD"]].drop_duplicates().index].reset_index(drop=True)
+    if drop_duplicates:
+        df = df.loc[df[["input", "YIELD"]].drop_duplicates().index].reset_index(drop=True)
 
     if cfg.debug:
         df = df.head(1000)

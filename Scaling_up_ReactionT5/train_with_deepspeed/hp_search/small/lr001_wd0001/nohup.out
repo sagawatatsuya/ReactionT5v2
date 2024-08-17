@@ -1,0 +1,95 @@
+[2024-04-20 16:10:01,636] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-20 16:10:02,630] [WARNING] [runner.py:202:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2024-04-20 16:10:02,630] [INFO] [runner.py:571:main] cmd = /home/sagawa/miniconda3/envs/deepspeed/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMF19 --master_addr=127.0.0.1 --master_port=12345 --enable_each_rank_log=None /home/sagawa/Scaling_up_ReactionT5/train_with_deepspeed/train_with_deepspeed.py --do_train --do_eval --num_train_epochs=10 --output_dir=./output --overwrite_output_dir --save_total_limit=2 --deepspeed=/home/sagawa/Scaling_up_ReactionT5/train_with_deepspeed/deepspeed_configs/ds_config_zero0.json --per_device_train_batch_size=256 --per_device_eval_batch_size=1024 --learning_rate=0.01 --weight_decay=0.001 --warmup_steps=10000 --logging_steps=32 --save_steps=512 --eval_steps=512 --config_name=/home/sagawa/Scaling_up_ReactionT5/T5configs/small --tokenizer_name=/home/sagawa/Scaling_up_ReactionT5/T5configs/small --train_files_dir=/data/sagawa/preprocessed_ZINC22/ --max_seq_length=512 --num_workers=2 --local_rank=1
+[2024-04-20 16:10:04,176] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-20 16:10:04,952] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0]}
+[2024-04-20 16:10:04,952] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=1, node_rank=0
+[2024-04-20 16:10:04,952] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})
+[2024-04-20 16:10:04,952] [INFO] [launch.py:163:main] dist_world_size=1
+[2024-04-20 16:10:04,952] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=0
+output_dir already exists
+Resolving data files:   0%|          | 0/26 [00:00<?, ?it/s]Resolving data files: 100%|██████████| 26/26 [00:00<00:00, 160606.63it/s]
+[2024-04-20 16:10:08,976] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-20 16:10:09,218] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-04-20 16:10:09,218] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+Detected kernel version 5.4.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+training started
+/home/sagawa/miniconda3/envs/deepspeed/lib/python3.11/site-packages/deepspeed/runtime/utils.py:274: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400430266/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  overflow_gpu = get_accelerator().ByteTensor([overflow])
+{'loss': 71.9053, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 27.1396, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 18.6389, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 14.2109, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 10.9778, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 8.0811, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 6.3234, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 4.9917, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 4.412, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 4.4142, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 3.7987, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 3.3965, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 3.3446, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 3.2627, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 3.1034, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 3.0609, 'learning_rate': 0.01, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
+{'eval_loss': 2.796875, 'eval_runtime': 22846.6663, 'eval_samples_per_second': 933.041, 'eval_steps_per_second': 0.911, 'epoch': 0.0}
+/home/sagawa/miniconda3/envs/deepspeed/lib/python3.11/site-packages/torch/nn/modules/module.py:1879: UserWarning: Positional args are being deprecated, use kwargs instead. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+{'loss': 3.0173, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 2.9865, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 2.9696, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 2.2966, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
+{'eval_loss': nan, 'eval_runtime': 22961.7578, 'eval_samples_per_second': 928.365, 'eval_steps_per_second': 0.907, 'epoch': 0.0}
+/home/sagawa/miniconda3/envs/deepspeed/lib/python3.11/site-packages/torch/nn/modules/module.py:1879: UserWarning: Positional args are being deprecated, use kwargs instead. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
+{'eval_loss': nan, 'eval_runtime': 22902.415, 'eval_samples_per_second': 930.77, 'eval_steps_per_second': 0.909, 'epoch': 0.0}
+/home/sagawa/miniconda3/envs/deepspeed/lib/python3.11/site-packages/torch/nn/modules/module.py:1879: UserWarning: Positional args are being deprecated, use kwargs instead. Refer to https://pytorch.org/docs/master/generated/torch.nn.Module.html#torch.nn.Module.state_dict for details.
+  warnings.warn(
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+{'loss': 0.0, 'learning_rate': 0.01, 'epoch': 0.0}
+Too many dataloader workers: 2 (max is dataset.n_shards=1). Stopping 1 dataloader workers.
