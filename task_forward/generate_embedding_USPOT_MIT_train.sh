@@ -3,4 +3,4 @@ CUDA_VISIBLE_DEVICES=3 python generate_embedding.py \
     --model_name_or_path="sagawa/ReactionT5v2-forward" \
     --input_max_length=150 \
     --batch_size=16 \
-    --output_dir="output_ord"
+    --output_dir="output_uspto"

@@ -33,7 +33,7 @@ pip install sentencepiece
 You can use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction.
 
 ### Task: Forward
-To predict the products of reactions from their inputs, use the following command. The code expects these data to contain columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
+To predict the products of reactions from their inputs, use the following command. The code expects 'input_data' as a CSV file that contains columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
 ```
 cd task_forward
 python prediction.py \
@@ -76,7 +76,7 @@ python prediction_with_PreTrainedModel.py \
 If your dataset is very specific and different from ORD's data, ReactionT5 may not predict well. In that case, you can fine-tune ReactionT5 on your dataset. From our study, ReactionT5's performance drastically improved its performance by fine-tuning using relatively small data (100 reactions).
 
 ### Task: Forward
-Specify your training and validation data used for fine-tuning and run the following command. The code expects these data to contain columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
+Specify your training and validation data used for fine-tuning and run the following command. The code expects train and valid data that contain columns named 'REACTANT', 'REAGENT', and 'PRODUCT'; each has SMILES information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
 ```
 cd task_forward
 python finetune.py \
@@ -88,7 +88,7 @@ python finetune.py \
 ```
 
 ### Task: Retrosynthesis
-Specify your training and validation data used for fine-tuning and run the following command. The code expects these data to contain columns named 'REACTANT' and 'PRODUCT'; each has SMILES information. For multiple compounds, concatenate them with ".".
+Specify your training and validation data used for fine-tuning and run the following command. The code expects train and valid data that contain columns named 'REACTANT' and 'PRODUCT'; each has SMILES information. For multiple compounds, concatenate them with ".".
 ```
 cd task_retrosynthesis
 python finetune.py \
@@ -100,7 +100,7 @@ python finetune.py \
 ```
 
 ### Task: Yield
-Specify your training and validation data used for fine-tuning and run the following command. We expect these data to contain columns named 'REACTANT', 'REAGENT', 'PRODUCT', and 'YIELD'; except 'YIELD ' have SMILES information, and 'YIELD' has numerical information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
+Specify your training and validation data used for fine-tuning and run the following command. The code expects train and valid data that contain columns named 'REACTANT', 'REAGENT', 'PRODUCT', and 'YIELD'; except 'YIELD ' have SMILES information, and 'YIELD' has numerical information. If there is no reagent information, fill in the blank with ' '. For multiple compounds, concatenate them with ".".
 ```
 cd task_yield
 python finetune.py \

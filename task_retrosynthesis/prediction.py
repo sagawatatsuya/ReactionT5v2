@@ -18,7 +18,7 @@ warnings.filterwarnings("ignore")
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Script for reaction product prediction."
+        description="Script for reaction retrosynthesis prediction."
     )
     parser.add_argument(
         "--input_data",
