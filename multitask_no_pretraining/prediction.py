@@ -4,13 +4,13 @@ import pandas as pd
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import argparse
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 import sys
 import gc
 
 sys.path.append("../")
 from utils import seed_everything
-from generation_utils import prepare_input
+from generation_utils import ReactionT5Dataset, save_multiple_predictions
 from train import (
     preprocess_df_FORWARD,
     preprocess_df_RETROSYNTHESIS,
@@ -38,12 +38,6 @@ def parse_args():
         "--input_data_YIELD",
         type=str,
         help="Path to the input data.",
-    )
-    parser.add_argument(
-        "--input_column",
-        type=str,
-        default="input",
-        help="Column name used for model input.",
     )
     parser.add_argument(
         "--input_max_length",
@@ -96,18 +90,6 @@ def parse_args():
     return parser.parse_args()
 
 
-class ReactionT5Dataset(Dataset):
-    def __init__(self, cfg, df):
-        self.cfg = cfg
-        self.inputs = df[cfg.input_column].values
-
-    def __len__(self):
-        return len(self.inputs)
-
-    def __getitem__(self, idx):
-        return prepare_input(self.cfg, self.inputs[idx])
-
-
 def decode_output(output, cfg):
     special_tokens = cfg.tokenizer.special_tokens_map
     special_tokens = [special_tokens['eos_token'], special_tokens['pad_token'], special_tokens['unk_token']] + list(set(special_tokens['additional_special_tokens']) - set(['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%']))
@@ -119,22 +101,6 @@ def decode_output(output, cfg):
         scores = output["sequences_scores"].tolist()
         return sequences, scores
     return sequences, None
-
-
-def save_multiple_predictions(input_data, sequences, scores, cfg):
-    output_list = [
-        [input_data.loc[i // cfg.num_return_sequences, cfg.input_column]]
-        + sequences[i : i + cfg.num_return_sequences]
-        + scores[i : i + cfg.num_return_sequences]
-        for i in range(0, len(sequences), cfg.num_return_sequences)
-    ]
-    columns = (
-        ["input"]
-        + [f"{i}th" for i in range(cfg.num_return_sequences)]
-        + ([f"{i}th score" for i in range(cfg.num_return_sequences)] if scores else [])
-    )
-    output_df = pd.DataFrame(output_list, columns=columns)
-    return output_df
 
 
 if __name__ == "__main__":
