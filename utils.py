@@ -30,12 +30,12 @@ def canonicalize(smiles):
 
 def canonicalize_str(smiles):
     """Try to canonicalize the molecule, return empty string if fails."""
-    try:
-        return canonicalize(smiles)
-    except:
-        if "%" in smiles:
-            return smiles
-        else:
+    if "%" in smiles:
+        return smiles
+    else:
+        try:
+            return canonicalize(smiles)
+        except:
             return ""
 
 

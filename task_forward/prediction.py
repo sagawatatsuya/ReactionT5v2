@@ -4,12 +4,13 @@ import pandas as pd
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import argparse
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 import sys
 import gc
 
 sys.path.append("../")
 from utils import seed_everything
+from generation_utils import ReactionT5Dataset, predict_single_input, decode_output, save_single_prediction, save_multiple_predictions
 from train import preprocess_df
 
 warnings.filterwarnings("ignore")
@@ -76,85 +77,6 @@ def parse_args():
     return parser.parse_args()
 
 
-def prepare_input(cfg, text):
-    inputs = cfg.tokenizer(
-        text,
-        return_tensors="pt",
-        max_length=cfg.input_max_length,
-        padding="max_length",
-        truncation=True,
-    )
-    dic = {"input_ids": [], "attention_mask": []}
-    for k, v in inputs.items():
-        dic[k].append(torch.tensor(v[0], dtype=torch.long))
-    return dic
-
-
-class ProductDataset(Dataset):
-    def __init__(self, cfg, df):
-        self.cfg = cfg
-        self.inputs = df["input"].values
-
-    def __len__(self):
-        return len(self.inputs)
-
-    def __getitem__(self, idx):
-        return prepare_input(self.cfg, self.inputs[idx])
-
-
-def predict_single_input(input_compound, model, cfg):
-    inp = cfg.tokenizer(input_compound, return_tensors="pt").to(cfg.device)
-    with torch.no_grad():
-        output = model.generate(
-            **inp,
-            min_length=cfg.output_min_length,
-            max_length=cfg.output_max_length,
-            num_beams=cfg.num_beams,
-            num_return_sequences=cfg.num_return_sequences,
-            return_dict_in_generate=True,
-            output_scores=True,
-        )
-    return output
-
-
-def decode_output(output, cfg):
-    sequences = [
-        cfg.tokenizer.decode(seq, skip_special_tokens=True).replace(" ", "").rstrip(".")
-        for seq in output["sequences"]
-    ]
-    if cfg.num_beams > 1:
-        scores = output["sequences_scores"].tolist()
-        return sequences, scores
-    return sequences, None
-
-
-def save_single_prediction(input_compound, output, scores, cfg):
-    output_data = [input_compound] + output + (scores if scores else [])
-    columns = (
-        ["input"]
-        + [f"{i}th" for i in range(cfg.num_beams)]
-        + ([f"{i}th score" for i in range(cfg.num_beams)] if scores else [])
-    )
-    output_df = pd.DataFrame([output_data], columns=columns)
-    return output_df
-
-
-def save_multiple_predictions(input_data, sequences, scores, cfg):
-    output_list = [
-        [input_data.loc[i // cfg.num_return_sequences, "input"]]
-        + sequences[i : i + cfg.num_return_sequences]
-        + scores[i : i + cfg.num_return_sequences]
-        for i in range(0, len(sequences), cfg.num_return_sequences)
-    ]
-    columns = (
-        ["input"]
-        + [f"{i}th" for i in range(cfg.num_return_sequences)]
-        + ([f"{i}th score" for i in range(cfg.num_return_sequences)] if scores else [])
-    )
-    output_df = pd.DataFrame(output_list, columns=columns)
-    return output_df
-
-
 if __name__ == "__main__":
     CFG = parse_args()
     CFG.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -176,7 +98,7 @@ if __name__ == "__main__":
     else:
         input_data = pd.read_csv(CFG.input_data)
         input_data = preprocess_df(input_data, drop_duplicates=False)
-        dataset = ProductDataset(CFG, input_data)
+        dataset = ReactionT5Dataset(CFG, input_data)
         dataloader = DataLoader(
             dataset,
             batch_size=CFG.batch_size,
@@ -188,7 +110,7 @@ if __name__ == "__main__":
 
         all_sequences, all_scores = [], []
         for inputs in dataloader:
-            inputs = {k: v[0].to(CFG.device) for k, v in inputs.items()}
+            inputs = {k: v.to(CFG.device) for k, v in inputs.items()}
             with torch.no_grad():
                 output = model.generate(
                     **inputs,

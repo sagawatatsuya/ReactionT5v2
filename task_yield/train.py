@@ -30,6 +30,7 @@ from utils import (
     space_clean,
     filter_out
 )
+from generation_utils import prepare_input
 from models import ReactionT5Yield
 
 # Suppress warnings and logging
@@ -231,28 +232,6 @@ def preprocess_CN(df):
     )
     df["pair"] = df["input"]
     return df
-
-
-def prepare_input(cfg, text):
-    """
-    Prepare input tensors for the model.
-
-    Args:
-        cfg (argparse.Namespace): Configuration object.
-        text (str): Input text.
-
-    Returns:
-        dict: Tokenized input tensors.
-    """
-    inputs = cfg.tokenizer(
-        text,
-        add_special_tokens=True,
-        max_length=cfg.input_max_length,
-        padding="max_length",
-        truncation=True,
-        return_attention_mask=True,
-    )
-    return {k: torch.tensor(v, dtype=torch.long) for k, v in inputs.items()}
 
 
 class TrainDataset(Dataset):

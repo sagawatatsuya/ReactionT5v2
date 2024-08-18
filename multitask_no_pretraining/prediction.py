@@ -10,6 +10,7 @@ import gc
 
 sys.path.append("../")
 from utils import seed_everything
+from generation_utils import prepare_input
 from train import (
     preprocess_df_FORWARD,
     preprocess_df_RETROSYNTHESIS,
@@ -95,21 +96,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def prepare_input(cfg, text):
-    inputs = cfg.tokenizer(
-        text,
-        return_tensors="pt",
-        max_length=cfg.input_max_length,
-        padding="max_length",
-        truncation=True,
-    )
-    dic = {"input_ids": [], "attention_mask": []}
-    for k, v in inputs.items():
-        dic[k].append(torch.tensor(v[0], dtype=torch.long))
-    return dic
-
-
-class ProductDataset(Dataset):
+class ReactionT5Dataset(Dataset):
     def __init__(self, cfg, df):
         self.cfg = cfg
         self.inputs = df[cfg.input_column].values
@@ -180,7 +167,7 @@ if __name__ == "__main__":
     input_data = pd.concat(
         input_data, axis=0
     ).reset_index(drop=True)
-    dataset = ProductDataset(CFG, input_data)
+    dataset = ReactionT5Dataset(CFG, input_data)
     dataloader = DataLoader(
         dataset,
         batch_size=CFG.batch_size,
@@ -192,7 +179,7 @@ if __name__ == "__main__":
 
     all_sequences, all_scores = [], []
     for inputs in dataloader:
-        inputs = {k: v[0].to(CFG.device) for k, v in inputs.items()}
+        inputs = {k: v.to(CFG.device) for k, v in inputs.items()}
         with torch.no_grad():
             output = model.generate(
                 **inputs,

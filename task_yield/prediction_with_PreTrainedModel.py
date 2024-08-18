@@ -6,7 +6,7 @@ import argparse
 
 import pandas as pd
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
 from datasets.utils.logging import disable_progress_bar
 
@@ -19,7 +19,8 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 # Append the utils module path
 sys.path.append("../")
 from utils import seed_everything
-from train import prepare_input, inference_fn, preprocess_df
+from generation_utils import ReactionT5Dataset
+from train import inference_fn, preprocess_df
 from models import ReactionT5Yield2
 
 
@@ -72,24 +73,6 @@ def parse_args():
     return parser.parse_args()
 
 
-class TestDataset(Dataset):
-    """
-    Dataset class for training.
-    """
-
-    def __init__(self, cfg, df):
-        self.cfg = cfg
-        self.inputs = df["input"].values
-
-    def __len__(self):
-        return len(self.inputs)
-
-    def __getitem__(self, item):
-        inputs = prepare_input(self.cfg, self.inputs[item])
-
-        return inputs
-
-
 if __name__ == "__main__":
     CFG = parse_args()
 
@@ -113,7 +96,7 @@ if __name__ == "__main__":
     else:
         test_ds = pd.DataFrame.from_dict({"input": [CFG.data]}, orient="index").T
 
-    test_dataset = TestDataset(CFG, test_ds)
+    test_dataset = ReactionT5Dataset(CFG, test_ds)
     test_loader = DataLoader(
         test_dataset,
         batch_size=CFG.batch_size,

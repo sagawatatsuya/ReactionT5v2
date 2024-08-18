@@ -13,6 +13,7 @@ __pycache__
 *.tgz
 *.rar
 *.safetensors
+*.npy
 
 !data/task_forward_demo_input.csv
 !data/task_retrosynthesis_demo_input.csv

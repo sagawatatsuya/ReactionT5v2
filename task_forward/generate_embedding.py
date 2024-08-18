@@ -10,7 +10,8 @@ import numpy as np
 
 sys.path.append("../")
 from utils import seed_everything
-from prediction import ProductDataset
+from generation_utils import ReactionT5Dataset
+from train import preprocess_df
 
 warnings.filterwarnings("ignore")
 
@@ -24,12 +25,6 @@ def parse_args():
         type=str,
         required=True,
         help="Path to the input data.",
-    )
-    parser.add_argument(
-        "--input_column",
-        type=str,
-        default="input",
-        help="Column name used for model input.",
     )
     parser.add_argument(
         "--input_max_length",
@@ -62,19 +57,18 @@ def parse_args():
 
 
 def create_embedding(dataloader, model, device):
-    outputs = []
-    outputs_cls = []
+    outputs_mean = []
+    # outputs_cls = []
     model.eval()
     model.to(device)
     for inputs in dataloader:
-        for k, v in inputs.items():
-            inputs[k] = v.to(device)
+        inputs = {k: v.to(CFG.device) for k, v in inputs.items()}
         with torch.no_grad():
             output = model(**inputs)
-        outputs.append(output[0].detach().cpu().numpy())
-        outputs_cls.append(output[0][:, 0, :].detach().cpu().numpy())
+        outputs_mean.append(output[0].mean(dim=1).detach().cpu().numpy())
+        # outputs_cls.append(output[0][:, 0, :].detach().cpu().numpy())
 
-    return outputs, outputs_cls
+    return outputs_mean #, outputs_cls
 
 
 if __name__ == "__main__":
@@ -93,7 +87,8 @@ if __name__ == "__main__":
     model.eval()
 
     input_data = pd.read_csv(CFG.input_data)
-    dataset = ProductDataset(CFG, input_data)
+    input_data = preprocess_df(input_data, drop_duplicates=False)
+    dataset = ReactionT5Dataset(CFG, input_data)
     dataloader = DataLoader(
         dataset,
         batch_size=CFG.batch_size,
@@ -103,10 +98,10 @@ if __name__ == "__main__":
         drop_last=False,
     )
 
-    outputs, outputs_cls = create_embedding(dataloader, model, CFG.device)
+    outputs = create_embedding(dataloader, model, CFG.device)
 
     outputs = np.concatenate(outputs, axis=0)
-    outputs_cls = np.concatenate(outputs_cls, axis=0)
+    # outputs_cls = np.concatenate(outputs_cls, axis=0)
 
-    np.save(os.path.join(CFG.output_dir, "embedding.npy"), outputs)
-    np.save(os.path.join(CFG.output_dir, "embedding_cls.npy"), outputs_cls)
+    np.save(os.path.join(CFG.output_dir, "embedding_mean.npy"), outputs)
+    # np.save(os.path.join(CFG.output_dir, "embedding_cls.npy"), outputs_cls)
