@@ -178,8 +178,11 @@ def preprocess_df(df, cfg, drop_duplicates=True):
         df["YIELD"] = None
 
     for col in [
+        "REACTANT",
+        "PRODUCT",
         "CATALYST",
         "REAGENT",
+        "SOLVENT"
     ]:
         if col not in df.columns:
             df[col] = None

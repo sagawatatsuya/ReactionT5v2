@@ -41,6 +41,12 @@ def parse_args():
         help="Path to validation data CSV file.",
     )
     parser.add_argument(
+        "--similar_reaction_data_path",
+        type=str,
+        required=False,
+        help="Path to similar data CSV.",
+    )
+    parser.add_argument(
         "--pretrained_model_name_or_path",
         type=str,
         default="sagawa/CompoundT5",
@@ -190,6 +196,12 @@ if __name__ == "__main__":
         train = train.sample(frac=CFG.sampling_frac, random_state=CFG.seed).reset_index(
             drop=True
         )
+
+    if CFG.similar_reaction_data_path:
+        similar = preprocess_df(pd.read_csv(CFG.similar_reaction_data_path))
+        print(len(train))
+        train = pd.concat([train, similar], ignore_index=True)
+        print(len(train))
 
     LOGGER = get_logger(os.path.join(CFG.output_dir, "train"))
     CFG.logger = LOGGER

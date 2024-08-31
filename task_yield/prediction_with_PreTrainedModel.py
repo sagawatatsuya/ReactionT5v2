@@ -33,7 +33,7 @@ def parse_args():
     )
 
     parser.add_argument(
-        "--data",
+        "--input_data",
         type=str,
         required=True,
         help="Data as a string or CSV file that contains an 'input' column. The format of the string or contents of the column are like 'REACTANT:{reactants of the reaction}PRODUCT:{products of the reaction}'. If there are multiple reactants, concatenate them with '.'.",
@@ -42,11 +42,11 @@ def parse_args():
         "--model_name_or_path",
         type=str,
         default="sagawa/ReactionT5v2-yield",
-        help="The name of a finetuned model or path to a model which you want to use for prediction. You can use your local models or models uploaded to hugging face.",
+        help="Name or path of the finetuned model for prediction. Can be a local model or one from Hugging Face.",
     )
-    parser.add_argument("--debug", action="store_true", help="Enable debug mode.")
+    parser.add_argument("--debug", action="store_true", help="Use debug mode.")
     parser.add_argument(
-        "--input_max_length", type=int, default=400, help="Maximum input token length."
+        "--input_max_length", type=int, default=400, help="Maximum token length of input."
     )
     parser.add_argument(
         "--batch_size", type=int, default=5, required=False, help="Batch size."
@@ -64,7 +64,7 @@ def parse_args():
         "--output_dir",
         type=str,
         default="./",
-        help="Directory to save the prediction.",
+        help="Directory where predictions are saved.",
     )
     parser.add_argument(
         "--seed", type=int, default=42, help="Random seed for reproducibility."
@@ -91,10 +91,10 @@ if __name__ == "__main__":
     model = ReactionT5Yield2.from_pretrained(CFG.model_name_or_path)
 
     if CFG.data.endswith(".csv"):
-        test_ds = pd.read_csv(CFG.data)
+        test_ds = pd.read_csv(CFG.input_data)
         test_ds = preprocess_df(test_ds, CFG, drop_duplicates=False)
     else:
-        test_ds = pd.DataFrame.from_dict({"input": [CFG.data]}, orient="index").T
+        test_ds = pd.DataFrame.from_dict({"input": [CFG.input_data]}, orient="index").T
 
     test_dataset = ReactionT5Dataset(CFG, test_ds)
     test_loader = DataLoader(

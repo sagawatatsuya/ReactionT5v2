@@ -45,7 +45,7 @@ def parse_args():
         type=str,
         help="The path to data used for USPTO testing. CSV file that contains ['REACTANT', 'PRODUCT'] columns is expected.",
     )
-    parser.add_argument("--model", type=str, default="t5", help="Model name.")
+    parser.add_argument("--output_dir", type=str, default="t5", help="Path of the output directory.")
     parser.add_argument(
         "--pretrained_model_name_or_path",
         type=str,
@@ -310,7 +310,7 @@ if __name__ == "__main__":
     data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
 
     args = Seq2SeqTrainingArguments(
-        CFG.model,
+        CFG.output_dir,
         evaluation_strategy=CFG.evaluation_strategy,
         eval_steps=CFG.eval_steps,
         save_strategy=CFG.save_strategy,

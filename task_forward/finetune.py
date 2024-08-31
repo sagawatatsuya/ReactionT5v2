@@ -19,6 +19,7 @@ import argparse
 
 sys.path.append("../")
 from utils import seed_everything, get_accuracy_score, preprocess_dataset, filter_out
+from train import preprocess_df
 
 # Suppress warnings and disable progress bars
 warnings.filterwarnings("ignore")
@@ -39,7 +40,13 @@ def parse_args():
         required=True,
         help="Path to validation data CSV.",
     )
-    parser.add_argument("--model", type=str, default="t5", help="Model name.")
+    parser.add_argument(
+        "--similar_reaction_data_path",
+        type=str,
+        required=False,
+        help="Path to similar data CSV.",
+    )
+    parser.add_argument("--output_dir", type=str, default="t5", help="Path of the output directory.")
     parser.add_argument(
         "--model_name_or_path",
         type=str,
@@ -150,12 +157,20 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed_everything(seed=CFG.seed)
 
-    train = filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"])
-    valid = filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"])
+    train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"]))
+    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"]))
     if CFG.sampling_num > 0:
         train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
             drop=True
         )
+    
+    if CFG.similar_reaction_data_path:
+        similar = preprocess_df(filter_out(
+            pd.read_csv(CFG.similar_reaction_data_path), ["REACTANT", "PRODUCT"])
+        )
+        print(len(train))
+        train = pd.concat([train, similar], ignore_index=True)
+        print(len(train))
 
     for col in ["REAGENT"]:
         train[col] = train[col].fillna(" ")
@@ -195,7 +210,7 @@ if __name__ == "__main__":
     data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
 
     args = Seq2SeqTrainingArguments(
-        CFG.model,
+        CFG.output_dir,
         evaluation_strategy=CFG.evaluation_strategy,
         save_strategy=CFG.save_strategy,
         logging_strategy=CFG.logging_strategy,

@@ -91,7 +91,7 @@ def parse_args():
     parser.add_argument(
         "--CN_test_data_path", type=str, help="Path to CN test data CSV."
     )
-    parser.add_argument("--model", type=str, default="t5", help="Model name.")
+    parser.add_argument("--output_dir", type=str, default="t5", help="Path of the output directory.")
     parser.add_argument(
         "--pretrained_model_name_or_path",
         type=str,
@@ -560,7 +560,7 @@ if __name__ == "__main__":
     data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
 
     args = Seq2SeqTrainingArguments(
-        CFG.model,
+        CFG.output_dir,
         evaluation_strategy=CFG.evaluation_strategy,
         eval_steps=CFG.eval_steps,
         save_strategy=CFG.save_strategy,

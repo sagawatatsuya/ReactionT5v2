@@ -65,7 +65,7 @@ To predict the yields of reactions from their inputs, use the following command.
 ```
 cd task_yield
 python prediction_with_PreTrainedModel.py \
-    --data="../data/task_yield_demo_input.csv" \
+    --input_data="../data/task_yield_demo_input.csv" \
     --model_name_or_path="sagawa/ReactionT5v2-yield" \
     --batch_size=16 \
     --output_dir="output"
@@ -84,7 +84,8 @@ python finetune.py \
     --epochs=50 \
     --batch_size=32 \
     --train_data_path='../data/demo_reaction_data.csv' \
-    --valid_data_path='../data/demo_reaction_data.csv'
+    --valid_data_path='../data/demo_reaction_data.csv' \
+    --output_dir="output"
 ```
 
 ### Task: Retrosynthesis
@@ -96,7 +97,8 @@ python finetune.py \
     --epochs=20 \
     --batch_size=32 \
     --train_data_path='../data/demo_reaction_data.csv' \
-    --valid_data_path='../data/demo_reaction_data.csv'
+    --valid_data_path='../data/demo_reaction_data.csv' \
+    --output_dir='output'
 ```
 
 ### Task: Yield

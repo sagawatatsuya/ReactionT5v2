@@ -5,6 +5,7 @@ import torch
 from rdkit import Chem
 import math
 import time
+import pickle
 
 def seed_everything(seed=42):
     random.seed(seed)
@@ -188,3 +189,15 @@ def filter_out(df, col_names):
     for col_name in col_names:
         df = df[~df[col_name].isna()].reset_index(drop=True)
     return df
+
+
+def save_pickle(path: str, contents):
+    """Saves contents to a pickle file."""
+    with open(path, "wb") as f:
+        pickle.dump(contents, f)
+
+
+def load_pickle(path: str):
+    """Loads contents from a pickle file."""
+    with open(path, "rb") as f:
+        return pickle.load(f)

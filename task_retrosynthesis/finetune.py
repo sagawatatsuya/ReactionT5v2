@@ -41,12 +41,12 @@ def parse_args():
         help="The path to data used for validation. CSV file that contains ['REACTANT', 'PRODUCT'] columns is expected.",
     )
     parser.add_argument(
-        "--model",
+        "--similar_reaction_data_path",
         type=str,
-        default="t5",
         required=False,
-        help="Model name used for training. Currentry, only t5 is expected.",
+        help="Path to similar data CSV.",
     )
+    parser.add_argument("--output_dir", type=str, default="t5", help="Path of the output directory.")
     parser.add_argument(
         "--model_name_or_path",
         type=str,
@@ -193,13 +193,20 @@ if __name__ == "__main__":
     seed_everything(seed=CFG.seed)
 
     train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"]))
+    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"]))
+
     if CFG.sampling_num > 0:
         train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
             drop=True
         )
-    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"]))
-    train.to_csv("train.csv", index=False)
-    valid.to_csv("valid.csv", index=False)
+
+    if CFG.similar_reaction_data_path:
+        similar = preprocess_df(filter_out(
+            pd.read_csv(CFG.similar_reaction_data_path), ["REACTANT", "PRODUCT"])
+        )
+        print(len(train))
+        train = pd.concat([train, similar], ignore_index=True)
+        print(len(train))
 
     dataset = DatasetDict(
         {
@@ -236,7 +243,7 @@ if __name__ == "__main__":
     data_collator = DataCollatorForSeq2Seq(tokenizer, model=model)
 
     args = Seq2SeqTrainingArguments(
-        CFG.model,
+        CFG.output_dir,
         evaluation_strategy=CFG.evaluation_strategy,
         eval_steps=CFG.eval_steps,
         save_strategy=CFG.save_strategy,

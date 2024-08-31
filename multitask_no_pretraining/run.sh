@@ -13,7 +13,7 @@ module load python/3.11 cuda/12.2 cudnn/8.9 nccl/2.18/2.18.5-1
 source /home/acf15718oa/reactiont5/bin/activate
 
 python train.py \
-    --model='t5' \
+    --output_dir='output' \
     --epochs=40 \
     --lr=2e-4 \
     --batch_size=32 \

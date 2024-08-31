@@ -9,7 +9,7 @@ import sys
 import numpy as np
 
 sys.path.append("../")
-from utils import seed_everything
+from utils import seed_everything, filter_out
 from generation_utils import ReactionT5Dataset
 from train import preprocess_df
 
@@ -84,7 +84,8 @@ if __name__ == "__main__":
     model = T5EncoderModel.from_pretrained(CFG.model_name_or_path).to(CFG.device)
     model.eval()
 
-    input_data = pd.read_csv(CFG.input_data)
+    input_data = filter_out(pd.read_csv(CFG.input_data), ["REACTANT", "PRODUCT"])
+    input_data.to_csv(os.path.join(CFG.output_dir, "input_data.csv"), index=False)
     input_data = preprocess_df(input_data, drop_duplicates=False)
     dataset = ReactionT5Dataset(CFG, input_data)
     dataloader = DataLoader(
