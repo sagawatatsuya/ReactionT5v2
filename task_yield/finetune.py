@@ -198,7 +198,7 @@ if __name__ == "__main__":
         )
 
     if CFG.similar_reaction_data_path:
-        similar = preprocess_df(pd.read_csv(CFG.similar_reaction_data_path))
+        similar = preprocess_df(pd.read_csv(CFG.similar_reaction_data_path), CFG)
         print(len(train))
         train = pd.concat([train, similar], ignore_index=True)
         print(len(train))

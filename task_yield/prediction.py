@@ -118,7 +118,7 @@ if __name__ == "__main__":
         except:
             pass
 
-    if CFG.data.endswith(".csv"):
+    if CFG.input_data.endswith(".csv"):
         test_ds = pd.read_csv(CFG.input_data)
         test_ds = preprocess_df(test_ds, CFG, drop_duplicates=False)
     else:

@@ -16,7 +16,6 @@ python prediction.py \
     --input_data_FORWARD="/home/acf15718oa/ReactionT5_neword/data/USPTO_MIT/MIT_separated/test.csv" \
     --input_data_RETROSYNTHESIS="/home/acf15718oa/ReactionT5_neword/data/USPTO_50k/test.csv" \
     --input_data_YIELD="/home/acf15718oa/ReactionT5_neword/data/C_N_yield/MFF_Test1/test.csv" \
-    --input_column="input" \
     --input_max_length="150" \
     --model_name_or_path="/home/acf15718oa/ReactionT5_neword/multitask_no_pretraining/t5/checkpoint-565160" \
     --num_beams=5 \

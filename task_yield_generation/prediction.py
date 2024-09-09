@@ -12,8 +12,6 @@ sys.path.append("../")
 from utils import seed_everything
 from generation_utils import ReactionT5Dataset, save_multiple_predictions
 from train import (
-    preprocess_df_FORWARD,
-    preprocess_df_RETROSYNTHESIS,
     preprocess_df_YIELD,
 )
 
@@ -117,16 +115,6 @@ if __name__ == "__main__":
     model.eval()
 
     input_data = []
-    if CFG.input_data_FORWARD:
-        input_data_FORWARD = preprocess_df_FORWARD(pd.read_csv(CFG.input_data_FORWARD))[
-            ["input"]
-        ]
-        input_data.append(input_data_FORWARD)
-    if CFG.input_data_RETROSYNTHESIS:
-        input_data_RETROSYNTHESIS = preprocess_df_RETROSYNTHESIS(
-            pd.read_csv(CFG.input_data_RETROSYNTHESIS)
-        )[["input"]]
-        input_data.append(input_data_RETROSYNTHESIS)
     if CFG.input_data_YIELD:
         input_data_YIELD = preprocess_df_YIELD(pd.read_csv(CFG.input_data_YIELD))[["input"]]
         input_data.append(input_data_YIELD)

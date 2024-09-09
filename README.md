@@ -4,11 +4,12 @@ ReactionT5 is a T5 model pretrained on a vast array of chemical reactions from t
 ![model image](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/model-image.png)
 
 
-In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models, datasets, and demo is available at [Hugging Face Hub](https://huggingface.co/sagawa).
+In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models and demo is available at [Hugging Face Hub](https://huggingface.co/sagawa).
 
-
+# Table of Contents
 - [ReactionT5v2](#reactiont5v2)  
   - [Setup](#setup)  
+  - [Dataset](#dataset)
   - [Usage](#usage)  
   - [Fine-tuning](#fine-tuning)  
   - [Structure](#structure) 
@@ -27,6 +28,13 @@ pip install datasets
 pip install accelerate -U
 pip install sentencepiece
 ```
+
+# Dataset
+For model training and finetuning, we used the ORD dataset, USPTO_MIT dataset, USPTO_50k dataset, and C-N cross-coupling reactions dataset. Each dataset can be downloaded from the following links:
+- [ORD](https://drive.google.com/file/d/1fa2MyLdN1vcA7Rysk8kLQENE92YejS9B/view?usp=drive_link)
+- [USPTO_MIT](https://yzhang.hpc.nyu.edu/T5Chem/data/USPTO_MIT.tar.bz2)
+- [USPTO_50k](https://yzhang.hpc.nyu.edu/T5Chem/data/USPTO_50k.tar.bz2)
+- [C-N coupling](https://yzhang.hpc.nyu.edu/T5Chem/data/C_N_yield.tar.bz2)
 
 
 # Usage
