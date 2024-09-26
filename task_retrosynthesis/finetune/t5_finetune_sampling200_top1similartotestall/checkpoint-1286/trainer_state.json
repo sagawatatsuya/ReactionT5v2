@@ -1,0 +1,37 @@
+{
+  "best_metric": 0.12804219126701355,
+  "best_model_checkpoint": "finetune/t5_finetune_sampling200_top1similartotestall/checkpoint-1286",
+  "epoch": 1.0,
+  "eval_steps": 500,
+  "global_step": 1286,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 1.0,
+      "grad_norm": 0.6298869252204895,
+      "learning_rate": 1.9001555209953347e-05,
+      "loss": 0.0544,
+      "step": 1286
+    },
+    {
+      "epoch": 1.0,
+      "eval_accuracy": 0.21163069544364507,
+      "eval_loss": 0.12804219126701355,
+      "eval_runtime": 857.0289,
+      "eval_samples_per_second": 5.839,
+      "eval_steps_per_second": 1.46,
+      "step": 1286
+    }
+  ],
+  "logging_steps": 500,
+  "max_steps": 25720,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 20,
+  "save_steps": 500,
+  "total_flos": 353931393300480.0,
+  "train_batch_size": 4,
+  "trial_name": null,
+  "trial_params": null
+}

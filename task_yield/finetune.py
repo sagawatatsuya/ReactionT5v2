@@ -192,7 +192,7 @@ if __name__ == "__main__":
         train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
             drop=True
         )
-    elif CFG.sampling_frac > 0:
+    elif CFG.sampling_frac > 0 and CFG.sampling_frac < 1:
         train = train.sample(frac=CFG.sampling_frac, random_state=CFG.seed).reset_index(
             drop=True
         )

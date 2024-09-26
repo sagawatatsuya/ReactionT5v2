@@ -25,6 +25,12 @@ def parse_args():
         help="Path to the input data.",
     )
     parser.add_argument(
+        "--test_data",
+        type=str,
+        required=False,
+        help="Path to the test data. If provided, the duplicates will be removed from the input data.",
+    )
+    parser.add_argument(
         "--input_max_length",
         type=int,
         default=400,
@@ -85,8 +91,13 @@ if __name__ == "__main__":
     model.eval()
 
     input_data = filter_out(pd.read_csv(CFG.input_data), ["REACTANT", "PRODUCT"])
-    input_data.to_csv(os.path.join(CFG.output_dir, "input_data.csv"), index=False)
     input_data = preprocess_df(input_data, drop_duplicates=False)
+    if CFG.test_data:
+        test_data = filter_out(pd.read_csv(CFG.test_data), ["REACTANT", "PRODUCT"])
+        test_data = preprocess_df(test_data, drop_duplicates=False)
+        # Remove duplicates from the input data
+        input_data = input_data[~input_data["input"].isin(test_data["input"])].reset_index(drop=True)
+    input_data.to_csv(os.path.join(CFG.output_dir, "input_data.csv"), index=False)
     dataset = ReactionT5Dataset(CFG, input_data)
     dataloader = DataLoader(
         dataset,

@@ -151,7 +151,7 @@ def parse_args():
     parser.add_argument(
         "--save_total_limit",
         type=int,
-        default=2,
+        default=3,
         required=False,
         help="Limit of the number of saved checkpoints. If limit is reached, the oldest checkpoint will be deleted.",
     )

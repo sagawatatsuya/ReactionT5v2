@@ -96,7 +96,7 @@ class ReactionT5Yield2(PreTrainedModel):
         encoder_hidden_states = encoder_outputs[0]
         outputs = self.model.decoder(input_ids=torch.full((inputs['input_ids'].size(0),1),
                                             self.config.decoder_start_token_id,
-                                            dtype=torch.long), encoder_hidden_states=encoder_hidden_states)
+                                            dtype=torch.long, device=inputs['input_ids'].device), encoder_hidden_states=encoder_hidden_states)
         last_hidden_states = outputs[0]
         output1 = self.fc1(last_hidden_states.view(-1, self.config.hidden_size))
         output2 = self.fc2(encoder_hidden_states[:, 0, :].view(-1, self.config.hidden_size))

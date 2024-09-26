@@ -3,5 +3,5 @@
   "eos_token_id": 1,
   "max_length": 150,
   "pad_token_id": 0,
-  "transformers_version": "4.44.2"
+  "transformers_version": "4.40.2"
 }
