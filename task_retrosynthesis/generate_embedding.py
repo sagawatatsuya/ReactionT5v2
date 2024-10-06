@@ -66,13 +66,13 @@ def create_embedding(dataloader, model, device):
     model.eval()
     model.to(device)
     for inputs in dataloader:
-        inputs = {k: v.to(CFG.device) for k, v in inputs.items()}
+        inputs = {k: v.to(device) for k, v in inputs.items()}
         with torch.no_grad():
             output = model(**inputs)
         outputs_mean.append(output[0].mean(dim=1).detach().cpu().numpy())
         # outputs_cls.append(output[0][:, 0, :].detach().cpu().numpy())
 
-    return outputs_mean #, outputs_cls
+    return outputs_mean  # , outputs_cls
 
 
 if __name__ == "__main__":
@@ -96,7 +96,9 @@ if __name__ == "__main__":
         test_data = filter_out(pd.read_csv(CFG.test_data), ["REACTANT", "PRODUCT"])
         test_data = preprocess_df(test_data, drop_duplicates=False)
         # Remove duplicates from the input data
-        input_data = input_data[~input_data["input"].isin(test_data["input"])].reset_index(drop=True)
+        input_data = input_data[
+            ~input_data["input"].isin(test_data["input"])
+        ].reset_index(drop=True)
     input_data.to_csv(os.path.join(CFG.output_dir, "input_data.csv"), index=False)
     dataset = ReactionT5Dataset(CFG, input_data)
     dataloader = DataLoader(

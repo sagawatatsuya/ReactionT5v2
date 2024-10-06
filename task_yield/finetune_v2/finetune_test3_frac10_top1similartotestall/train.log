@@ -1,0 +1,4 @@
+Epoch 1 - avg_train_loss: 0.0736  val_rmse_loss: 0.0664  val_r2_score: 0.1585  time: 21s
+Epoch 1 - Save Lowest Loss: 0.0664 Model
+Epoch 2 - avg_train_loss: 0.0377  val_rmse_loss: 0.0877  val_r2_score: -0.1115  time: 20s
+Epoch 3 - avg_train_loss: 0.0302  val_rmse_loss: 0.0738  val_r2_score: 0.0653  time: 19s
