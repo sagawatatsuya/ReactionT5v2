@@ -52,7 +52,10 @@ def parse_args():
     )
     parser.add_argument("--debug", action="store_true", help="Use debug mode.")
     parser.add_argument(
-        "--input_max_length", type=int, default=400, help="Maximum token length of input."
+        "--input_max_length",
+        type=int,
+        default=300,
+        help="Maximum token length of input.",
     )
     parser.add_argument(
         "--batch_size", type=int, default=5, required=False, help="Batch size."
@@ -134,9 +137,10 @@ if __name__ == "__main__":
         drop_last=False,
     )
 
-
     prediction = inference_fn(test_loader, model, CFG)
 
     test_ds["prediction"] = prediction * 100
     test_ds["prediction"] = test_ds["prediction"].clip(0, 100)
-    test_ds.to_csv(os.path.join(CFG.output_dir, 'yield_prediction_output.csv'), index=False)
+    test_ds.to_csv(
+        os.path.join(CFG.output_dir, "yield_prediction_output.csv"), index=False
+    )

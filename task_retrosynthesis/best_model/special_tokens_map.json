@@ -99,9 +99,7 @@
     "<extra_id_96>",
     "<extra_id_97>",
     "<extra_id_98>",
-    "<extra_id_99>",
-    "REACTANT:",
-    "REAGENT:"
+    "<extra_id_99>"
   ],
   "eos_token": {
     "content": "</s>",

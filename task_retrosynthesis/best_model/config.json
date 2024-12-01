@@ -1,5 +1,5 @@
 {
-  "_name_or_path": "sagawa/ReactionT5v2-retrosynthesis",
+  "_name_or_path": "sagawa/CompoundT5",
   "architectures": [
     "T5ForConditionalGeneration"
   ],
@@ -28,7 +28,7 @@
   "relative_attention_num_buckets": 32,
   "tie_word_embeddings": false,
   "torch_dtype": "float32",
-  "transformers_version": "4.40.2",
+  "transformers_version": "4.44.2",
   "use_cache": true,
-  "vocab_size": 268
+  "vocab_size": 221
 }

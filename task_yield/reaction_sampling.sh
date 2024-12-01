@@ -1,0 +1,87 @@
+CUDA_VISIBLE_DEVICES=0 python reaction_sampling.py \
+    --train_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/train.csv' \
+    --valid_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/test.csv' \
+    --model_name_or_path='/data1/ReactionT5_neword/task_yield' \
+    --epochs=200 \
+    --batch_size=16 \
+    --input_max_length=300 \
+    --output_dir='/data1/ReactionT5_neword/task_yield/finetune/finetune_test1_frac5' \
+    --patience=20 \
+    --sampling_frac=0.05
+
+CUDA_VISIBLE_DEVICES=0 python reaction_sampling.py \
+    --train_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/train.csv' \
+    --valid_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/test.csv' \
+    --model_name_or_path='/data1/ReactionT5_neword/task_yield' \
+    --epochs=200 \
+    --batch_size=16 \
+    --input_max_length=300 \
+    --output_dir='/data1/ReactionT5_neword/task_yield/finetune/finetune_test1_frac1' \
+    --patience=20 \
+    --sampling_frac=0.01
+
+CUDA_VISIBLE_DEVICES=0 python reaction_sampling.py \
+    --train_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/train.csv' \
+    --valid_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/test.csv' \
+    --model_name_or_path='/data1/ReactionT5_neword/task_yield' \
+    --epochs=200 \
+    --batch_size=16 \
+    --input_max_length=300 \
+    --output_dir='/data1/ReactionT5_neword/task_yield/finetune/finetune_test1_frac5' \
+    --patience=20 \
+    --sampling_frac=0.1
+
+CUDA_VISIBLE_DEVICES=0 python reaction_sampling.py \
+    --train_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/train.csv' \
+    --valid_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/test.csv' \
+    --model_name_or_path='/data1/ReactionT5_neword/task_yield' \
+    --epochs=200 \
+    --batch_size=16 \
+    --input_max_length=300 \
+    --output_dir='/data1/ReactionT5_neword/task_yield/finetune/finetune_test1_frac1' \
+    --patience=20 \
+    --sampling_frac=0.2
+
+CUDA_VISIBLE_DEVICES=0 python reaction_sampling.py \
+    --train_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/train.csv' \
+    --valid_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/test.csv' \
+    --model_name_or_path='/data1/ReactionT5_neword/task_yield' \
+    --epochs=200 \
+    --batch_size=16 \
+    --input_max_length=300 \
+    --output_dir='/data1/ReactionT5_neword/task_yield/finetune/finetune_test1_frac5' \
+    --patience=20 \
+    --sampling_frac=0.4
+
+CUDA_VISIBLE_DEVICES=0 python reaction_sampling.py \
+    --train_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/train.csv' \
+    --valid_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/test.csv' \
+    --model_name_or_path='/data1/ReactionT5_neword/task_yield' \
+    --epochs=200 \
+    --batch_size=16 \
+    --input_max_length=300 \
+    --output_dir='/data1/ReactionT5_neword/task_yield/finetune/finetune_test1_frac1' \
+    --patience=20 \
+    --sampling_frac=0.6
+
+CUDA_VISIBLE_DEVICES=0 python reaction_sampling.py \
+    --train_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/train.csv' \
+    --valid_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/test.csv' \
+    --model_name_or_path='/data1/ReactionT5_neword/task_yield' \
+    --epochs=200 \
+    --batch_size=16 \
+    --input_max_length=300 \
+    --output_dir='/data1/ReactionT5_neword/task_yield/finetune/finetune_test1_frac1' \
+    --patience=20 \
+    --sampling_frac=0.8
+
+CUDA_VISIBLE_DEVICES=0 python reaction_sampling.py \
+    --train_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/train.csv' \
+    --valid_data_path='/data1/ReactionT5_neword/data/C_N_yield/MFF_Test4/test.csv' \
+    --model_name_or_path='/data1/ReactionT5_neword/task_yield' \
+    --epochs=200 \
+    --batch_size=16 \
+    --input_max_length=300 \
+    --output_dir='/data1/ReactionT5_neword/task_yield/finetune/finetune_test1_frac1' \
+    --patience=20 \
+    --sampling_frac=1

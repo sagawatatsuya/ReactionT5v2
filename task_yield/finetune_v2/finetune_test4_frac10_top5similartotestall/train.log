@@ -1,0 +1,106 @@
+Epoch 1 - avg_train_loss: 0.0603  val_rmse_loss: 0.1184  val_r2_score: -0.6926  time: 45s
+Epoch 1 - Save Lowest Loss: 0.1184 Model
+Epoch 2 - avg_train_loss: 0.0305  val_rmse_loss: 0.1033  val_r2_score: -0.4763  time: 45s
+Epoch 2 - Save Lowest Loss: 0.1033 Model
+Epoch 3 - avg_train_loss: 0.0243  val_rmse_loss: 0.0675  val_r2_score: 0.0357  time: 44s
+Epoch 3 - Save Lowest Loss: 0.0675 Model
+Epoch 4 - avg_train_loss: 0.0178  val_rmse_loss: 0.0332  val_r2_score: 0.5250  time: 44s
+Epoch 4 - Save Lowest Loss: 0.0332 Model
+Epoch 5 - avg_train_loss: 0.0113  val_rmse_loss: 0.0210  val_r2_score: 0.6998  time: 44s
+Epoch 5 - Save Lowest Loss: 0.0210 Model
+Epoch 6 - avg_train_loss: 0.0087  val_rmse_loss: 0.0187  val_r2_score: 0.7327  time: 44s
+Epoch 6 - Save Lowest Loss: 0.0187 Model
+Epoch 7 - avg_train_loss: 0.0061  val_rmse_loss: 0.0187  val_r2_score: 0.7326  time: 43s
+Epoch 8 - avg_train_loss: 0.0045  val_rmse_loss: 0.0183  val_r2_score: 0.7387  time: 44s
+Epoch 8 - Save Lowest Loss: 0.0183 Model
+Epoch 9 - avg_train_loss: 0.0039  val_rmse_loss: 0.0180  val_r2_score: 0.7424  time: 43s
+Epoch 9 - Save Lowest Loss: 0.0180 Model
+Epoch 10 - avg_train_loss: 0.0035  val_rmse_loss: 0.0193  val_r2_score: 0.7236  time: 42s
+Epoch 11 - avg_train_loss: 0.0031  val_rmse_loss: 0.0199  val_r2_score: 0.7149  time: 43s
+Epoch 12 - avg_train_loss: 0.0029  val_rmse_loss: 0.0187  val_r2_score: 0.7329  time: 43s
+Epoch 13 - avg_train_loss: 0.0028  val_rmse_loss: 0.0180  val_r2_score: 0.7431  time: 43s
+Epoch 13 - Save Lowest Loss: 0.0180 Model
+Epoch 14 - avg_train_loss: 0.0026  val_rmse_loss: 0.0191  val_r2_score: 0.7263  time: 42s
+Epoch 15 - avg_train_loss: 0.0024  val_rmse_loss: 0.0183  val_r2_score: 0.7387  time: 43s
+Epoch 16 - avg_train_loss: 0.0024  val_rmse_loss: 0.0180  val_r2_score: 0.7425  time: 44s
+Epoch 17 - avg_train_loss: 0.0022  val_rmse_loss: 0.0189  val_r2_score: 0.7302  time: 43s
+Epoch 18 - avg_train_loss: 0.0023  val_rmse_loss: 0.0187  val_r2_score: 0.7325  time: 43s
+Epoch 19 - avg_train_loss: 0.0023  val_rmse_loss: 0.0190  val_r2_score: 0.7290  time: 44s
+Epoch 20 - avg_train_loss: 0.0020  val_rmse_loss: 0.0177  val_r2_score: 0.7467  time: 43s
+Epoch 20 - Save Lowest Loss: 0.0177 Model
+Epoch 21 - avg_train_loss: 0.0021  val_rmse_loss: 0.0180  val_r2_score: 0.7429  time: 43s
+Epoch 22 - avg_train_loss: 0.0021  val_rmse_loss: 0.0176  val_r2_score: 0.7484  time: 44s
+Epoch 22 - Save Lowest Loss: 0.0176 Model
+Epoch 23 - avg_train_loss: 0.0019  val_rmse_loss: 0.0184  val_r2_score: 0.7377  time: 43s
+Epoch 24 - avg_train_loss: 0.0017  val_rmse_loss: 0.0177  val_r2_score: 0.7464  time: 43s
+Epoch 25 - avg_train_loss: 0.0019  val_rmse_loss: 0.0185  val_r2_score: 0.7355  time: 43s
+Epoch 26 - avg_train_loss: 0.0017  val_rmse_loss: 0.0193  val_r2_score: 0.7240  time: 43s
+Epoch 27 - avg_train_loss: 0.0018  val_rmse_loss: 0.0183  val_r2_score: 0.7378  time: 43s
+Epoch 28 - avg_train_loss: 0.0016  val_rmse_loss: 0.0203  val_r2_score: 0.7099  time: 44s
+Epoch 29 - avg_train_loss: 0.0015  val_rmse_loss: 0.0177  val_r2_score: 0.7466  time: 44s
+Epoch 30 - avg_train_loss: 0.0015  val_rmse_loss: 0.0182  val_r2_score: 0.7401  time: 44s
+Epoch 31 - avg_train_loss: 0.0016  val_rmse_loss: 0.0196  val_r2_score: 0.7197  time: 43s
+Epoch 32 - avg_train_loss: 0.0016  val_rmse_loss: 0.0193  val_r2_score: 0.7238  time: 43s
+Epoch 33 - avg_train_loss: 0.0016  val_rmse_loss: 0.0188  val_r2_score: 0.7308  time: 43s
+Epoch 34 - avg_train_loss: 0.0015  val_rmse_loss: 0.0190  val_r2_score: 0.7287  time: 44s
+Epoch 35 - avg_train_loss: 0.0017  val_rmse_loss: 0.0196  val_r2_score: 0.7201  time: 44s
+Epoch 36 - avg_train_loss: 0.0015  val_rmse_loss: 0.0190  val_r2_score: 0.7283  time: 43s
+Epoch 37 - avg_train_loss: 0.0013  val_rmse_loss: 0.0197  val_r2_score: 0.7183  time: 43s
+Epoch 38 - avg_train_loss: 0.0014  val_rmse_loss: 0.0192  val_r2_score: 0.7256  time: 43s
+Epoch 39 - avg_train_loss: 0.0013  val_rmse_loss: 0.0207  val_r2_score: 0.7041  time: 44s
+Epoch 40 - avg_train_loss: 0.0014  val_rmse_loss: 0.0197  val_r2_score: 0.7177  time: 44s
+Epoch 41 - avg_train_loss: 0.0013  val_rmse_loss: 0.0196  val_r2_score: 0.7197  time: 44s
+Epoch 42 - avg_train_loss: 0.0011  val_rmse_loss: 0.0191  val_r2_score: 0.7268  time: 43s
+Epoch 1 - avg_train_loss: 0.0603  val_rmse_loss: 0.1184  val_r2_score: -0.6926  time: 44s
+Epoch 1 - Save Lowest Loss: 0.1184 Model
+Epoch 2 - avg_train_loss: 0.0305  val_rmse_loss: 0.1033  val_r2_score: -0.4763  time: 42s
+Epoch 2 - Save Lowest Loss: 0.1033 Model
+Epoch 3 - avg_train_loss: 0.0243  val_rmse_loss: 0.0675  val_r2_score: 0.0357  time: 43s
+Epoch 3 - Save Lowest Loss: 0.0675 Model
+Epoch 4 - avg_train_loss: 0.0178  val_rmse_loss: 0.0332  val_r2_score: 0.5250  time: 43s
+Epoch 4 - Save Lowest Loss: 0.0332 Model
+Epoch 5 - avg_train_loss: 0.0113  val_rmse_loss: 0.0210  val_r2_score: 0.6998  time: 43s
+Epoch 5 - Save Lowest Loss: 0.0210 Model
+Epoch 6 - avg_train_loss: 0.0087  val_rmse_loss: 0.0187  val_r2_score: 0.7327  time: 43s
+Epoch 6 - Save Lowest Loss: 0.0187 Model
+Epoch 7 - avg_train_loss: 0.0061  val_rmse_loss: 0.0187  val_r2_score: 0.7326  time: 44s
+Epoch 8 - avg_train_loss: 0.0045  val_rmse_loss: 0.0183  val_r2_score: 0.7387  time: 43s
+Epoch 8 - Save Lowest Loss: 0.0183 Model
+Epoch 9 - avg_train_loss: 0.0039  val_rmse_loss: 0.0180  val_r2_score: 0.7424  time: 43s
+Epoch 9 - Save Lowest Loss: 0.0180 Model
+Epoch 10 - avg_train_loss: 0.0035  val_rmse_loss: 0.0193  val_r2_score: 0.7236  time: 43s
+Epoch 11 - avg_train_loss: 0.0031  val_rmse_loss: 0.0199  val_r2_score: 0.7149  time: 44s
+Epoch 12 - avg_train_loss: 0.0029  val_rmse_loss: 0.0187  val_r2_score: 0.7329  time: 43s
+Epoch 13 - avg_train_loss: 0.0028  val_rmse_loss: 0.0180  val_r2_score: 0.7431  time: 43s
+Epoch 13 - Save Lowest Loss: 0.0180 Model
+Epoch 14 - avg_train_loss: 0.0026  val_rmse_loss: 0.0191  val_r2_score: 0.7263  time: 43s
+Epoch 15 - avg_train_loss: 0.0024  val_rmse_loss: 0.0183  val_r2_score: 0.7387  time: 44s
+Epoch 16 - avg_train_loss: 0.0024  val_rmse_loss: 0.0180  val_r2_score: 0.7425  time: 44s
+Epoch 17 - avg_train_loss: 0.0022  val_rmse_loss: 0.0189  val_r2_score: 0.7302  time: 43s
+Epoch 18 - avg_train_loss: 0.0023  val_rmse_loss: 0.0187  val_r2_score: 0.7325  time: 43s
+Epoch 19 - avg_train_loss: 0.0023  val_rmse_loss: 0.0190  val_r2_score: 0.7290  time: 43s
+Epoch 20 - avg_train_loss: 0.0020  val_rmse_loss: 0.0177  val_r2_score: 0.7467  time: 44s
+Epoch 20 - Save Lowest Loss: 0.0177 Model
+Epoch 21 - avg_train_loss: 0.0021  val_rmse_loss: 0.0180  val_r2_score: 0.7429  time: 43s
+Epoch 22 - avg_train_loss: 0.0021  val_rmse_loss: 0.0176  val_r2_score: 0.7484  time: 44s
+Epoch 22 - Save Lowest Loss: 0.0176 Model
+Epoch 23 - avg_train_loss: 0.0019  val_rmse_loss: 0.0184  val_r2_score: 0.7377  time: 44s
+Epoch 24 - avg_train_loss: 0.0017  val_rmse_loss: 0.0177  val_r2_score: 0.7464  time: 43s
+Epoch 25 - avg_train_loss: 0.0019  val_rmse_loss: 0.0185  val_r2_score: 0.7355  time: 44s
+Epoch 26 - avg_train_loss: 0.0017  val_rmse_loss: 0.0193  val_r2_score: 0.7240  time: 43s
+Epoch 27 - avg_train_loss: 0.0018  val_rmse_loss: 0.0183  val_r2_score: 0.7378  time: 43s
+Epoch 28 - avg_train_loss: 0.0016  val_rmse_loss: 0.0203  val_r2_score: 0.7099  time: 43s
+Epoch 29 - avg_train_loss: 0.0015  val_rmse_loss: 0.0177  val_r2_score: 0.7466  time: 44s
+Epoch 30 - avg_train_loss: 0.0015  val_rmse_loss: 0.0182  val_r2_score: 0.7401  time: 44s
+Epoch 31 - avg_train_loss: 0.0016  val_rmse_loss: 0.0196  val_r2_score: 0.7197  time: 43s
+Epoch 32 - avg_train_loss: 0.0016  val_rmse_loss: 0.0193  val_r2_score: 0.7238  time: 44s
+Epoch 33 - avg_train_loss: 0.0016  val_rmse_loss: 0.0188  val_r2_score: 0.7308  time: 44s
+Epoch 34 - avg_train_loss: 0.0015  val_rmse_loss: 0.0190  val_r2_score: 0.7287  time: 44s
+Epoch 35 - avg_train_loss: 0.0017  val_rmse_loss: 0.0196  val_r2_score: 0.7201  time: 44s
+Epoch 36 - avg_train_loss: 0.0015  val_rmse_loss: 0.0190  val_r2_score: 0.7283  time: 43s
+Epoch 37 - avg_train_loss: 0.0013  val_rmse_loss: 0.0197  val_r2_score: 0.7183  time: 43s
+Epoch 38 - avg_train_loss: 0.0014  val_rmse_loss: 0.0192  val_r2_score: 0.7256  time: 43s
+Epoch 39 - avg_train_loss: 0.0013  val_rmse_loss: 0.0207  val_r2_score: 0.7041  time: 44s
+Epoch 40 - avg_train_loss: 0.0014  val_rmse_loss: 0.0197  val_r2_score: 0.7177  time: 44s
+Epoch 41 - avg_train_loss: 0.0013  val_rmse_loss: 0.0196  val_r2_score: 0.7197  time: 43s
+Epoch 42 - avg_train_loss: 0.0011  val_rmse_loss: 0.0191  val_r2_score: 0.7268  time: 43s
