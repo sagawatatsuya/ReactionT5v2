@@ -28,7 +28,7 @@ from utils import (
     timeSince,
     get_optimizer_params,
     space_clean,
-    filter_out
+    filter_out,
 )
 from generation_utils import prepare_input
 from models import ReactionT5Yield
@@ -177,13 +177,7 @@ def preprocess_df(df, cfg, drop_duplicates=True):
     else:
         df["YIELD"] = None
 
-    for col in [
-        "REACTANT",
-        "PRODUCT",
-        "CATALYST",
-        "REAGENT",
-        "SOLVENT"
-    ]:
+    for col in ["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]:
         if col not in df.columns:
             df[col] = None
         df[col] = df[col].fillna(" ")
@@ -204,7 +198,9 @@ def preprocess_df(df, cfg, drop_duplicates=True):
         + df["PRODUCT"]
     )
     if drop_duplicates:
-        df = df.loc[df[["input", "YIELD"]].drop_duplicates().index].reset_index(drop=True)
+        df = df.loc[df[["input", "YIELD"]].drop_duplicates().index].reset_index(
+            drop=True
+        )
 
     if cfg.debug:
         df = df.head(1000)
@@ -317,8 +313,8 @@ def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, cfg):
 
         if step % cfg.print_freq == 0 or step == (len(train_loader) - 1):
             print(
-                f"Epoch: [{epoch+1}][{step}/{len(train_loader)}] "
-                f"Elapsed {timeSince(start, float(step+1)/len(train_loader))} "
+                f"Epoch: [{epoch + 1}][{step}/{len(train_loader)}] "
+                f"Elapsed {timeSince(start, float(step + 1) / len(train_loader))} "
                 f"Loss: {losses.val:.4f}({losses.avg:.4f}) "
                 f"Grad: {grad_norm:.4f} "
                 f"LR: {scheduler.get_lr()[0]:.8f}"
@@ -354,7 +350,7 @@ def valid_fn(valid_loader, model, cfg):
         if step % cfg.print_freq == 0 or step == (len(valid_loader) - 1):
             print(
                 f"EVAL: [{step}/{len(valid_loader)}] "
-                f"Elapsed {timeSince(start, float(step+1)/len(valid_loader))} "
+                f"Elapsed {timeSince(start, float(step + 1) / len(valid_loader))} "
                 f"RMSE Loss: {mean_squared_error(label_list, pred_list, squared=False):.4f} "
                 f"R^2 Score: {r2_score(label_list, pred_list):.4f}"
             )
@@ -420,7 +416,9 @@ def train_loop(train_ds, valid_ds, cfg):
         torch.save(model.config, os.path.join(cfg.output_dir, "config.pth"))
     else:
         model = ReactionT5Yield(
-            cfg, config_path=os.path.join(cfg.model_name_or_path, "config.pth"), pretrained=False
+            cfg,
+            config_path=os.path.join(cfg.model_name_or_path, "config.pth"),
+            pretrained=False,
         )
         torch.save(model.config, os.path.join(cfg.output_dir, "config.pth"))
         pth_files = glob.glob(os.path.join(cfg.model_name_or_path, "*.pth"))
@@ -474,13 +472,15 @@ def train_loop(train_ds, valid_ds, cfg):
         elapsed = time.time() - start_time
 
         cfg.logger.info(
-            f"Epoch {epoch+1} - avg_train_loss: {avg_loss:.4f}  val_rmse_loss: {val_loss:.4f}  val_r2_score: {val_r2_score:.4f}  time: {elapsed:.0f}s"
+            f"Epoch {epoch + 1} - avg_train_loss: {avg_loss:.4f}  val_rmse_loss: {val_loss:.4f}  val_r2_score: {val_r2_score:.4f}  time: {elapsed:.0f}s"
         )
 
         if val_loss < best_loss:
             es_count = 0
             best_loss = val_loss
-            cfg.logger.info(f"Epoch {epoch+1} - Save Lowest Loss: {best_loss:.4f} Model")
+            cfg.logger.info(
+                f"Epoch {epoch + 1} - Save Lowest Loss: {best_loss:.4f} Model"
+            )
             torch.save(
                 model.state_dict(),
                 os.path.join(
@@ -519,8 +519,14 @@ if __name__ == "__main__":
         os.makedirs(CFG.output_dir)
     seed_everything(seed=CFG.seed)
 
-    train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["YIELD", "REACTANT", "PRODUCT"]), CFG)
-    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["YIELD", "REACTANT", "PRODUCT"]), CFG)
+    train = preprocess_df(
+        filter_out(pd.read_csv(CFG.train_data_path), ["YIELD", "REACTANT", "PRODUCT"]),
+        CFG,
+    )
+    valid = preprocess_df(
+        filter_out(pd.read_csv(CFG.valid_data_path), ["YIELD", "REACTANT", "PRODUCT"]),
+        CFG,
+    )
 
     if CFG.CN_test_data_path:
         train_copy = preprocess_CN(train.copy())
@@ -547,10 +553,13 @@ if __name__ == "__main__":
     valid.to_csv("valid.csv", index=False)
 
     if CFG.test_data_path:
-        test = filter_out(pd.read_csv(CFG.test_data_path), ["YIELD", "REACTANT", "PRODUCT"])
+        test = filter_out(
+            pd.read_csv(CFG.test_data_path), ["YIELD", "REACTANT", "PRODUCT"]
+        )
         test = preprocess_df(test, CFG)
         test["pair"] = test["input"] + " - " + test["YIELD"].astype(str)
         test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
+        test = test.drop_duplicates(subset=["pair"]).reset_index(drop=True)
         test.to_csv("test.csv", index=False)
 
     LOGGER = get_logger(os.path.join(CFG.output_dir, "train"))

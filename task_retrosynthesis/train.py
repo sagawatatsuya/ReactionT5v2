@@ -45,7 +45,9 @@ def parse_args():
         type=str,
         help="The path to data used for USPTO testing. CSV file that contains ['REACTANT', 'PRODUCT'] columns is expected.",
     )
-    parser.add_argument("--output_dir", type=str, default="t5", help="Path of the output directory.")
+    parser.add_argument(
+        "--output_dir", type=str, default="t5", help="Path of the output directory."
+    )
     parser.add_argument(
         "--pretrained_model_name_or_path",
         type=str,
@@ -61,12 +63,8 @@ def parse_args():
         default=5,
         help="Number of epochs.",
     )
-    parser.add_argument(
-        "--lr", type=float, default=1e-3, help="Learning rate."
-    )
-    parser.add_argument(
-        "--batch_size", type=int, default=16, help="Batch size."
-    )
+    parser.add_argument("--lr", type=float, default=1e-3, help="Learning rate.")
+    parser.add_argument("--batch_size", type=int, default=16, help="Batch size.")
     parser.add_argument(
         "--input_max_length",
         type=int,
@@ -162,17 +160,11 @@ def parse_args():
 
 def preprocess_df(df, drop_duplicates=True):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
-    for col in [
-        "REACTANT",
-        "PRODUCT",
-        "CATALYST",
-        "REAGENT",
-        "SOLVENT"
-    ]:
+    for col in ["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]:
         if col not in df.columns:
             df[col] = None
         df[col] = df[col].fillna(" ")
-    
+
     if drop_duplicates:
         df = (
             df[["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]]
@@ -199,12 +191,18 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed_everything(seed=CFG.seed)
 
-    train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"]))
-    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"]))
+    train = preprocess_df(
+        filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"])
+    )
+    valid = preprocess_df(
+        filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"])
+    )
     if CFG.USPTO_test_data_path:
         train_copy = preprocess_USPTO(train.copy())
         USPTO_test = preprocess_USPTO(pd.read_csv(CFG.USPTO_test_data_path))
-        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(drop=True)
+        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(
+            drop=True
+        )
     train["pair"] = train["REACTANT"] + " - " + train["PRODUCT"]
     valid["pair"] = valid["REACTANT"] + " - " + valid["PRODUCT"]
     valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
@@ -212,9 +210,12 @@ if __name__ == "__main__":
     valid.to_csv("valid.csv", index=False)
 
     if CFG.test_data_path:
-        test = preprocess_df(filter_out(pd.read_csv(CFG.test_data_path), ["REACTANT", "PRODUCT"]))
+        test = preprocess_df(
+            filter_out(pd.read_csv(CFG.test_data_path), ["REACTANT", "PRODUCT"])
+        )
         test["pair"] = test["REACTANT"] + " - " + test["PRODUCT"]
         test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
+        test = test.drop_duplicates(subset=["pair"]).reset_index(drop=True)
         test.to_csv("test.csv", index=False)
 
     dataset = DatasetDict(

@@ -18,7 +18,14 @@ from datasets import Dataset, DatasetDict
 import argparse
 
 sys.path.append("../")
-from utils import seed_everything, canonicalize, space_clean, get_accuracy_score, preprocess_dataset, filter_out
+from utils import (
+    seed_everything,
+    canonicalize,
+    space_clean,
+    get_accuracy_score,
+    preprocess_dataset,
+    filter_out,
+)
 
 # Suppress warnings and disable progress bars
 warnings.filterwarnings("ignore")
@@ -45,7 +52,9 @@ def parse_args():
         type=str,
         help="The path to data used for USPTO testing. CSV file that contains ['REACTANT', 'REAGENT', 'PRODUCT'] columns is expected.",
     )
-    parser.add_argument("--output_dir", type=str, default="t5", help="Path of the output directory.")
+    parser.add_argument(
+        "--output_dir", type=str, default="t5", help="Path of the output directory."
+    )
     parser.add_argument(
         "--pretrained_model_name_or_path",
         type=str,
@@ -158,13 +167,7 @@ def parse_args():
 
 def preprocess_df(df, drop_duplicates=True):
     """Preprocess the dataframe by filling NaNs, dropping duplicates, and formatting the input."""
-    for col in [
-        "REACTANT",
-        "PRODUCT",
-        "CATALYST",
-        "REAGENT",
-        "SOLVENT"
-    ]:
+    for col in ["REACTANT", "PRODUCT", "CATALYST", "REAGENT", "SOLVENT"]:
         if col not in df.columns:
             df[col] = None
         df[col] = df[col].fillna(" ")
@@ -199,12 +202,18 @@ if __name__ == "__main__":
     seed_everything(seed=CFG.seed)
 
     # Load and preprocess data
-    train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"]))
-    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"]))
+    train = preprocess_df(
+        filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"])
+    )
+    valid = preprocess_df(
+        filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"])
+    )
     if CFG.USPTO_test_data_path:
         train_copy = preprocess_USPTO(train.copy())
         USPTO_test = preprocess_USPTO(pd.read_csv(CFG.USPTO_test_data_path))
-        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(drop=True)
+        train = train[~train_copy["pair"].isin(USPTO_test["pair"])].reset_index(
+            drop=True
+        )
     train["pair"] = train["input"] + " - " + train["PRODUCT"]
     valid["pair"] = valid["input"] + " - " + valid["PRODUCT"]
     valid = valid[~valid["pair"].isin(train["pair"])].reset_index(drop=True)
@@ -212,9 +221,12 @@ if __name__ == "__main__":
     valid.to_csv("valid.csv", index=False)
 
     if CFG.test_data_path:
-        test = preprocess_df(filter_out(pd.read_csv(CFG.test_data_path), ["REACTANT", "PRODUCT"]))
+        test = preprocess_df(
+            filter_out(pd.read_csv(CFG.test_data_path), ["REACTANT", "PRODUCT"])
+        )
         test["pair"] = test["input"] + " - " + test["PRODUCT"]
         test = test[~test["pair"].isin(train["pair"])].reset_index(drop=True)
+        test = test.drop_duplicates(subset=["pair"]).reset_index(drop=True)
         test.to_csv("test.csv", index=False)
 
     dataset = DatasetDict(
