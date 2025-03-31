@@ -16,7 +16,7 @@ from transformers import (
     Seq2SeqTrainingArguments,
 )
 
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from train import preprocess_df
 from utils import filter_out, get_accuracy_score, preprocess_dataset, seed_everything
 

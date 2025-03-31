@@ -16,7 +16,7 @@ from transformers import (
     Seq2SeqTrainingArguments,
 )
 
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils import (
     canonicalize,
     filter_out,

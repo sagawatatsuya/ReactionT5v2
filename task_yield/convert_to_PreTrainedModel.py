@@ -1,13 +1,12 @@
-import os
-import sys
 import argparse
 import glob
+import os
+import sys
 
 import torch
-from transformers import AutoTokenizer, AutoConfig
+from transformers import AutoConfig, AutoTokenizer
 
-# Append the utils module path
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from models import ReactionT5Yield
 
 

@@ -9,7 +9,7 @@ import torch
 from torch.utils.data import DataLoader
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from generation_utils import (
     ReactionT5Dataset,
     decode_output,

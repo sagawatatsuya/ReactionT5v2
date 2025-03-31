@@ -1,3 +1,4 @@
+import os
 import subprocess
 import sys
 import warnings
@@ -6,7 +7,7 @@ import pandas as pd
 from rdkit import Chem, RDLogger
 from sklearn.model_selection import train_test_split
 
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils import remove_atom_mapping, seed_everything
 
 seed_everything(seed=42)

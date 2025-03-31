@@ -17,7 +17,7 @@ disable_progress_bar()
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # Append the utils module path
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from generation_utils import ReactionT5Dataset
 from models import ReactionT5Yield2
 from train import inference_fn, preprocess_df

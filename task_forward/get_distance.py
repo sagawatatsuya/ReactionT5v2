@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils import seed_everything
 
 warnings.filterwarnings("ignore")

@@ -9,7 +9,7 @@ import torch
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer, T5EncoderModel
 
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from generation_utils import ReactionT5Dataset
 from train import preprocess_df, preprocess_USPTO
 from utils import filter_out, seed_everything

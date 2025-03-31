@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 import sys
 from typing import Iterator, List, Union
 
@@ -21,7 +22,7 @@ from tokenizers.models import Unigram
 from tokenizers.processors import TemplateProcessing
 from transformers import AutoTokenizer, T5Config
 
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils import seed_everything
 
 seed_everything(seed=42)

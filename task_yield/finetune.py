@@ -9,8 +9,7 @@ import torch
 from datasets.utils.logging import disable_progress_bar
 from transformers import AutoTokenizer
 
-# Append the utils module path
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from train import preprocess_df, train_loop
 from utils import get_logger, seed_everything
 

@@ -1,4 +1,5 @@
 import argparse
+import os
 import sys
 import warnings
 
@@ -9,7 +10,7 @@ from transformers import AutoTokenizer
 
 rdkit.RDLogger.DisableLog("rdApp.*")
 
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils import canonicalize, seed_everything
 
 warnings.filterwarnings("ignore")

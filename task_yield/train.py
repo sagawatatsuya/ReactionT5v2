@@ -18,7 +18,7 @@ from tqdm.auto import tqdm
 from transformers import AutoTokenizer, get_linear_schedule_with_warmup
 
 # Append the utils module path
-sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from generation_utils import prepare_input
 from models import ReactionT5Yield
 from utils import (
