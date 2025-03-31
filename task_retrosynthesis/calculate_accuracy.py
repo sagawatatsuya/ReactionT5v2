@@ -1,15 +1,16 @@
-import warnings
-import pandas as pd
-from transformers import AutoTokenizer
 import argparse
 import sys
+import warnings
+
+import pandas as pd
 import rdkit
 from rdkit import Chem
+from transformers import AutoTokenizer
 
 rdkit.RDLogger.DisableLog("rdApp.*")
 
 sys.path.append("../")
-from utils import seed_everything, canonicalize
+from utils import canonicalize, seed_everything
 
 warnings.filterwarnings("ignore")
 
@@ -120,10 +121,10 @@ if __name__ == "__main__":
                 inval_score += 1
         invalidity.append(inval_score)
     print(CFG.input_data)
-    print(f"Top 1 accuracy: {sum(top1)/len(top1)}")
-    print(f"Top 2 accuracy: {sum(top2)/len(top2)}")
-    print(f"Top 3 accuracy: {sum(top3)/len(top3)}")
-    print(f"Top 5 accuracy: {sum(top5)/len(top5)}")
+    print(f"Top 1 accuracy: {sum(top1) / len(top1)}")
+    print(f"Top 2 accuracy: {sum(top2) / len(top2)}")
+    print(f"Top 3 accuracy: {sum(top3) / len(top3)}")
+    print(f"Top 5 accuracy: {sum(top5) / len(top5)}")
     print(
-        f"Top {top_k_invalidity} Invalidity: {sum(invalidity)/(len(invalidity)*top_k_invalidity)*100}"
+        f"Top {top_k_invalidity} Invalidity: {sum(invalidity) / (len(invalidity) * top_k_invalidity) * 100}"
     )

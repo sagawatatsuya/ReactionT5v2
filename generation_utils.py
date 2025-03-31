@@ -1,6 +1,7 @@
-from torch.utils.data import Dataset
-import torch
 import pandas as pd
+import torch
+from torch.utils.data import Dataset
+
 
 def prepare_input(cfg, text):
     inputs = cfg.tokenizer(

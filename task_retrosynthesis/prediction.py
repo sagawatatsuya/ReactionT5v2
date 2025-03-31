@@ -1,17 +1,24 @@
+import argparse
+import gc
 import os
+import sys
 import warnings
+
 import pandas as pd
 import torch
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-import argparse
 from torch.utils.data import DataLoader
-import sys
-import gc
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 sys.path.append("../")
-from utils import seed_everything
-from generation_utils import ReactionT5Dataset, predict_single_input, decode_output, save_single_prediction, save_multiple_predictions
+from generation_utils import (
+    ReactionT5Dataset,
+    decode_output,
+    predict_single_input,
+    save_multiple_predictions,
+    save_single_prediction,
+)
 from train import preprocess_df
+from utils import seed_everything
 
 warnings.filterwarnings("ignore")
 
@@ -86,10 +93,11 @@ if __name__ == "__main__":
 
     seed_everything(seed=CFG.seed)
 
-    CFG.tokenizer = AutoTokenizer.from_pretrained(CFG.model_name_or_path, return_tensors="pt")
+    CFG.tokenizer = AutoTokenizer.from_pretrained(
+        CFG.model_name_or_path, return_tensors="pt"
+    )
     model = AutoModelForSeq2SeqLM.from_pretrained(CFG.model_name_or_path).to(CFG.device)
     model.eval()
-
 
     if "csv" not in CFG.input_data:
         input_compound = CFG.input_data
@@ -130,6 +138,8 @@ if __name__ == "__main__":
             torch.cuda.empty_cache()
             gc.collect()
 
-        output_df = save_multiple_predictions(input_data, all_sequences, all_scores, CFG)
+        output_df = save_multiple_predictions(
+            input_data, all_sequences, all_scores, CFG
+        )
 
     output_df.to_csv(os.path.join(CFG.output_dir, "output.csv"), index=False)

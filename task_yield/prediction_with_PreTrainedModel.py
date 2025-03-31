@@ -1,14 +1,14 @@
-import os
-import warnings
-import logging
-import sys
 import argparse
+import logging
+import os
+import sys
+import warnings
 
 import pandas as pd
 import torch
+from datasets.utils.logging import disable_progress_bar
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
-from datasets.utils.logging import disable_progress_bar
 
 # Suppress warnings and logging
 warnings.filterwarnings("ignore")
@@ -18,10 +18,10 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # Append the utils module path
 sys.path.append("../")
-from utils import seed_everything
 from generation_utils import ReactionT5Dataset
-from train import inference_fn, preprocess_df
 from models import ReactionT5Yield2
+from train import inference_fn, preprocess_df
+from utils import seed_everything
 
 
 def parse_args():
@@ -46,7 +46,10 @@ def parse_args():
     )
     parser.add_argument("--debug", action="store_true", help="Use debug mode.")
     parser.add_argument(
-        "--input_max_length", type=int, default=400, help="Maximum token length of input."
+        "--input_max_length",
+        type=int,
+        default=400,
+        help="Maximum token length of input.",
     )
     parser.add_argument(
         "--batch_size", type=int, default=5, required=False, help="Batch size."
@@ -106,9 +109,10 @@ if __name__ == "__main__":
         drop_last=False,
     )
 
-
     prediction = inference_fn(test_loader, model, CFG)
 
     test_ds["prediction"] = prediction
     test_ds["prediction"] = test_ds["prediction"].clip(0, 100)
-    test_ds.to_csv(os.path.join(CFG.output_dir, 'yield_prediction_output.csv'), index=False)
+    test_ds.to_csv(
+        os.path.join(CFG.output_dir, "yield_prediction_output.csv"), index=False
+    )

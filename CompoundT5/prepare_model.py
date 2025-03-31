@@ -1,14 +1,10 @@
 # https://github.com/huggingface/transformers/blob/main/examples/flax/language-modeling/t5_tokenizer_model.py
 
-import os
-import sys
-import json
 import argparse
+import json
+import sys
 from typing import Iterator, List, Union
 
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from transformers import AutoTokenizer, T5Config
 import datasets
 from datasets import load_dataset
 from tokenizers import (
@@ -23,6 +19,7 @@ from tokenizers import (
 from tokenizers.implementations.base_tokenizer import BaseTokenizer
 from tokenizers.models import Unigram
 from tokenizers.processors import TemplateProcessing
+from transformers import AutoTokenizer, T5Config
 
 sys.path.append("../")
 from utils import seed_everything

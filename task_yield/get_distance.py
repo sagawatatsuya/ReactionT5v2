@@ -1,10 +1,11 @@
-import os
-import warnings
-import pandas as pd
-import numpy as np
-import torch
 import argparse
+import os
 import sys
+import warnings
+
+import numpy as np
+import pandas as pd
+import torch
 
 sys.path.append("../")
 from utils import seed_everything
@@ -13,9 +14,7 @@ warnings.filterwarnings("ignore")
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Search for similar reactions."
-    )
+    parser = argparse.ArgumentParser(description="Search for similar reactions.")
     parser.add_argument(
         "--input_data",
         type=str,
@@ -40,9 +39,7 @@ def parse_args():
         default=1,
         help="Number of similar reactions to retrieve.",
     )
-    parser.add_argument(
-        "--batch_size", type=int, default=64, help="Batch size."
-    )
+    parser.add_argument("--batch_size", type=int, default=64, help="Batch size.")
     parser.add_argument(
         "--output_dir",
         type=str,
@@ -60,7 +57,6 @@ if __name__ == "__main__":
     target_embedding = np.load(config.target_embedding)
     query_embedding = np.load(config.query_embedding)
 
-
     target_embedding = torch.tensor(target_embedding, dtype=torch.float32).cuda()
     query_embedding = torch.tensor(query_embedding, dtype=torch.float32).cuda()
 
@@ -71,14 +67,14 @@ if __name__ == "__main__":
     distances = []
 
     for i in range(0, query_embedding.shape[0], batch_size):
-        print(f"Processing batch {i//batch_size}...")
-        batch = query_embedding[i: i + batch_size]
+        print(f"Processing batch {i // batch_size}...")
+        batch = query_embedding[i : i + batch_size]
         similarity = torch.matmul(batch, target_embedding.T)
         distance, _ = torch.max(similarity, dim=1)
         distances.append(distance.cpu().tolist())
 
     distances = np.concatenate(distances)
-    
+
     df = pd.read_csv(config.input_data)
     df["distance"] = distances
     df.to_csv(os.path.join(config.output_dir, "distance.csv"), index=False)

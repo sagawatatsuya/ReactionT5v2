@@ -1,8 +1,9 @@
 import subprocess
-from rdkit import RDLogger, Chem
 import sys
 import warnings
+
 import pandas as pd
+from rdkit import Chem, RDLogger
 from sklearn.model_selection import train_test_split
 
 sys.path.append("../")
@@ -54,9 +55,7 @@ def process_smiles_files(file_paths):
 
 
 # Process 16_p files
-process_smiles_files(
-    [f"../data/16_p{i}.smi" for i in range(4)]
-)
+process_smiles_files([f"../data/16_p{i}.smi" for i in range(4)])
 
 
 # Load reaction data
@@ -156,8 +155,8 @@ for column in [
 # Save cleaned DataFrame
 cleaned_df.to_csv("../data/preprocessed_ord.tsv", index=False)
 
-train, valid = train_test_split(cleaned_df, test_size=int(len(cleaned_df)*0.1))
-train, test = train_test_split(train, test_size=int(len(cleaned_df)*0.1))
+train, valid = train_test_split(cleaned_df, test_size=int(len(cleaned_df) * 0.1))
+train, test = train_test_split(train, test_size=int(len(cleaned_df) * 0.1))
 # Save train and validation data
 train.to_csv("../data/preprocessed_ord_train.csv", index=False)
 valid.to_csv("../data/preprocessed_ord_valid.csv", index=False)

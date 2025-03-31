@@ -4,7 +4,7 @@ ReactionT5 is a T5 model pretrained on a vast array of chemical reactions from t
 ![model image](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/model-image.png)
 
 
-In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models and demo is available at [Hugging Face Hub](https://huggingface.co/sagawa).
+In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models and demo is available at [Hugging Face Hub](https://huggingface.co/collections/sagawa/reactiont5-67dbe0550cbb6886a85e348b).
 
 # Table of Contents
 - [ReactionT5v2](#reactiont5v2)  

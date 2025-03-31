@@ -1,25 +1,24 @@
+import argparse
 import os
-import warnings
 import sys
+import warnings
 
+import datasets
 import pandas as pd
 import torch
-from tqdm.auto import tqdm
-from transformers import (
-    AutoTokenizer,
-    AutoModelForSeq2SeqLM,
-    DataCollatorForSeq2Seq,
-    Seq2SeqTrainingArguments,
-    Seq2SeqTrainer,
-    EarlyStoppingCallback,
-)
-import datasets
 from datasets import Dataset, DatasetDict
-import argparse
+from transformers import (
+    AutoModelForSeq2SeqLM,
+    AutoTokenizer,
+    DataCollatorForSeq2Seq,
+    EarlyStoppingCallback,
+    Seq2SeqTrainer,
+    Seq2SeqTrainingArguments,
+)
 
 sys.path.append("../")
-from utils import seed_everything, get_accuracy_score, preprocess_dataset, filter_out
 from train import preprocess_df
+from utils import filter_out, get_accuracy_score, preprocess_dataset, seed_everything
 
 # Suppress warnings and disable progress bars
 warnings.filterwarnings("ignore")
@@ -46,7 +45,9 @@ def parse_args():
         required=False,
         help="Path to similar data CSV.",
     )
-    parser.add_argument("--output_dir", type=str, default="t5", help="Path of the output directory.")
+    parser.add_argument(
+        "--output_dir", type=str, default="t5", help="Path of the output directory."
+    )
     parser.add_argument(
         "--model_name_or_path",
         type=str,
@@ -68,12 +69,8 @@ def parse_args():
         required=False,
         help="Number of epochs for training.",
     )
-    parser.add_argument(
-        "--lr", type=float, default=2e-5, help="Learning rate."
-    )
-    parser.add_argument(
-        "--batch_size", type=int, default=32, help="Batch size."
-    )
+    parser.add_argument("--lr", type=float, default=2e-5, help="Learning rate.")
+    parser.add_argument("--batch_size", type=int, default=32, help="Batch size.")
     parser.add_argument(
         "--input_max_length",
         type=int,
@@ -192,8 +189,12 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed_everything(seed=CFG.seed)
 
-    train = preprocess_df(filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"]))
-    valid = preprocess_df(filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"]))
+    train = preprocess_df(
+        filter_out(pd.read_csv(CFG.train_data_path), ["REACTANT", "PRODUCT"])
+    )
+    valid = preprocess_df(
+        filter_out(pd.read_csv(CFG.valid_data_path), ["REACTANT", "PRODUCT"])
+    )
 
     if CFG.sampling_num > 0:
         train = train.sample(n=CFG.sampling_num, random_state=CFG.seed).reset_index(
@@ -201,8 +202,10 @@ if __name__ == "__main__":
         )
 
     if CFG.similar_reaction_data_path:
-        similar = preprocess_df(filter_out(
-            pd.read_csv(CFG.similar_reaction_data_path), ["REACTANT", "PRODUCT"])
+        similar = preprocess_df(
+            filter_out(
+                pd.read_csv(CFG.similar_reaction_data_path), ["REACTANT", "PRODUCT"]
+            )
         )
         print(len(train))
         train = pd.concat([train, similar], ignore_index=True)
