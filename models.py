@@ -17,7 +17,7 @@ class ReactionT5Yield(nn.Module):
                 self.cfg.pretrained_model_name_or_path, output_hidden_states=True
             )
         else:
-            self.config = torch.load(config_path)
+            self.config = torch.load(config_path, weights_only=False)
         if pretrained:
             self.model = AutoModel.from_pretrained(
                 self.cfg.pretrained_model_name_or_path

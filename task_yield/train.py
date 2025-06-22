@@ -159,6 +159,10 @@ def parse_args():
 
     return parser.parse_args()
 
+# suppress warnings and logging
+from rdkit import RDLogger
+RDLogger.DisableLog("rdApp.*")
+
 
 def preprocess_df(df, cfg, drop_duplicates=True):
     """
@@ -172,7 +176,9 @@ def preprocess_df(df, cfg, drop_duplicates=True):
         pd.DataFrame: Preprocessed DataFrame.
     """
     if "YIELD" in df.columns:
-        df["YIELD"] = df["YIELD"].clip(0, 100) / 100
+        # if max yield is 100, then normalize to [0, 1]
+        if df["YIELD"].max() > 100:
+            df["YIELD"] = df["YIELD"].clip(0, 100) / 100
     else:
         df["YIELD"] = None
 
@@ -186,6 +192,7 @@ def preprocess_df(df, cfg, drop_duplicates=True):
     for col in ["REAGENT", "REACTANT", "PRODUCT"]:
         df[col] = df[col].apply(lambda x: space_clean(x))
         df[col] = df[col].apply(lambda x: canonicalize(x) if x != " " else " ")
+        df = df[~df[col].isna()].reset_index(drop=True)
         df[col] = df[col].apply(lambda x: ".".join(sorted(x.split("."))))
 
     df["input"] = (
@@ -350,7 +357,7 @@ def valid_fn(valid_loader, model, cfg):
             print(
                 f"EVAL: [{step}/{len(valid_loader)}] "
                 f"Elapsed {timeSince(start, float(step + 1) / len(valid_loader))} "
-                f"RMSE Loss: {mean_squared_error(label_list, pred_list, squared=False):.4f} "
+                f"RMSE Loss: {np.sqrt(mean_squared_error(label_list, pred_list)):.4f} "
                 f"R^2 Score: {r2_score(label_list, pred_list):.4f}"
             )
 
@@ -425,6 +432,7 @@ def train_loop(train_ds, valid_ds, cfg):
             state = torch.load(
                 pth_file,
                 map_location=torch.device("cpu"),
+                weights_only=False
             )
             try:
                 model.load_state_dict(state)
