@@ -128,7 +128,9 @@ def parse_args():
         "--print_freq", type=int, default=100, help="Logging frequency."
     )
     parser.add_argument(
-        "--use_apex", action="store_true", help="Use apex for mixed precision training."
+        "--use_amp",
+        action="store_true",
+        help="Use automatic mixed precision for training.",
     )
     parser.add_argument(
         "--output_dir",
@@ -179,7 +181,7 @@ def preprocess_df(df, cfg, drop_duplicates=True):
     """
     if "YIELD" in df.columns:
         # if max yield is 100, then normalize to [0, 1]
-        if df["YIELD"].max() > 100:
+        if df["YIELD"].max() >= 100:
             df["YIELD"] = df["YIELD"].clip(0, 100) / 100
     else:
         df["YIELD"] = None
@@ -288,7 +290,7 @@ def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, cfg):
         float: Average training loss.
     """
     model.train()
-    scaler = torch.cuda.amp.GradScaler(enabled=cfg.use_apex)
+    scaler = torch.amp.GradScaler(enabled=cfg.use_amp)
     losses = AverageMeter()
     start = time.time()
 
@@ -297,7 +299,7 @@ def train_fn(train_loader, model, criterion, optimizer, epoch, scheduler, cfg):
         labels = labels.to(cfg.device)
         batch_size = labels.size(0)
 
-        with torch.cuda.amp.autocast(enabled=cfg.use_apex):
+        with torch.autocast(cfg.device, enabled=cfg.use_amp):
             y_preds = model(inputs)
         loss = criterion(y_preds.view(-1, 1), labels.view(-1, 1))
 

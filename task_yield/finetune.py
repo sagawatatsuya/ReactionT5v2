@@ -112,7 +112,9 @@ def parse_args():
         "--print_freq", type=int, default=100, help="Logging frequency."
     )
     parser.add_argument(
-        "--use_apex", action="store_true", help="Use apex for mixed precision training."
+        "--use_amp",
+        action="store_true",
+        help="Use automatic mixed precision for training.",
     )
     parser.add_argument(
         "--output_dir",
