@@ -13,9 +13,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from generation_utils import (
     ReactionT5Dataset,
     decode_output,
-    predict_single_input,
     save_multiple_predictions,
-    save_single_prediction,
 )
 from train import preprocess_df
 from utils import seed_everything
@@ -94,52 +92,47 @@ if __name__ == "__main__":
     seed_everything(seed=CFG.seed)
 
     CFG.tokenizer = AutoTokenizer.from_pretrained(
-        CFG.model_name_or_path, return_tensors="pt"
+        os.path.abspath(CFG.model_name_or_path)
+        if os.path.exists(CFG.model_name_or_path)
+        else CFG.model_name_or_path,
+        return_tensors="pt",
     )
     model = AutoModelForSeq2SeqLM.from_pretrained(CFG.model_name_or_path).to(CFG.device)
     model.eval()
 
-    if "csv" not in CFG.input_data:
-        input_compound = CFG.input_data
-        output = predict_single_input(input_compound, model, CFG)
+    input_data = pd.read_csv(CFG.input_data)
+    input_data = preprocess_df(input_data, drop_duplicates=False)
+    dataset = ReactionT5Dataset(CFG, input_data)
+    dataloader = DataLoader(
+        dataset,
+        batch_size=CFG.batch_size,
+        shuffle=False,
+        num_workers=4,
+        pin_memory=True,
+        drop_last=False,
+    )
+
+    all_sequences, all_scores = [], []
+    for inputs in dataloader:
+        inputs = {k: v.to(CFG.device) for k, v in inputs.items()}
+        with torch.no_grad():
+            output = model.generate(
+                **inputs,
+                min_length=CFG.output_min_length,
+                max_length=CFG.output_max_length,
+                num_beams=CFG.num_beams,
+                num_return_sequences=CFG.num_return_sequences,
+                return_dict_in_generate=True,
+                output_scores=True,
+            )
         sequences, scores = decode_output(output, CFG)
-        output_df = save_single_prediction(input_compound, sequences, scores, CFG)
-    else:
-        input_data = pd.read_csv(CFG.input_data)
-        input_data = preprocess_df(input_data, drop_duplicates=False)
-        dataset = ReactionT5Dataset(CFG, input_data)
-        dataloader = DataLoader(
-            dataset,
-            batch_size=CFG.batch_size,
-            shuffle=False,
-            num_workers=4,
-            pin_memory=True,
-            drop_last=False,
-        )
+        all_sequences.extend(sequences)
+        if scores:
+            all_scores.extend(scores)
+        del output
+        torch.cuda.empty_cache()
+        gc.collect()
 
-        all_sequences, all_scores = [], []
-        for inputs in dataloader:
-            inputs = {k: v.to(CFG.device) for k, v in inputs.items()}
-            with torch.no_grad():
-                output = model.generate(
-                    **inputs,
-                    min_length=CFG.output_min_length,
-                    max_length=CFG.output_max_length,
-                    num_beams=CFG.num_beams,
-                    num_return_sequences=CFG.num_return_sequences,
-                    return_dict_in_generate=True,
-                    output_scores=True,
-                )
-            sequences, scores = decode_output(output, CFG)
-            all_sequences.extend(sequences)
-            if scores:
-                all_scores.extend(scores)
-            del output
-            torch.cuda.empty_cache()
-            gc.collect()
-
-        output_df = save_multiple_predictions(
-            input_data, all_sequences, all_scores, CFG
-        )
+    output_df = save_multiple_predictions(input_data, all_sequences, all_scores, CFG)
 
     output_df.to_csv(os.path.join(CFG.output_dir, "output.csv"), index=False)

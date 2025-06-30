@@ -236,14 +236,12 @@ if __name__ == "__main__":
     )
 
     # load tokenizer
-    try:  # load pretrained tokenizer from local directory
-        tokenizer = AutoTokenizer.from_pretrained(
-            os.path.abspath(CFG.pretrained_model_name_or_path), return_tensors="pt"
-        )
-    except:  # load pretrained tokenizer from huggingface model hub
-        tokenizer = AutoTokenizer.from_pretrained(
-            CFG.pretrained_model_name_or_path, return_tensors="pt"
-        )
+    tokenizer = AutoTokenizer.from_pretrained(
+        os.path.abspath(CFG.model_name_or_path)
+        if os.path.exists(CFG.model_name_or_path)
+        else CFG.model_name_or_path,
+        return_tensors="pt",
+    )
     tokenizer.add_tokens(
         [
             ".",

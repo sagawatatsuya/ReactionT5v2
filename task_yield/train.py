@@ -159,8 +159,10 @@ def parse_args():
 
     return parser.parse_args()
 
+
 # suppress warnings and logging
 from rdkit import RDLogger
+
 RDLogger.DisableLog("rdApp.*")
 
 
@@ -430,9 +432,7 @@ def train_loop(train_ds, valid_ds, cfg):
         pth_files = glob.glob(os.path.join(cfg.model_name_or_path, "*.pth"))
         for pth_file in pth_files:
             state = torch.load(
-                pth_file,
-                map_location=torch.device("cpu"),
-                weights_only=False
+                pth_file, map_location=torch.device("cpu"), weights_only=False
             )
             try:
                 model.load_state_dict(state)
@@ -573,14 +573,12 @@ if __name__ == "__main__":
     CFG.logger = LOGGER
 
     # load tokenizer
-    try:  # load pretrained tokenizer from local directory
-        tokenizer = AutoTokenizer.from_pretrained(
-            os.path.abspath(CFG.pretrained_model_name_or_path), return_tensors="pt"
-        )
-    except:  # load pretrained tokenizer from huggingface model hub
-        tokenizer = AutoTokenizer.from_pretrained(
-            CFG.pretrained_model_name_or_path, return_tensors="pt"
-        )
+    tokenizer = AutoTokenizer.from_pretrained(
+        os.path.abspath(CFG.model_name_or_path)
+        if os.path.exists(CFG.model_name_or_path)
+        else CFG.model_name_or_path,
+        return_tensors="pt",
+    )
     tokenizer.add_tokens(
         [
             ".",

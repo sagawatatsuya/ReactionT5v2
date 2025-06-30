@@ -99,7 +99,10 @@ if __name__ == "__main__":
     seed_everything(seed=CFG.seed)
 
     CFG.tokenizer = AutoTokenizer.from_pretrained(
-        CFG.model_name_or_path, return_tensors="pt"
+        os.path.abspath(CFG.model_name_or_path)
+        if os.path.exists(CFG.model_name_or_path)
+        else CFG.model_name_or_path,
+        return_tensors="pt",
     )
 
     model = ReactionT5Yield2.from_pretrained(CFG.model_name_or_path).to(CFG.device)

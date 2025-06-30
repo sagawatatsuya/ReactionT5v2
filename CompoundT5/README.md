@@ -1,18 +1,12 @@
 # ReactionT5
-![training_procedure_image](https://github.com/sagawatatsuya/ReactionT5/blob/main/study_reproduction/training-procedure.png)
-Here, we will explain how to do compound pretraining. 
+Here, we will explain how to do compound pre-training. 
 
 # Installation
 To get started, you will first need to install the necessary libraries. You can use the requirements.yaml file for this purpose. If the versions of torch and jax do not match your environment, you can change and run the following command:
 ```
-conda install -c conda-forge rdkit
-conda install -c conda-forge gdown
-conda install scikit-learn
+conda install -c conda-forge rdkit gdown scikit-learn
 conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
-pip install tokenizers==0.12.1
-pip install transformers==4.21.0
-pip install datasets
-pip install sentencepiece==0.1.96
+pip install tokenizers==0.12.1 transformers==4.21.0 datasets sentencepiece==0.1.96
 pip install "jax[cuda11_cudnn82]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 pip install flax
 ```
@@ -27,13 +21,13 @@ To download the data, you can run the following command:
 ```
 python preprocess_data.py
 ```
-To complete the preparation for compound pretraining, run the following command:
+To complete the preparation for compound pre-training, run the following command:
 ```
 python prepare_model.py
 ```
 
-# Compound pretraining
-Run the following command to conduct compound pretraining. In compound pretraining, T5 is trained on the ZINC dataset using span-masked language modeling. The pretraine model (CompoundT5) is uploaded to [Hugging Face Hub](https://huggingface.co/sagawa/CompoundT5).
+# Compound pre-training
+Run the following command to conduct compound pre-training. In compound pre-training, T5 is trained on the ZINC dataset using span-masked language modeling. The pretraine model (CompoundT5) is uploaded to [Hugging Face Hub](https://huggingface.co/sagawa/CompoundT5).
 ```
 cd CompoundT5
 sh run.sh

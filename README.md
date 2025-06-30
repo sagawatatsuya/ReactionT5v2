@@ -34,7 +34,7 @@ For model training and finetuning, we used the ORD dataset, USPTO_MIT dataset, U
 - [ORD](https://drive.google.com/file/d/1fa2MyLdN1vcA7Rysk8kLQENE92YejS9B/view?usp=drive_link)
 - [USPTO_MIT](https://yzhang.hpc.nyu.edu/T5Chem/data/USPTO_MIT.tar.bz2)
 - [USPTO_50k](https://yzhang.hpc.nyu.edu/T5Chem/data/USPTO_50k.tar.bz2)
-- [C-N coupling](https://yzhang.hpc.nyu.edu/T5Chem/data/C_N_yield.tar.bz2)
+- [Buchwald-Hartwig C-N cross-coupling](https://yzhang.hpc.nyu.edu/T5Chem/data/C_N_yield.tar.bz2)
 
 
 # Usage
@@ -128,8 +128,6 @@ ReactionT5v2/
 ├── CompoundT5/                     # Codes used for data processing and compound pretraining  
 │ └── README.md                     # More detailed README file for CompoundT5 creation  
 ├── data/                           # Datasets  
-├── multitask_no_pretraining/       # Multitask (forward, retrosynthesis, and yield prediction and finetuning)  
-├── multitask_pretraining/          # Multitask (forward, retrosynthesis, and yield prediction and finetuning)  
 ├── task_forward/                   # Forward prediction and finetuning  
 ├── task_retrosynthesis/            # Retrosynthesis prediction and finetuning  
 ├── task_yield/                     # Yield prediction and finetuning  

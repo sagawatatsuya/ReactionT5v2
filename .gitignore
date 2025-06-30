@@ -16,7 +16,4 @@ __pycache__
 *.npy
 *.pkl
 
-!data/task_forward_demo_input.csv
-!data/task_retrosynthesis_demo_input.csv
-!data/task_yield_demo_input.csv
 !data/demo_reaction_data.csv

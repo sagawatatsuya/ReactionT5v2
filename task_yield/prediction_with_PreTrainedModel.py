@@ -88,16 +88,16 @@ if __name__ == "__main__":
     seed_everything(seed=CFG.seed)
 
     CFG.tokenizer = AutoTokenizer.from_pretrained(
-        CFG.model_name_or_path, return_tensors="pt"
+        os.path.abspath(CFG.model_name_or_path)
+        if os.path.exists(CFG.model_name_or_path)
+        else CFG.model_name_or_path,
+        return_tensors="pt",
     )
 
     model = ReactionT5Yield2.from_pretrained(CFG.model_name_or_path)
 
-    if CFG.input_data.endswith(".csv"):
-        test_ds = pd.read_csv(CFG.input_data)
-        test_ds = preprocess_df(test_ds, CFG, drop_duplicates=False)
-    else:
-        test_ds = pd.DataFrame.from_dict({"input": [CFG.input_data]}, orient="index").T
+    test_ds = pd.read_csv(CFG.input_data)
+    test_ds = preprocess_df(test_ds, CFG, drop_duplicates=False)
 
     test_dataset = ReactionT5Dataset(CFG, test_ds)
     test_loader = DataLoader(

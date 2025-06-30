@@ -65,7 +65,10 @@ if __name__ == "__main__":
     seed_everything(seed=CFG.seed)
 
     tokenizer = AutoTokenizer.from_pretrained(
-        CFG.model_name_or_path, return_tensors="pt"
+        os.path.abspath(CFG.model_name_or_path)
+        if os.path.exists(CFG.model_name_or_path)
+        else CFG.model_name_or_path,
+        return_tensors="pt",
     )
 
     df = pd.read_csv(CFG.input_data)
@@ -118,7 +121,7 @@ if __name__ == "__main__":
         inval_score = 0
         for ith, out in enumerate(output):
             mol = Chem.MolFromSmiles(out.rstrip("."))
-            if type(mol) != rdkit.Chem.rdchem.Mol:
+            if not isinstance(mol, Chem.rdchem.Mol):
                 inval_score += 1
         invalidity.append(inval_score)
     print(CFG.input_data)

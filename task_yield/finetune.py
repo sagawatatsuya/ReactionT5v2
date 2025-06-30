@@ -205,14 +205,12 @@ if __name__ == "__main__":
     LOGGER = get_logger(os.path.join(CFG.output_dir, "train"))
     CFG.logger = LOGGER
 
-    try:  # load pretrained tokenizer from local directory
-        tokenizer = AutoTokenizer.from_pretrained(
-            os.path.abspath(CFG.model_name_or_path), return_tensors="pt"
-        )
-    except:  # load pretrained tokenizer from huggingface model hub
-        tokenizer = AutoTokenizer.from_pretrained(
-            CFG.model_name_or_path, return_tensors="pt"
-        )
+    tokenizer = AutoTokenizer.from_pretrained(
+        os.path.abspath(CFG.model_name_or_path)
+        if os.path.exists(CFG.model_name_or_path)
+        else CFG.model_name_or_path,
+        return_tensors="pt",
+    )
     tokenizer.save_pretrained(CFG.output_dir)
     CFG.tokenizer = tokenizer
 
