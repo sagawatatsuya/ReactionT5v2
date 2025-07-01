@@ -20,7 +20,8 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from generation_utils import ReactionT5Dataset
 from models import ReactionT5Yield2
-from train import inference_fn, preprocess_df
+from prediction import inference_fn
+from train import preprocess_df
 from utils import seed_everything
 
 
@@ -36,7 +37,7 @@ def parse_args():
         "--input_data",
         type=str,
         required=True,
-        help="Data as a string or CSV file that contains an 'input' column. The format of the string or contents of the column are like 'REACTANT:{reactants of the reaction}PRODUCT:{products of the reaction}'. If there are multiple reactants, concatenate them with '.'.",
+        help="Data as a CSV file that contains an 'input' column. The format of the contents of the column are like 'REACTANT:{reactants of the reaction}PRODUCT:{products of the reaction}'. If there are multiple reactants, concatenate them with '.'.",
     )
     parser.add_argument(
         "--model_name_or_path",

@@ -15,7 +15,6 @@ from datasets.utils.logging import disable_progress_bar
 from sklearn.metrics import mean_squared_error, r2_score
 from torch.optim import AdamW
 from torch.utils.data import DataLoader, Dataset
-from tqdm.auto import tqdm
 from transformers import AutoTokenizer, get_linear_schedule_with_warmup
 
 # Append the utils module path
@@ -368,31 +367,6 @@ def valid_fn(valid_loader, model, cfg):
             )
 
     return mean_squared_error(label_list, pred_list), r2_score(label_list, pred_list)
-
-
-def inference_fn(test_loader, model, cfg):
-    """
-    Inference function.
-
-    Args:
-        test_loader (DataLoader): DataLoader for test data.
-        model (nn.Module): Model for inference.
-        cfg (argparse.Namespace): Configuration object.
-
-    Returns:
-        np.ndarray: Predictions.
-    """
-    model.eval()
-    model.to(cfg.device)
-    preds = []
-
-    for inputs in tqdm(test_loader, total=len(test_loader)):
-        inputs = {k: v.to(cfg.device) for k, v in inputs.items()}
-        with torch.no_grad():
-            y_preds = model(inputs)
-        preds.append(y_preds.to("cpu").numpy())
-
-    return np.concatenate(preds)
 
 
 def train_loop(train_ds, valid_ds, cfg):

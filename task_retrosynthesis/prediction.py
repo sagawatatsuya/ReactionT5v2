@@ -7,6 +7,7 @@ import warnings
 import pandas as pd
 import torch
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -113,7 +114,7 @@ if __name__ == "__main__":
     )
 
     all_sequences, all_scores = [], []
-    for inputs in dataloader:
+    for inputs in tqdm(dataloader, total=len(DataLoader)):
         inputs = {k: v.to(CFG.device) for k, v in inputs.items()}
         with torch.no_grad():
             output = model.generate(

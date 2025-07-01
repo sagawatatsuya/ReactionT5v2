@@ -5,10 +5,12 @@ import os
 import sys
 import warnings
 
+import numpy as np
 import pandas as pd
 import torch
 from datasets.utils.logging import disable_progress_bar
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 from transformers import AutoTokenizer
 
 # Suppress warnings and logging
@@ -22,7 +24,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from finetune import download_pretrained_model
 from generation_utils import ReactionT5Dataset
 from models import ReactionT5Yield
-from train import inference_fn, preprocess_df
+from train import preprocess_df
 from utils import seed_everything
 
 
@@ -38,7 +40,7 @@ def parse_args():
         "--input_data",
         type=str,
         required=True,
-        help="Data as a string or CSV file that contains an 'input' column. The format of the string or contents of the column are like 'REACTANT:{reactants of the reaction}PRODUCT:{products of the reaction}'. If there are multiple reactants, concatenate them with '.'.",
+        help="Data as a CSV file that contains an 'input' column. The format of the contents of the column are like 'REACTANT:{reactants of the reaction}PRODUCT:{products of the reaction}'. If there are multiple reactants, concatenate them with '.'.",
     )
     parser.add_argument(
         "--model_name_or_path",
@@ -80,6 +82,31 @@ def parse_args():
     )
 
     return parser.parse_args()
+
+
+def inference_fn(test_loader, model, cfg):
+    """
+    Inference function.
+
+    Args:
+        test_loader (DataLoader): DataLoader for test data.
+        model (nn.Module): Model for inference.
+        cfg (argparse.Namespace): Configuration object.
+
+    Returns:
+        np.ndarray: Predictions.
+    """
+    model.eval()
+    model.to(cfg.device)
+    preds = []
+
+    for inputs in tqdm(test_loader, total=len(test_loader)):
+        inputs = {k: v.to(cfg.device) for k, v in inputs.items()}
+        with torch.no_grad():
+            y_preds = model(inputs)
+        preds.append(y_preds.to("cpu").numpy())
+
+    return np.concatenate(preds)
 
 
 if __name__ == "__main__":
@@ -124,11 +151,8 @@ if __name__ == "__main__":
         except:
             pass
 
-    if CFG.input_data.endswith(".csv"):
-        test_ds = pd.read_csv(CFG.input_data)
-        test_ds = preprocess_df(test_ds, CFG, drop_duplicates=False)
-    else:
-        test_ds = pd.DataFrame.from_dict({"input": [CFG.input_data]}, orient="index").T
+    test_ds = pd.read_csv(CFG.input_data)
+    test_ds = preprocess_df(test_ds, CFG, drop_duplicates=False)
 
     test_dataset = ReactionT5Dataset(CFG, test_ds)
     test_loader = DataLoader(
