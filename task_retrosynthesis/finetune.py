@@ -228,12 +228,9 @@ if __name__ == "__main__":
     CFG.tokenizer = tokenizer
 
     # load model
-    try:  # load pretrained model from local directory
-        model = AutoModelForSeq2SeqLM.from_pretrained(
-            os.path.abspath(CFG.model_name_or_path)
-        )
-    except:  # load pretrained model from huggingface model hub
-        model = AutoModelForSeq2SeqLM.from_pretrained(CFG.model_name_or_path)
+    model = AutoModelForSeq2SeqLM.from_pretrained(
+        os.path.abspath(CFG.pretrained_model_name_or_path) if os.path.exists(CFG.pretrained_model_name_or_path) else CFG.pretrained_model_name_or_path
+    )
     tokenized_datasets = dataset.map(
         lambda examples: preprocess_dataset(examples, CFG),
         batched=True,

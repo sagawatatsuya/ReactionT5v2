@@ -98,7 +98,9 @@ if __name__ == "__main__":
         else CFG.model_name_or_path,
         return_tensors="pt",
     )
-    model = AutoModelForSeq2SeqLM.from_pretrained(CFG.model_name_or_path).to(CFG.device)
+    model = AutoModelForSeq2SeqLM.from_pretrained(
+        os.path.abspath(CFG.pretrained_model_name_or_path) if os.path.exists(CFG.pretrained_model_name_or_path) else CFG.pretrained_model_name_or_path
+    ).to(CFG.device)
     model.eval()
 
     input_data = pd.read_csv(CFG.input_data)
