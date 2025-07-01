@@ -5,6 +5,7 @@ import os
 import sys
 import time
 import warnings
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -23,6 +24,7 @@ from generation_utils import prepare_input
 from models import ReactionT5Yield
 from utils import (
     AverageMeter,
+    add_new_tokens,
     canonicalize,
     filter_out,
     get_logger,
@@ -581,56 +583,9 @@ if __name__ == "__main__":
         else CFG.model_name_or_path,
         return_tensors="pt",
     )
-    tokenizer.add_tokens(
-        [
-            ".",
-            "6",
-            "7",
-            "8",
-            "<",
-            ">",
-            "Ag",
-            "Al",
-            "Ar",
-            "As",
-            "Au",
-            "Ba",
-            "Bi",
-            "Ca",
-            "Cl",
-            "Cu",
-            "Fe",
-            "Ge",
-            "Hg",
-            "K",
-            "Li",
-            "Mg",
-            "Mn",
-            "Mo",
-            "Na",
-            "Nd",
-            "Ni",
-            "P",
-            "Pb",
-            "Pd",
-            "Pt",
-            "Re",
-            "Rh",
-            "Ru",
-            "Ru",
-            "Sb",
-            "Si",
-            "Sm",
-            "Ta",
-            "Ti",
-            "Tl",
-            "W",
-            "Yb",
-            "Zn",
-            "Zr",
-            "e",
-            "p",
-        ]
+    tokenizer = add_new_tokens(
+        tokenizer,
+        Path(__file__).resolve().parent.parent / "data" / "additional_tokens.txt",
     )
 
     tokenizer.add_special_tokens(

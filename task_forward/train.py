@@ -2,6 +2,7 @@ import argparse
 import os
 import sys
 import warnings
+from pathlib import Path
 
 import datasets
 import pandas as pd
@@ -18,6 +19,7 @@ from transformers import (
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from utils import (
+    add_new_tokens,
     canonicalize,
     filter_out,
     get_accuracy_score,
@@ -242,56 +244,9 @@ if __name__ == "__main__":
         else CFG.model_name_or_path,
         return_tensors="pt",
     )
-    tokenizer.add_tokens(
-        [
-            ".",
-            "6",
-            "7",
-            "8",
-            "<",
-            ">",
-            "Ag",
-            "Al",
-            "Ar",
-            "As",
-            "Au",
-            "Ba",
-            "Bi",
-            "Ca",
-            "Cl",
-            "Cu",
-            "Fe",
-            "Ge",
-            "Hg",
-            "K",
-            "Li",
-            "Mg",
-            "Mn",
-            "Mo",
-            "Na",
-            "Nd",
-            "Ni",
-            "P",
-            "Pb",
-            "Pd",
-            "Pt",
-            "Re",
-            "Rh",
-            "Ru",
-            "Ru",
-            "Sb",
-            "Si",
-            "Sm",
-            "Ta",
-            "Ti",
-            "Tl",
-            "W",
-            "Yb",
-            "Zn",
-            "Zr",
-            "e",
-            "p",
-        ]
+    tokenizer = add_new_tokens(
+        tokenizer,
+        Path(__file__).resolve().parent.parent / "data" / "additional_tokens.txt",
     )
     tokenizer.add_special_tokens(
         {

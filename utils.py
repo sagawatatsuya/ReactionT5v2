@@ -262,3 +262,16 @@ def load_pickle(path: str):
     """Loads contents from a pickle file."""
     with open(path, "rb") as f:
         return pickle.load(f)
+
+
+def add_new_tokens(tokenizer, file_path):
+    """
+    Adds new tokens to the tokenizer from a file.
+    The file should contain one token per line.
+    """
+    with open(file_path, "r") as f:
+        new_tokens = [line.strip() for line in f if line.strip()]
+
+    tokenizer.add_tokens(new_tokens)
+
+    return tokenizer
