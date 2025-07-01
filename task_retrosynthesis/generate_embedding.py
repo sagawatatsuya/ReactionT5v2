@@ -113,7 +113,8 @@ if __name__ == "__main__":
         input_data = input_data[
             ~input_data_copy["pair"].isin(USPTO_test["pair"])
         ].reset_index(drop=True)
-    input_data.to_csv(os.path.join(CFG.output_dir, "input_data_v5.csv"), index=False)
+
+    input_data.to_csv(os.path.join(CFG.output_dir, "input_data.csv"), index=False)
     dataset = ReactionT5Dataset(CFG, input_data)
     dataloader = DataLoader(
         dataset,
@@ -125,7 +126,6 @@ if __name__ == "__main__":
     )
 
     outputs = create_embedding(dataloader, model, CFG.device)
-
     outputs = np.concatenate(outputs, axis=0)
 
-    np.save(os.path.join(CFG.output_dir, "embedding_mean_v5.npy"), outputs)
+    np.save(os.path.join(CFG.output_dir, "embedding_mean.npy"), outputs)

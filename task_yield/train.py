@@ -21,6 +21,7 @@ from transformers import AutoTokenizer, get_linear_schedule_with_warmup
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from generation_utils import prepare_input
 from models import ReactionT5Yield
+from rdkit import RDLogger
 from utils import (
     AverageMeter,
     add_new_tokens,
@@ -35,6 +36,7 @@ from utils import (
 
 # Suppress warnings and logging
 warnings.filterwarnings("ignore")
+RDLogger.DisableLog("rdApp.*")
 disable_progress_bar()
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -161,12 +163,6 @@ def parse_args():
     )
 
     return parser.parse_args()
-
-
-# suppress warnings and logging
-from rdkit import RDLogger
-
-RDLogger.DisableLog("rdApp.*")
 
 
 def preprocess_df(df, cfg, drop_duplicates=True):

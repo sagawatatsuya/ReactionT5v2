@@ -135,4 +135,4 @@ if __name__ == "__main__":
     outputs = create_embedding(dataloader, model, CFG.device)
     outputs = np.concatenate(outputs, axis=0)
 
-    np.save(os.path.join(CFG.output_dir, "embedding_mean_v2.npy"), outputs)
+    np.save(os.path.join(CFG.output_dir, "embedding_mean.npy"), outputs)
