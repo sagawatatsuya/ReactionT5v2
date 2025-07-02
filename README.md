@@ -122,6 +122,69 @@ python finetune.py \
     --output_dir='output'
 ```
 
+# Retrain ReactionT5
+If you want to retrain ReactionT5 from CompoundT5, you can do so by running the following command. This will train ReactionT5 on the Open Reaction Database (ORD) dataset.
+
+### Task: Forward
+```
+cd task_forward
+python train.py \
+    --output_dir='ReactionT5_forward' \
+    --epochs=100 \
+    --lr=1e-3 \
+    --batch_size=32 \
+    --input_max_len=150 \
+    --target_max_len=100 \
+    --weight_decay=0.01 \
+    --evaluation_strategy='epoch' \
+    --save_strategy='epoch' \
+    --logging_strategy='epoch' \
+    --save_total_limit=100 \
+    --train_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
+    --valid_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
+    --test_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
+    --USPTO_test_data_path='../data/USPTO_MIT/MIT_separated/test.csv' \
+    --disable_tqdm \
+    --pretrained_model_name_or_path='sagawa/CompoundT5'
+```
+### Task: Retrosynthesis
+```
+cd task_retrosynthesis
+python train_without_duplicates.py \
+    --output_dir='ReactionT5_retrosynthesis' \
+    --epochs=100 \
+    --lr=2e-4 \
+    --batch_size=32 \
+    --input_max_len=100 \
+    --target_max_len=150 \
+    --weight_decay=0.01 \
+    --evaluation_strategy='epoch' \
+    --save_strategy='epoch' \
+    --logging_strategy='epoch' \
+    --save_total_limit=100 \
+    --train_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
+    --valid_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
+    --test_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
+    --USPTO_test_data_path='../data/USPTO_50k/test.csv' \
+    --disable_tqdm \
+    --pretrained_model_name_or_path='sagawa/CompoundT5'
+```
+### Task: Yield
+```
+cd task_yield
+python train.py \
+    --output_dir='ReactionT5_yield_CN_test1' \
+    --train_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
+    --valid_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
+    --test_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
+    --CN_test_data_path='../data/C_N_yield/MFF_Test1/test.csv' \
+    --epochs=100 \
+    --input_max_length=300 \
+    --pretrained_model_name_or_path='sagawa/CompoundT5' \
+    --batch_size=32
+```
+
+
 # Structure
 ```
 ReactionT5v2/  
