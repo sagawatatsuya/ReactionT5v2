@@ -12,6 +12,7 @@ In this repository, we will demonstrate how to use ReactionT5 for product predic
   - [Dataset](#dataset)
   - [Usage](#usage)  
   - [Fine-tuning](#fine-tuning)  
+  - [Reaction Pre-training](#reaction-pre-training)
   - [Structure](#structure) 
   - [Authors](#authors)
   - [Citation](#citation)  
@@ -122,8 +123,8 @@ python finetune.py \
     --output_dir='output'
 ```
 
-# Retrain ReactionT5
-If you want to retrain ReactionT5 from CompoundT5, you can do so by running the following command. This will train ReactionT5 on the Open Reaction Database (ORD) dataset.
+# Reaction Pre-training
+If you want to retrain ReactionT5 from CompoundT5 (reaction pre-training), you can do so by running the following commands. These will train ReactionT5 on the Open Reaction Database (ORD) dataset.
 
 ### Task: Forward
 ```
@@ -150,7 +151,7 @@ python train.py \
 ### Task: Retrosynthesis
 ```
 cd task_retrosynthesis
-python train_without_duplicates.py \
+python train.py \
     --output_dir='ReactionT5_retrosynthesis' \
     --epochs=100 \
     --lr=2e-4 \
