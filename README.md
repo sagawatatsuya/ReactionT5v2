@@ -1,6 +1,6 @@
 # ReactionT5v2
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white&style=flat)](https://www.python.org/downloads/)
-[![Ruff](https://img.shields.io/badge/Ruff-D7FF64?logo=ruff&logoColor=white&style=flat)](https://github.com/astral-sh/ruff)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Transformers](https://img.shields.io/badge/transformers-4.40.2-FFD21E?logo=huggingface&logoColor=white&style=flat)](https://huggingface.co/docs/transformers/en/installation)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/LICENSE.txt)
 [![arXiv](https://img.shields.io/badge/arXiv-2311.06708-B31B1B?logo=arxiv&logoColor=white&style=flat)](https://arxiv.org/abs/2311.06708)
