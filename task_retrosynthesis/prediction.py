@@ -118,7 +118,7 @@ if __name__ == "__main__":
     )
 
     all_sequences, all_scores = [], []
-    for inputs in tqdm(dataloader, total=len(DataLoader)):
+    for inputs in tqdm(dataloader, total=len(dataloader)):
         inputs = {k: v.to(CFG.device) for k, v in inputs.items()}
         with torch.no_grad():
             output = model.generate(
