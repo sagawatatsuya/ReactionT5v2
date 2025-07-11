@@ -12,7 +12,8 @@ In this repository, we will demonstrate how to use ReactionT5 for product predic
   - [Dataset](#dataset)
   - [Usage](#usage)  
   - [Fine-tuning](#fine-tuning)  
-  - [Reaction Pre-training](#reaction-pre-training)
+  - [Compound Pre-training](#compound-pre-training)  
+  - [Reaction Pre-training](#reaction-pre-training)  
   - [Structure](#structure) 
   - [Authors](#authors)
   - [Citation](#citation)  
@@ -32,10 +33,10 @@ pip install sentencepiece
 
 # Dataset
 For model training and finetuning, we used the ORD dataset, USPTO_MIT dataset, USPTO_50k dataset, and C-N cross-coupling reactions dataset. Each dataset can be downloaded from the following links:
-- [ORD](https://drive.google.com/file/d/1fa2MyLdN1vcA7Rysk8kLQENE92YejS9B/view?usp=drive_link)
-- [USPTO_MIT](https://yzhang.hpc.nyu.edu/T5Chem/data/USPTO_MIT.tar.bz2)
-- [USPTO_50k](https://yzhang.hpc.nyu.edu/T5Chem/data/USPTO_50k.tar.bz2)
-- [Buchwald-Hartwig C-N cross-coupling](https://yzhang.hpc.nyu.edu/T5Chem/data/C_N_yield.tar.bz2)
+- [ORD](https://drive.google.com/file/d/1JozA2OlByfZ-ILt5H5YrTjLJvSvD8xdL/view?usp=drive_link)
+- [USPTO_MIT](https://drive.google.com/file/d/1NEb5DSwqFfg4gm0P2lPb19cqPt96-OSC/view?usp=drive_link)
+- [USPTO_50k](https://drive.google.com/file/d/15-E4eaxsUJ_aKxX0mnOrvYCTWKpqrLvf/view?usp=drive_link)
+- [Buchwald-Hartwig C-N cross-coupling](https://drive.google.com/file/d/1qvsJk1_q1yfJvBYtEMGOcCuk2pRvsWvy/view?usp=drive_link)
 
 
 # Usage
@@ -46,7 +47,7 @@ To predict the products of reactions from their inputs, use the following comman
 ```
 cd task_forward
 python prediction.py \
-    --input_data="../data/task_forward_demo_input.csv" \
+    --input_data="../data/demo_reaction_data.csv" \
     --model_name_or_path="sagawa/ReactionT5v2-forward" \
     --input_max_length=150 \
     --num_beams=5 \
@@ -60,7 +61,7 @@ To predict the reactants of reactions from their products, use the following com
 ```
 cd task_retrosynthesis
 python prediction.py \
-    --input_data="../data/task_retrosynthesis_demo_input.csv" \
+    --input_data="../data/demo_reaction_data.csv" \
     --model_name_or_path="sagawa/ReactionT5v2-retrosynthesis" \
     --input_max_length=100 \
     --num_beams=5 \
@@ -74,7 +75,7 @@ To predict the yields of reactions from their inputs, use the following command.
 ```
 cd task_yield
 python prediction_with_PreTrainedModel.py \
-    --input_data="../data/task_yield_demo_input.csv" \
+    --input_data="../data/demo_reaction_data.csv" \
     --model_name_or_path="sagawa/ReactionT5v2-yield" \
     --batch_size=16 \
     --output_dir="output"
@@ -123,8 +124,20 @@ python finetune.py \
     --output_dir='output'
 ```
 
+# Compound Pre-training
+If you want to retrain CompoundT5 (compound pre-training), please refer to the [README.md](./CompoundT5/README.md) file located inside the CompoundT5 directory.
+
+
 # Reaction Pre-training
 If you want to retrain ReactionT5 from CompoundT5 (reaction pre-training), you can do so by running the following commands. These will train ReactionT5 on the Open Reaction Database (ORD) dataset.
+
+### Dataset
+Download the preprocessed ORD dataset from [here](https://drive.google.com/file/d/1JozA2OlByfZ-ILt5H5YrTjLJvSvD8xdL/view?usp=drive_link) and place it in the data/ORD directory.  
+To prevent data leakage in downstream benchmarks, we specify either 'USPTO_test_data_path' or 'CN_test_data_path' in the training commands below and remove any duplicated reactions from the training data. You can also train ReactionT5 on full ORD data without specifying these parameters.  
+The corresponding test datasets can be downloaded from the following links:
+- [USPTO_MIT](https://drive.google.com/file/d/1NEb5DSwqFfg4gm0P2lPb19cqPt96-OSC/view?usp=drive_link)
+- [USPTO_50k](https://drive.google.com/file/d/15-E4eaxsUJ_aKxX0mnOrvYCTWKpqrLvf/view?usp=drive_link)
+- [Buchwald-Hartwig C-N cross-coupling](https://drive.google.com/file/d/1qvsJk1_q1yfJvBYtEMGOcCuk2pRvsWvy/view?usp=drive_link)
 
 ### Task: Forward
 ```
@@ -141,9 +154,9 @@ python train.py \
     --save_strategy='epoch' \
     --logging_strategy='epoch' \
     --save_total_limit=100 \
-    --train_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
-    --valid_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
-    --test_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
+    --train_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
+    --valid_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
+    --test_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
     --USPTO_test_data_path='../data/USPTO_MIT/MIT_separated/test.csv' \
     --disable_tqdm \
     --pretrained_model_name_or_path='sagawa/CompoundT5'
@@ -163,9 +176,9 @@ python train.py \
     --save_strategy='epoch' \
     --logging_strategy='epoch' \
     --save_total_limit=100 \
-    --train_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
-    --valid_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
-    --test_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
+    --train_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
+    --valid_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
+    --test_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
     --USPTO_test_data_path='../data/USPTO_50k/test.csv' \
     --disable_tqdm \
     --pretrained_model_name_or_path='sagawa/CompoundT5'
@@ -175,9 +188,9 @@ python train.py \
 cd task_yield
 python train.py \
     --output_dir='ReactionT5_yield_CN_test1' \
-    --train_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
-    --valid_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
-    --test_data_path='../data/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
+    --train_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_train.csv' \
+    --valid_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_valid.csv' \
+    --test_data_path='../data/ORD/all_ord_reaction_uniq_with_attr20240506_v3_test.csv' \
     --CN_test_data_path='../data/C_N_yield/MFF_Test1/test.csv' \
     --epochs=100 \
     --input_max_length=300 \

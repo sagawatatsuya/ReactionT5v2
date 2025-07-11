@@ -1,4 +1,4 @@
-# ReactionT5
+# CompoundT5
 Here, we will explain how to do compound pre-training. 
 
 # Installation
