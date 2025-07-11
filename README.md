@@ -1,4 +1,10 @@
 # ReactionT5v2
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white&style=flat)](https://www.python.org/downloads/)
+[![Ruff](https://img.shields.io/badge/Ruff-D7FF64?logo=ruff&logoColor=white&style=flat)](https://github.com/astral-sh/ruff)
+[![Transformers](https://img.shields.io/badge/transformers-4.40.2-FFD21E?logo=huggingface&logoColor=white&style=flat)](https://huggingface.co/docs/transformers/en/installation)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/LICENSE.txt)
+[![arXiv](https://img.shields.io/badge/arXiv-2311.06708-B31B1B?logo=arxiv&logoColor=white&style=flat)](https://arxiv.org/abs/2311.06708)
+
 ReactionT5 is a T5 model pretrained on a vast array of chemical reactions from the [Open Reaction Database (ORD)](https://github.com/open-reaction-database/ord-data). Unlike other models that are trained on smaller, potentially biased datasets (e.g. patent datasets or high-throughput reaction datasets created by a single reaction), ReactionT5 leverages the extyensive and diverse dataset provided by ORD. This ensures greater generalizability and performance, enabling ReactionT5 to condact product, retrosynthesis, and yield prediction of unseen chemical reactions with high accuracy. This makes it highly practical for real-world applications.
 
 ![model image](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/model-image.png)
