@@ -4,13 +4,14 @@
 [![Transformers](https://img.shields.io/badge/transformers-4.40.2-FFD21E?logo=huggingface&logoColor=white&style=flat)](https://huggingface.co/docs/transformers/en/installation)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/LICENSE.txt)
 [![arXiv](https://img.shields.io/badge/arXiv-2311.06708-B31B1B?logo=arxiv&logoColor=white&style=flat)](https://arxiv.org/abs/2311.06708)
+[![GoogleColab](https://img.shields.io/badge/Google%20Colab-Demo%20Notebook-F9AB00?logo=googlecolab&logoColor=F9AB00&style=flat)](https://colab.research.google.com/drive/10Hkx8YJTG5JGXj73XfnEYxZ8fDnsJRcs?usp=sharing)
 
 ReactionT5 is a T5 model pretrained on a vast array of chemical reactions from the [Open Reaction Database (ORD)](https://github.com/open-reaction-database/ord-data). Unlike other models that are trained on smaller, potentially biased datasets (e.g. patent datasets or high-throughput reaction datasets created by a single reaction), ReactionT5 leverages the extyensive and diverse dataset provided by ORD. This ensures greater generalizability and performance, enabling ReactionT5 to condact product, retrosynthesis, and yield prediction of unseen chemical reactions with high accuracy. This makes it highly practical for real-world applications.
 
 ![model image](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/model-image.png)
 
 
-In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models and demo is available at [Hugging Face Hub](https://huggingface.co/collections/sagawa/reactiont5-67dbe0550cbb6886a85e348b).
+In this repository, we will demonstrate how to use ReactionT5 for product prediction, retrosynthesis prediction, and yield prediction on your own datasets. The pretrained models and demo is available at [Hugging Face Hub](https://huggingface.co/collections/sagawa/reactiont5-67dbe0550cbb6886a85e348b) or [Google Colab](https://colab.research.google.com/drive/10Hkx8YJTG5JGXj73XfnEYxZ8fDnsJRcs?usp=sharing)
 
 # Table of Contents
 - [ReactionT5v2](#reactiont5v2)  
