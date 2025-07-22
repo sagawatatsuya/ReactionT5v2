@@ -206,7 +206,7 @@ if __name__ == "__main__":
     CFG.tokenizer = tokenizer
 
     model = AutoModelForSeq2SeqLM.from_pretrained(
-        os.path.abspath(CFG.pretrained_model_name_or_path) if os.path.exists(CFG.pretrained_model_name_or_path) else CFG.pretrained_model_name_or_path
+        os.path.abspath(CFG.model_name_or_path) if os.path.exists(CFG.model_name_or_path) else CFG.model_name_or_path
     ).to(device)
     tokenized_datasets = dataset.map(
         lambda examples: preprocess_dataset(examples, CFG),
