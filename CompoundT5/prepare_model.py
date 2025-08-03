@@ -27,6 +27,10 @@ from utils import seed_everything
 
 seed_everything(seed=42)
 
+script_dir = os.path.abspath(os.path.dirname(__file__))
+project_root = os.path.abspath(os.path.join(script_dir, ".."))
+data_dir = os.path.join(project_root, "data")
+
 
 class SentencePieceUnigramTokenizer(BaseTokenizer):
     """
@@ -187,16 +191,18 @@ CFG = parse_args()
 
 
 # Initialize a dataset
-dataset = load_dataset("csv", data_files="../data/ZINC-canonicalized.csv")
+dataset = load_dataset(
+    "csv", data_files=os.path.join(data_dir, "ZINC-canonicalized.csv")
+)
 
 if CFG.use_character_level_tokenizer:
     tokenizer = create_character_level_tokenizer(dataset, "t5")
 else:
     tokenizer = create_normal_tokenizer(dataset, "t5")
 # Save files to disk
-tokenizer.save("./compound_pretraining/CompoundT5/CompoundT5-config/tokenizer.json")
+tokenizer.save(os.path.join(script_dir, "CompoundT5/CompoundT5-config/tokenizer.json"))
 
 config = T5Config.from_pretrained(
     "google/t5-v1_1-base", vocab_size=tokenizer.get_vocab_size()
 )
-config.save_pretrained("./compound_pretraining/CompoundT5/CompoundT5-config/")
+config.save_pretrained(os.path.join(script_dir, "CompoundT5/CompoundT5-config/"))

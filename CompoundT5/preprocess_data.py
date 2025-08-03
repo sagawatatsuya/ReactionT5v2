@@ -16,6 +16,10 @@ seed_everything(seed=42)
 RDLogger.DisableLog("rdApp.*")
 warnings.filterwarnings("ignore")
 
+script_dir = os.path.abspath(os.path.dirname(__file__))
+project_root = os.path.abspath(os.path.join(script_dir, ".."))
+data_dir = os.path.join(project_root, "data")
+
 files_to_download = [
     "1ZPsoUYb4HcxFzK_ac9rb_pQj7oO3Gagh",
     "1XwkxxHiaWFbSNhGyxnv6hAliutIMNrIp",
@@ -30,8 +34,8 @@ for file_id in files_to_download:
     )
 
 # Move downloaded files to data directory
-subprocess.run("mv *.smi ../data", shell=True)
-subprocess.run("mv *.tsv ../data", shell=True)
+subprocess.run("mv *.smi " + data_dir, shell=True)
+subprocess.run("mv *.tsv " + data_dir, shell=True)
 
 
 # Function to process SMILES files and save canonicalized versions
@@ -47,21 +51,21 @@ def process_smiles_files(file_paths):
                 except:
                     continue
     df = pd.DataFrame({"smiles": list(unique_smiles)})
-    df.to_csv("../data/ZINC-canonicalized.csv", index=False)
+    df.to_csv(os.path.join(data_dir, "ZINC-canonicalized.csv"), index=False)
 
     train, valid = train_test_split(df, test_size=0.1)
     # Save train and validation data
-    train.to_csv("../data/ZINC-canonicalized-train.csv", index=False)
-    valid.to_csv("../data/ZINC-canonicalized-valid.csv", index=False)
+    train.to_csv(os.path.join(data_dir, "ZINC-canonicalized-train.csv"), index=False)
+    valid.to_csv(os.path.join(data_dir, "ZINC-canonicalized-valid.csv"), index=False)
 
 
 # Process 16_p files
-process_smiles_files([f"../data/16_p{i}.smi" for i in range(4)])
+process_smiles_files([os.path.join(data_dir, f"16_p{i}.smi") for i in range(4)])
 
 
 # Load reaction data
 ord_df = pd.read_csv(
-    "../data/all_ord_reaction_uniq_with_attr20240506_v1.tsv",
+    os.path.join(data_dir, "all_ord_reaction_uniq_with_attr20240506_v1.tsv"),
     sep="\t",
     names=["id", "input", "product", "condition"],
 )
@@ -154,11 +158,11 @@ for column in [
     )
 
 # Save cleaned DataFrame
-cleaned_df.to_csv("../data/preprocessed_ord.tsv", index=False)
+cleaned_df.to_csv(os.path.join(data_dir, "preprocessed_ord.tsv"), index=False)
 
 train, valid = train_test_split(cleaned_df, test_size=int(len(cleaned_df) * 0.1))
 train, test = train_test_split(train, test_size=int(len(cleaned_df) * 0.1))
 # Save train and validation data
-train.to_csv("../data/preprocessed_ord_train.csv", index=False)
-valid.to_csv("../data/preprocessed_ord_valid.csv", index=False)
-test.to_csv("../data/preprocessed_ord_test.csv", index=False)
+train.to_csv(os.path.join(data_dir, "preprocessed_ord_train.csv"), index=False)
+valid.to_csv(os.path.join(data_dir, "preprocessed_ord_valid.csv"), index=False)
+test.to_csv(os.path.join(data_dir, "preprocessed_ord_test.csv"), index=False)
