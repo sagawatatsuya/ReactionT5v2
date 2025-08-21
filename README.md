@@ -3,7 +3,7 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![Transformers](https://img.shields.io/badge/transformers-4.40.2-FFD21E?logo=huggingface&logoColor=white&style=flat)](https://huggingface.co/docs/transformers/en/installation)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/sagawatatsuya/ReactionT5v2/blob/main/LICENSE.txt)
-[![arXiv](https://img.shields.io/badge/arXiv-2311.06708-B31B1B?logo=arxiv&logoColor=white&style=flat)](https://arxiv.org/abs/2311.06708)
+[![DOI](https://zenodo.org/badge/DOI/10.1186/s13321-025-01075-4.svg)](https://doi.org/10.1186/s13321-025-01075-4)
 [![GoogleColab](https://img.shields.io/badge/Google%20Colab-Demo%20Notebook-F9AB00?logo=googlecolab&logoColor=F9AB00&style=flat)](https://colab.research.google.com/drive/10Hkx8YJTG5JGXj73XfnEYxZ8fDnsJRcs?usp=sharing)
 
 ReactionT5 is a T5 model pretrained on a vast array of chemical reactions from the [Open Reaction Database (ORD)](https://github.com/open-reaction-database/ord-data). Unlike other models that are trained on smaller, potentially biased datasets (e.g. patent datasets or high-throughput reaction datasets created by a single reaction), ReactionT5 leverages the extyensive and diverse dataset provided by ORD. This ensures greater generalizability and performance, enabling ReactionT5 to condact product, retrosynthesis, and yield prediction of unseen chemical reactions with high accuracy. This makes it highly practical for real-world applications.
@@ -223,14 +223,15 @@ ReactionT5v2/
 Tatsuya Sagawa, Ryosuke Kojima
 
 # Citation
-arxiv link: https://arxiv.org/abs/2311.06708
-```
-@misc{sagawa2023reactiont5,  
-      title={ReactionT5: a large-scale pre-trained model towards application of limited reaction data}, 
-      author={Tatsuya Sagawa and Ryosuke Kojima},  
-      year={2023},  
-      eprint={2311.06708},  
-      archivePrefix={arXiv},  
-      primaryClass={physics.chem-ph}  
+```bibtex
+@article{Sagawa2025,
+  title   = {ReactionT5: a pre-trained transformer model for accurate chemical reaction prediction with limited data},
+  author  = {Sagawa, Tatsuya and Kojima, Ryosuke},
+  journal = {Journal of Cheminformatics},
+  year    = {2025},
+  volume  = {17},
+  number  = {1},
+  pages   = {126},
+  doi     = {10.1186/s13321-025-01075-4},
+  url     = {https://doi.org/10.1186/s13321-025-01075-4}
 }
-```
