@@ -242,7 +242,7 @@ if __name__ == "__main__":
 
     args = Seq2SeqTrainingArguments(
         CFG.output_dir,
-        evaluation_strategy=CFG.evaluation_strategy,
+        eval_strategy=CFG.evaluation_strategy,
         eval_steps=CFG.eval_steps,
         save_strategy=CFG.save_strategy,
         save_steps=CFG.save_steps,
@@ -259,6 +259,8 @@ if __name__ == "__main__":
         disable_tqdm=CFG.disable_tqdm,
         push_to_hub=False,
         load_best_model_at_end=True,
+        metric_for_best_model="accuracy",
+        greater_is_better=True
     )
 
     model.config.eval_beams = CFG.eval_beams
