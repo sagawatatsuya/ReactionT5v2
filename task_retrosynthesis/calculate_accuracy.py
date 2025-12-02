@@ -15,10 +15,19 @@ from utils import canonicalize, seed_everything
 
 warnings.filterwarnings("ignore")
 
+"""
+Score retrosynthesis predictions produced by prediction.py.
+
+Expected columns in --input_data: `input`, `0th` ... `{num_beams-1}th`.
+The target column is read from --target_data via --target_col.
+Reports top-k accuracies (k=1,2,3,5) and invalid SMILES rate.
+"""
+
 
 def parse_args():
+    """Parse CLI arguments."""
     parser = argparse.ArgumentParser(
-        description="Script for reaction retrosynthesis prediction."
+        description="Compute accuracy for retrosynthesis predictions."
     )
     parser.add_argument(
         "--input_data",
@@ -42,7 +51,7 @@ def parse_args():
         "--model_name_or_path",
         type=str,
         default="sagawa/ReactionT5v2-retrosynthesis",
-        help="Name or path of the finetuned model for prediction. Can be a local model or one from Hugging Face.",
+        help="Finetuned model path/name (only used to load tokenizer).",
     )
     parser.add_argument(
         "--num_beams", type=int, default=5, help="Number of beams used for beam search."
@@ -53,9 +62,11 @@ def parse_args():
     return parser.parse_args()
 
 
-def remove_space(row):
-    for i in range(5):
-        row[f"{i}th"] = row[f"{i}th"].replace(" ", "")
+def remove_space(row, num_beams: int):
+    """Strip whitespace inside predicted SMILES strings."""
+    for i in range(num_beams):
+        col = f"{i}th"
+        row[col] = row[col].replace(" ", "")
     return row
 
 
@@ -72,63 +83,29 @@ if __name__ == "__main__":
     )
 
     df = pd.read_csv(CFG.input_data)
-    df[[f"{i}th" for i in range(CFG.num_beams)]] = df[
-        [f"{i}th" for i in range(CFG.num_beams)]
-    ].fillna(" ")
+    pred_cols = [f"{i}th" for i in range(CFG.num_beams)]
+    df[pred_cols] = df[pred_cols].fillna(" ")
     df["target"] = pd.read_csv(CFG.target_data)[CFG.target_col].values
-    df = df.apply(remove_space, axis=1)
+    df = df.apply(lambda row: remove_space(row, CFG.num_beams), axis=1)
 
-    top_k_invalidity = CFG.num_beams
-
-    top1, top2, top3, top5 = [], [], [], []
+    top_metrics = {k: [] for k in (1, 2, 3, 5)}
     invalidity = []
 
-    for idx, row in df.iterrows():
+    for _, row in df.iterrows():
         target = canonicalize(row["target"])
-        if canonicalize(row["0th"]) == target:
-            top1.append(1)
-            top2.append(1)
-            top3.append(1)
-            top5.append(1)
-        elif canonicalize(row["1th"]) == target:
-            top1.append(0)
-            top2.append(1)
-            top3.append(1)
-            top5.append(1)
-        elif canonicalize(row["2th"]) == target:
-            top1.append(0)
-            top2.append(0)
-            top3.append(1)
-            top5.append(1)
-        elif canonicalize(row["3th"]) == target:
-            top1.append(0)
-            top2.append(0)
-            top3.append(0)
-            top5.append(1)
-        elif canonicalize(row["4th"]) == target:
-            top1.append(0)
-            top2.append(0)
-            top3.append(0)
-            top5.append(1)
-        else:
-            top1.append(0)
-            top2.append(0)
-            top3.append(0)
-            top5.append(0)
+        preds = [canonicalize(row[col]) for col in pred_cols]
 
-        input_compound = row["input"]
-        output = [row[f"{i}th"] for i in range(top_k_invalidity)]
-        inval_score = 0
-        for ith, out in enumerate(output):
-            mol = Chem.MolFromSmiles(out.rstrip("."))
-            if not isinstance(mol, Chem.rdchem.Mol):
-                inval_score += 1
-        invalidity.append(inval_score)
+        match_idx = next((i for i, pred in enumerate(preds) if pred == target), None)
+        for k in top_metrics:
+            top_metrics[k].append(1 if match_idx is not None and match_idx < k else 0)
+
+        invalidity.append(
+            sum(Chem.MolFromSmiles(row[col].rstrip(".")) is None for col in pred_cols)
+        )
+
     print(CFG.input_data)
-    print(f"Top 1 accuracy: {sum(top1) / len(top1)}")
-    print(f"Top 2 accuracy: {sum(top2) / len(top2)}")
-    print(f"Top 3 accuracy: {sum(top3) / len(top3)}")
-    print(f"Top 5 accuracy: {sum(top5) / len(top5)}")
+    for k, values in top_metrics.items():
+        print(f"Top {k} accuracy: {sum(values) / len(values):.4f}")
     print(
-        f"Top {top_k_invalidity} Invalidity: {sum(invalidity) / (len(invalidity) * top_k_invalidity) * 100}"
+        f"Top {CFG.num_beams} invalidity: {sum(invalidity) / (len(invalidity) * CFG.num_beams) * 100:.2f}"
     )
